@@ -1,2 +1,17 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+Memphis Rails 3 project skeleton
+================================
+
+Getting started
+---------------
+
+1. Download and install RubyGems from http://rubygems.org/.
+2. Add "gem" binary to PATH.
+2. Install Bundler using RubyGems: (sudo) gem install bundler
+3. Run in application root:
+
+bundle install  # install depedencies specified in Gemfile
+rake            # run tests
+rails s thin    # Run the Thin Rack server in port 3000
+
+4. Ready. The application is in location http://localhost:3000/
+
