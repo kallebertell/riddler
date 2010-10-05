@@ -1,5 +1,13 @@
 Trunk::Application.routes.draw do
-  resources :sessions
+
+  resources :games
+
+  root :to => 'games#new'
+
+  match 'sessions/create', :controller => :sessions, :action => :create, :as => :create_session
+  match 'sessions/new', :controller => :sessions, :action => :new, :as => :login
+  match 'sessions/destroy', :controller => :sessions, :action => :destroy, :as => :logout
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
