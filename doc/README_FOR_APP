@@ -16,3 +16,8 @@ rails s thin    # Run the Thin Rack server in port 3000
 
 4. Ready. The application is in location http://localhost:3000/
 
+
+Notice:
+
+If installing sqlite3-ruby gem fails, you need to install the development files for it. For example:
+http://accidentaltechnologist.com/ruby-on-rails/setting-up-sqlite3-for-ruby-on-rails-development/
