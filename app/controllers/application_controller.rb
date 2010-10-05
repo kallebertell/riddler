@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :set_session_variables
+  before_filter :login_required
 
   private
 
@@ -11,4 +12,5 @@ class ApplicationController < ActionController::Base
     @oauth = session[:oauth] = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url))
     @graph = session[:graph]
   end
+
 end

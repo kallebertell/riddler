@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+  skip_before_filter :login_required
+
+  def new
+  end
 
   def create
     @graph = session[:graph] = Koala::Facebook::GraphAPI.new(@oauth.get_access_token(params[:code]))
@@ -8,6 +12,7 @@ class SessionsController < ApplicationController
     unless @user = User.find_by_facebook_id(user['id'])
       @user = User.create(:facebook_id => user['id'])
     end
+    @user.update_attributes(user)
     flash[:notice] = "Logged in as #{@user.name} successfully."
     redirect_to_target_or_default(root_url)
   rescue Koala::Facebook::APIError
