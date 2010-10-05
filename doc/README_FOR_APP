@@ -10,6 +10,7 @@ Getting started
 3. Run in project root directory:
 
 bundle install  # install depedencies specified in Gemfile
+rake db:migrate # create database schema
 rake            # run tests
 rails s thin    # Run the Thin Rack server in port 3000
 
