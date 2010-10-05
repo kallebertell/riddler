@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Trunk::Application.load_tasks
+Riddler::Application.load_tasks

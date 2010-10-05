@@ -1,4 +1,4 @@
-Trunk::Application.routes.draw do
+Riddler::Application.routes.draw do
 
   resources :users
 
