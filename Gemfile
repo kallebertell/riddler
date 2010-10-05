@@ -2,6 +2,7 @@ source :gemcutter
 
 gem 'rails', '3.0.0'
 gem 'haml'
+gem 'rake'
 gem 'json'
 gem 'sqlite3-ruby'
 gem 'thin'

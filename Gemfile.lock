@@ -90,5 +90,6 @@ DEPENDENCIES
   json
   koala!
   rails (= 3.0.0)
+  rake
   sqlite3-ruby
   thin
