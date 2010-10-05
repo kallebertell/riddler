@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+%html{ :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %title
+      = h(yield(:title) || "Untitled")
+    = stylesheet_link_tag 'application', 'lavaLamp'
+    = javascript_include_tag 'jquery', 'jrails', 'jquery-ui', 'application'
+    = csrf_meta_tag
+    = yield(:head)
+    %script
+  %body
+    #container
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+
+      = yield

@@ -8,7 +8,10 @@ class ApplicationController < ActionController::Base
   private
 
   def set_session_variables
-   @oauth = (session[:oauth] ||= Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url)))
-   @graph = session[:graph]
+    @oauth = (session[:oauth] ||= Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url)))
+    @graph = session[:graph]
+    unless @oauth and @graph
+      render 'sessions/new'
+    end
   end
 end

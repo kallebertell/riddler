@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-  end
+  skip_before_filter :require_authentication
 
   def create
     @graph = session[:graph] = Koala::Facebook::GraphAPI.new(@oauth.get_access_token(params[:code]))
