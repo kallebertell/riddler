@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101005184141) do
+ActiveRecord::Schema.define(:version => 20101005194630) do
 
   create_table "games", :force => true do |t|
     t.integer  "user_id"
@@ -28,5 +28,12 @@ ActiveRecord::Schema.define(:version => 20101005184141) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "users", :force => true do |t|
+    t.integer  "facebook_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
