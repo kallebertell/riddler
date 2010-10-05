@@ -7,7 +7,7 @@ Getting started
 1. Download and install RubyGems from http://rubygems.org/.
 2. Add "gem" binary to PATH.
 2. Install Bundler using RubyGems: (sudo) gem install bundler
-3. Run in application root:
+3. Run in project root directory:
 
 bundle install  # install depedencies specified in Gemfile
 rake            # run tests
