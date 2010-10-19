@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   def set_session_variables
     @oauth = session[:oauth] = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url))
     @graph = session[:graph]
+    @restapi = session[:restapi]
   end
 
 end

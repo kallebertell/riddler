@@ -1,8 +1,10 @@
 .notification
-  ="You are logged in as #{current_user.name}."
+  ="You are logged in as #{current_user.name}. "
 
 %h1
   New Game
 
 %pre
-  = @game.to_yaml
+  = @query.to_yaml
+  %br
+  = @friends_status.to_yaml
