@@ -1,10 +1,18 @@
 .notification
-  ="You are logged in as #{current_user.name}. "
+  = "You are logged in as #{current_user.name}. "
+  = link_to "Log out", "/sessions/destroy"
 
 %h1
   New Game
 
-%pre
-  = @query.to_yaml
-  %br
-  = @friends_status.to_yaml
+.status
+  = @status_message
+
+%br
+  
+.question
+  %strong
+    Who said this?
+
+.alternatives
+  = @friends.join(", ")
