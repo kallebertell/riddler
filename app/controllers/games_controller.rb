@@ -13,7 +13,7 @@ class GamesController < ApplicationController
     @uids = unrelated_uids.concat([@correct_uid])
     @status_message = status_to_guess['message']
 
-    @friends = @restapi.fql_query("SELECT name FROM user WHERE uid IN (#{@uids.join(', ')})").collect {|x| x['name'] }
+    @friends = @restapi.fql_query("SELECT name, pic_small FROM user WHERE uid IN (#{@uids.join(', ')})").sort_by {rand}
   end
 
   
@@ -25,7 +25,7 @@ class GamesController < ApplicationController
 
     while unrelated_uids.size < 2
       uid = statuses.at(cnt)['uid']
-      unrelated_uids.push(uid) #if (uid != correct_uid)
+      unrelated_uids.push(uid) if (uid != correct_uid)
       cnt += 1;
       break if (cnt > 999)
     end

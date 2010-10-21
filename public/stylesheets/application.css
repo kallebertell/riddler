@@ -1,2 +1,29 @@
 body {
+  font-family: Arial, sans-serif;
+}
+
+.status {
+    font-size: 3em;
+    margin: 0 auto;
+    width: 700px;
+    border-radius: 15px;
+    border: 1px solid #ffcccc;
+    background-color: #ffdddd;
+    padding: 15px;
+}
+
+#container {
+    margin: 0 auto;
+    width: 900px;
+}
+
+#alternatives {
+  padding:0;
+  margin:0;
+}
+
+
+#alternatives li {
+  list-style-type: none;
+  width: 15em;
 }
