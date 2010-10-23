@@ -22,8 +22,18 @@ body {
   margin:0;
 }
 
+ul {
+
+}
 
 #alternatives li {
   list-style-type: none;
   width: 15em;
+  float: left;
+  text-align: center;
+}
+
+li a {
+    color: black;
+    text-decoration: none;
 }
