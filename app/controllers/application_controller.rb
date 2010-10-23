@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
     @restapi = session[:restapi]
   end
 
+  def fql(query)
+    @restapi.fql_query(query)
+  end
+
 end

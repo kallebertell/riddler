@@ -5,17 +5,25 @@ class GamesController < ApplicationController
     @game = get_current_game
     @game.round_count += 1;
 
-    query = "SELECT uid, status_id, message FROM status WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = #{@current_user.facebook_id.to_s})";
+    friends_statuses =
+            fql(  "SELECT uid, status_id, message FROM status " +
+                  "WHERE uid IN " +
+                  "(SELECT uid2 FROM friend WHERE uid1 = #{@current_user.facebook_id.to_s})").
+            sort_by {rand};
 
-    friends_statuses = @restapi.fql_query(query).sort_by {rand};
-
-    status_to_guess = friends_statuses.at(0)
+    status_to_guess = friends_statuses.pop()
+    
     @correct_uid = status_to_guess['uid'];
-    unrelated_uids = get_two_unrelated_uids(friends_statuses, @correct_uid)
-    @uids = unrelated_uids.concat([@correct_uid])
+
+    alternative_uids = get_two_unrelated_uids(friends_statuses, @correct_uid)
+    alternative_uids = alternative_uids.concat([@correct_uid])
+
     @status_message = status_to_guess['message']
 
-    @friends = @restapi.fql_query("SELECT uid, name, pic_square FROM user WHERE uid IN (#{@uids.join(', ')})").sort_by {rand}
+    @friends = fql( "SELECT uid, name, pic_square FROM user " +
+                    "WHERE uid IN (#{alternative_uids.join(', ')})").
+               sort_by {rand}
+
   end
 
   
