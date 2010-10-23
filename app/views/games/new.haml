@@ -1,7 +1,12 @@
 .notification
   = "You are logged in as #{current_user.name}. "
   = link_to "Log out", :logout
-  
+
+.top
+  %h1
+    Round
+    = @game.round_count;
+
 .question
   %h1
     Who said this?
@@ -12,15 +17,5 @@
 %br
 
 %ul{:id => 'alternatives'}
-  %li
-    %img{'src' => @friends.at(0)['pic_small']}
-    %br
-    = @friends.at(0)['name']
-  %li
-    %img{'src' => @friends.at(1)['pic_small']}
-    %br
-    = @friends.at(1)['name']
-  %li
-    %img{'src' => @friends.at(2)['pic_small']}
-    %br
-    = @friends.at(2)['name']
+  - for friend in @friends
+    = render :partial => 'games/alternative', :locals => {:friend => friend}
