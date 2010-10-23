@@ -3,14 +3,6 @@ class GamesController < ApplicationController
   def new
 
     @game = get_current_game
-
-    if (!@game)
-      @game = get_current_game
-    end
-    if (!@game.round_count)
-        @game.round_count = 0
-    end
-
     @game.round_count += 1;
 
     query = "SELECT uid, status_id, message FROM status WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = #{@current_user.facebook_id.to_s})";
