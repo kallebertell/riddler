@@ -43,3 +43,13 @@ li a {
     background-color: #dddddd;
 
 }
+
+#flash_correct {
+    font-size: 2em;
+    color: #66ff66;
+}
+
+#flash_incorrect {
+    font-size: 2em;
+    color: #ff6666;
+}

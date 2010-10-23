@@ -1,8 +1,20 @@
 class GamesController < ApplicationController
 
   def new
+    game = session[:game] = Game.new
+    game.round_count = 0
+    game.save
+    redirect_to :ask_question
+  end
 
-    @game = get_current_game
+
+  def question
+    @game = session[:game]
+
+    if (!@game)
+      redirect_to_target_or_default(root_url)
+    end
+
     @game.round_count += 1;
 
     friends_statuses =
@@ -13,10 +25,10 @@ class GamesController < ApplicationController
 
     status_to_guess = friends_statuses.pop()
     
-    @correct_uid = status_to_guess['uid'];
+    session[:correct_answer] = correct_answer = status_to_guess['uid'];
 
-    alternative_uids = get_two_unrelated_uids(friends_statuses, @correct_uid)
-    alternative_uids = alternative_uids.concat([@correct_uid])
+    alternative_uids = get_two_unrelated_uids(friends_statuses, correct_answer)
+    alternative_uids = alternative_uids.concat([correct_answer])
 
     @status_message = status_to_guess['message']
 
@@ -24,24 +36,25 @@ class GamesController < ApplicationController
                     "WHERE uid IN (#{alternative_uids.join(', ')})").
                sort_by {rand}
 
+    for friend in @friends
+      session[:correct_answer_metadata] = friend if (friend['uid'] == correct_answer)
+    end
+
+
   end
 
+  def answer
+
+    if (params[:answer].to_s == session[:correct_answer].to_s)
+      flash[:correct] = "Correct!"
+    else
+      flash[:incorrect] = "Incorrect. Should've been "+session[:correct_answer_metadata]['name']
+    end
+
+    redirect_to :ask_question
+  end
   
   private
-
-  def get_current_game
-    game = session[:game]
-
-     if (!game)
-       game = Game.new
-       game.save
-     end
-     if (!game.round_count)
-         game.round_count = 0
-     end
-
-    game
-  end
 
   def get_two_unrelated_uids(statuses, correct_uid)
     unrelated_uids = []
