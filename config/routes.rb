@@ -2,9 +2,13 @@ Riddler::Application.routes.draw do
 
   resources :users
 
+  match 'games/question', :controller => :games, :action => :question, :as => :ask_question
+  match 'games/answer/:answer', :controller => :games, :action => :answer
+
   resources :games
 
   root :to => 'games#new'
+
 
   match 'sessions/create', :controller => :sessions, :action => :create, :as => :create_session
   match 'sessions/new', :controller => :sessions, :action => :new, :as => :login
