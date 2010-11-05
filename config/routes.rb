@@ -1,5 +1,11 @@
 Riddler::Application.routes.draw do
 
+  resources :answers
+
+  resources :choices
+
+  resources :questions
+
   resources :users
 
   match 'games/question', :controller => :games, :action => :question, :as => :ask_question

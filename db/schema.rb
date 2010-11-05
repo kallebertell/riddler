@@ -10,11 +10,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101005194630) do
+ActiveRecord::Schema.define(:version => 20101105153820) do
+
+  create_table "answers", :force => true do |t|
+    t.integer  "choice_id",  :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "choices", :force => true do |t|
+    t.integer  "question_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "games", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "game_id"
+    t.integer  "correct_choice_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,5 +65,13 @@ ActiveRecord::Schema.define(:version => 20101005194630) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_foreign_key "answers", "choices", :name => "answers_choice_id_fk"
+  add_foreign_key "answers", "users", :name => "answers_user_id_fk"
+
+  add_foreign_key "choices", "questions", :name => "choices_question_id_fk"
+
+  add_foreign_key "questions", "choices", :name => "questions_correct_choice_id_fk", :column => "correct_choice_id"
+  add_foreign_key "questions", "games", :name => "questions_game_id_fk"
 
 end

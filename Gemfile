@@ -7,7 +7,12 @@ gem 'json'
 gem 'sqlite3-ruby'
 gem 'thin'
 gem 'jquery-rails'
+gem 'pg'
 git 'http://github.com/arsduo/koala.git' do 
   gem 'koala'
 end
+gem 'foreigner'
 
+group :test do
+  gem 'factory_girl_rails'
+end

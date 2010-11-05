@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.integer :facebook_id
+      t.integer :facebook_id, :limit => 100000000000
       t.string :name
       t.string :email
       t.string :location
