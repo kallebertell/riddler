@@ -17,29 +17,22 @@ class GamesController < ApplicationController
 
     @game.round_count += 1;
 
-    friends_statuses =
-            fql(  "SELECT uid, status_id, message FROM status " +
-                  "WHERE uid IN " +
-                  "(SELECT uid2 FROM friend WHERE uid1 = #{@current_user.facebook_id.to_s})").
-            sort_by {rand};
+    friends_statuses = @fb_session.get_friends_statuses().sort_by {rand};
 
     status_to_guess = friends_statuses.pop()
     
     session[:correct_answer] = correct_answer = status_to_guess['uid'];
 
-    alternative_uids = get_two_unrelated_uids(friends_statuses, correct_answer)
-    alternative_uids = alternative_uids.concat([correct_answer])
+    choice_uids = get_two_unrelated_uids(friends_statuses, correct_answer)
+    choice_uids = choice_uids.concat([correct_answer])
 
     @status_message = status_to_guess['message']
 
-    @friends = fql( "SELECT uid, name, pic_square FROM user " +
-                    "WHERE uid IN (#{alternative_uids.join(', ')})").
-               sort_by {rand}
+    @friends = @fb_session.get_users_details(choice_uids).sort_by {rand}
 
     for friend in @friends
       session[:correct_answer_metadata] = friend if (friend['uid'] == correct_answer)
     end
-
 
   end
 

@@ -1,5 +1,6 @@
+require File.dirname(__FILE__) + '/../models/facebook'
+
 class ApplicationController < ActionController::Base
-  include Koala
   include Authentication
   protect_from_forgery
 
@@ -9,13 +10,11 @@ class ApplicationController < ActionController::Base
   private
 
   def set_session_variables
-    @oauth = session[:oauth] = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url))
-    @graph = session[:graph]
-    @restapi = session[:restapi]
-  end
+    @fb_session = session[:fb_session];
 
-  def fql(query)
-    @restapi.fql_query(query)
+    if (!@fb_session)
+    	@fb_session = session[:fb_session] = FB::FacebookSession.new(FB_APP_ID, FB_SECRET, create_session_url)
+    end
   end
 
 end
