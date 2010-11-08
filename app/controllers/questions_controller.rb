@@ -1,17 +1,18 @@
 class QuestionsController < ApplicationController
 
   def new
-    @question_factory = QuestionFactory.new(@fb_session)
-     
     @game = session[:game]
 
     if (!@game)
       redirect_to_target_or_default(root_url)
     end
 
+    question_factory = QuestionFactory.new(@fb_session)
+     
+
     @game.round_count += 1
 
-    @question = @question_factory.createStatusQuestion
+    @question = question_factory.createStatusQuestion
     @question.save
     
     @game.questions << @question
