@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../models/facebook'
+require File.dirname(__FILE__) + '/../../lib/facebook'
 
 class ApplicationController < ActionController::Base
   include Authentication

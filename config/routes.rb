@@ -8,8 +8,7 @@ Riddler::Application.routes.draw do
 
   resources :users
 
-  match 'games/question', :controller => :games, :action => :question, :as => :ask_question
-  match 'games/answer/:answer', :controller => :games, :action => :answer
+  match 'questions/answer/:answer', :controller => :questions, :action => :answer
 
   resources :games
 
