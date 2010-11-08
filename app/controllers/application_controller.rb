@@ -1,5 +1,3 @@
-# require File.dirname(__FILE__) + '/../../lib/facebook'
-
 class ApplicationController < ActionController::Base
   include Authentication
   protect_from_forgery
@@ -13,7 +11,7 @@ class ApplicationController < ActionController::Base
     @fb_session = session[:fb_session];
 
     if (!@fb_session)
-    	@fb_session = session[:fb_session] = Facebook::Session.new(FB_APP_ID, FB_SECRET, create_session_url)
+    	@fb_session = session[:fb_session] = Facebook::Session.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url))
     end
   end
 

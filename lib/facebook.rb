@@ -7,8 +7,8 @@ end
     
 class Session
  
-  def initialize(fb_id, fb_secret, create_session_url)
-    @oauth = Koala::Facebook::OAuth.new(fb_id, fb_secret, URI.escape(create_session_url))
+  def initialize(fb_id, fb_secret, callback_url)
+    @oauth = Koala::Facebook::OAuth.new(fb_id, fb_secret, callback_url)
   end
   
   def connect(code)    
