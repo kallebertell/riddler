@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
 
     @game.round_count += 1
 
-    @question = question_factory.createStatusQuestion
+    @question = question_factory.create_status_question
     @question.save
     
     @game.questions << @question

@@ -5,7 +5,7 @@ class QuestionFactory
     @fb_session = fb_session
   end
 
-  def createStatusQuestion
+  def create_status_question
 
     question = Question.new
     
