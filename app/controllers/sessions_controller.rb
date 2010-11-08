@@ -5,22 +5,24 @@ class SessionsController < ApplicationController
   end
 
   def create
-	@fb_session.connect(params[:code])
+    @fb_session.connect(params[:code])
 
-	user = @fb_session.get_current_user
-
-	session[:user_id] = user['id']
+    user = @fb_session.get_current_user
+    
+    session[:user_id] = user['id']
+    
     unless @user = User.find_by_facebook_id(user['id'])
       @user = User.create(:facebook_id => user['id'])
     end
     
     @user.update_attributes(user)
-	flash[:notice] = "Logged in as #{@user.name} successfully."
+
+    flash[:notice] = "Logged in as #{@user.name} successfully."
     redirect_to_target_or_default(root_url)
     
-  rescue FB::Error
+  rescue Facebook::Error
   	flash[:error] = "Invalid login or password"	
-	redirect_to_target_or_default(root_url)
+    redirect_to_target_or_default(root_url)
   end
 
   def destroy
