@@ -6,4 +6,11 @@ class Question < ActiveRecord::Base
   def answered_correctly?
     correct_choice && correct_choice.answered?
   end
+  
+  def correct_choice
+    choices.each do |choice|
+      return choice if choice.correct?    
+    end
+  end
+  
 end

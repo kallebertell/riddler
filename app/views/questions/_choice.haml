@@ -1,5 +1,5 @@
 %li
-  %a{:href => 'answer/'+friend['uid'].to_s}
-    %img{'src' => friend['pic_square']}
+  %a{:href => 'answer/'+choice.key.to_s}
+    %img{'src' => choice.pic_url}
     %br
-    = friend['name']
+    = choice.text

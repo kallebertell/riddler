@@ -12,10 +12,10 @@
     Who said this?
 
 .status
-  = @status_message
+  = @question.text
 
 %br
 
 %ul{:id => 'choices'}
-  - for friend in @friends
-    = render :partial => 'questions/choice', :locals => {:friend => friend}
+  - for choice in @question.choices
+    = render :partial => 'questions/choice', :locals => {:choice => choice}
