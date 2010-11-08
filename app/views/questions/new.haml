@@ -16,6 +16,6 @@
 
 %br
 
-%ul{:id => 'alternatives'}
+%ul{:id => 'choices'}
   - for friend in @friends
-    = render :partial => 'games/alternative', :locals => {:friend => friend}
+    = render :partial => 'questions/choice', :locals => {:friend => friend}
