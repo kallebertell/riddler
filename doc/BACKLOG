@@ -6,7 +6,17 @@ Under work
 
 Backlog
 
+* Birthdate question
 * Facebook information caching in db
 * Question Type Specific haml templates
-* Basic javascript driven question-asking-loop
+* Basic javascript driven question-asking-loop ui
+** Json interfaces for creating/fetching new question
+** "Loading" spinner
+** update round count
+* Like question (ie. Who liked "foobar")
+* Rankings
+* Sharing rankings
+
+* Android wrapper app
+* iPhone wrapper app
 * ...
