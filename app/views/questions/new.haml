@@ -9,7 +9,10 @@
 
 .question
   %h1
-    Who said this?
+    - if @question.type == Question::STATUS
+      = "Who said this?"
+    - else
+      = "What is his/her birthday?"
 
 .status
   = @question.text

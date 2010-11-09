@@ -27,8 +27,8 @@ class Session
     return @user = @graph.get_object('me')
   end
   
-  def url_for_oauth_code(stuff)
-    @oauth.url_for_oauth_code(stuff)
+  def url_for_oauth_code
+    @oauth.url_for_oauth_code(:permissions => ["offline_access","friends_status","friends_birthday","friends_likes"])
   end
 
   def get_friends_statuses
@@ -42,6 +42,11 @@ class Session
         "WHERE uid IN (#{uids.join(', ')})")
   end
 
+  def get_friends_with_birthday
+    fql("SELECT uid, name, birthday_date FROM user " +
+        "WHERE uid IN "+
+        "(SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s})")
+  end
 
   private 
     
