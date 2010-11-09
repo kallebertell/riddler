@@ -11,6 +11,10 @@ class Session
     @oauth = Koala::Facebook::OAuth.new(fb_id, fb_secret, callback_url)
   end
   
+  def url_for_oauth_code
+    @oauth.url_for_oauth_code(:permissions => ["offline_access","friends_status","friends_birthday","friends_likes"])
+  end
+  
   def connect(code)    
     @graph = Koala::Facebook::GraphAPI.new(@oauth.get_access_token(code))
     @api = Koala::Facebook::RestAPI.new(@oauth.get_access_token(code))
@@ -27,10 +31,6 @@ class Session
     return @user = @graph.get_object('me')
   end
   
-  def url_for_oauth_code
-    @oauth.url_for_oauth_code(:permissions => ["offline_access","friends_status","friends_birthday","friends_likes"])
-  end
-
   def get_friends_statuses
     fql("SELECT uid, status_id, message FROM status " +
         "WHERE uid IN " +
