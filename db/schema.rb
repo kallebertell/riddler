@@ -10,14 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116221149) do
-
-  create_table "answers", :force => true do |t|
-    t.integer  "choice_id",  :null => false
-    t.integer  "user_id",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20101116223339) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -72,9 +65,6 @@ ActiveRecord::Schema.define(:version => 20101116221149) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_foreign_key "answers", "choices", :name => "answers_choice_id_fk"
-  add_foreign_key "answers", "users", :name => "answers_user_id_fk"
 
   add_foreign_key "choices", "questions", :name => "choices_question_id_fk"
 
