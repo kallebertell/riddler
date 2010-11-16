@@ -24,8 +24,10 @@ class GameTest < ActiveSupport::TestCase
   test 'should calculate points correctly' do
     @game_of_3_points = Factory(:game)
     @game_of_3_points.questions[0..2].each do |question|
-      question.correct_choice = question.choices.first
-      question.correct_choice.answers.create(:user => @user)
+      correct_choice = question.choices.first
+      correct_choice.correct = true
+      correct_choice.selected = true
+      correct_choice.save
     end
     assert_equal 3, @game_of_3_points.points
   end

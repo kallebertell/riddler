@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116163159) do
+ActiveRecord::Schema.define(:version => 20101116221149) do
 
   create_table "answers", :force => true do |t|
     t.integer  "choice_id",  :null => false
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20101116163159) do
     t.string   "text"
     t.boolean  "correct"
     t.string   "key"
+    t.boolean  "selected"
   end
 
   create_table "games", :force => true do |t|
