@@ -22,8 +22,8 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'should calculate points correctly when several choices are selected' do
-    @game_of_3_points = Factory(:game)
-    @game_of_3_points.questions[0..2].each do |question|
+    @game_of_0_points = Factory(:game)
+    @game_of_0_points.questions[0..2].each do |question|
       correct_choice = question.choices.first
       wrong_choice = question.choices.last
       wrong_choice.selected = true
@@ -33,7 +33,7 @@ class GameTest < ActiveSupport::TestCase
       assert_not_equal wrong_choice, correct_choice
       correct_choice.save
     end
-    assert_equal 0, @game_of_3_points.points
+    assert_equal 0, @game_of_0_points.points
   end
 
   test 'should calculate points correctly when three correct choices are selected' do
