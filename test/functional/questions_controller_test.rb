@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  test "should redirect to login form if not logged in" do
+  	get :new  	
+  	assert_redirected_to login_path
   end
 end

@@ -18,7 +18,7 @@ class QuestionFactory
     question = Question.new
     question.game_id = @game.id
 
-    question.type = Question::STATUS
+    question.question_type = Question::STATUS
     
     friends_statuses = @fb_session.get_friends_statuses().sort_by {rand}
 
@@ -54,7 +54,7 @@ class QuestionFactory
     question = Question.new
     question.game_id = @game.id
 
-    question.type = Question::BIRTHDATE
+    question.question_type = Question::BIRTHDATE
 
     friends = @fb_session.get_friends_with_birthday().sort_by {rand}
     
