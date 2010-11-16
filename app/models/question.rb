@@ -9,7 +9,9 @@ class Question < ActiveRecord::Base
   BIRTHDATE = "birthdate"
 
   def answered_correctly?
-    1 == choices.where( :correct => true, :selected => true ).count
+    return (1 == choices.where( :correct => true, :selected => true ).count) &&
+      (1 == choices.where( :correct => true).count) &&
+      (1 == choices.where( :selected => true).count)
   end
   
   def correct_choice
