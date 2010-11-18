@@ -5,7 +5,7 @@ class ModifyColumnInChoice < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :choices, :correct?
-    add_column :choices, :correct, :boolean
+    remove_column :choices, :correct
+    add_column :choices, :correct?, :boolean
   end
 end
