@@ -17,3 +17,4 @@ group :test do
   gem 'mocha'
   gem 'ci_reporter'
 end
+gem 'rails_code_qa'
