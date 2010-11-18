@@ -37,6 +37,8 @@ GEM
     arel (1.0.1)
       activesupport (~> 3.0.0)
     builder (2.1.2)
+    ci_reporter (1.6.3)
+      builder (>= 2.1.2)
     daemons (1.1.0)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -99,6 +101,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ci_reporter
   factory_girl_rails
   foreigner
   haml

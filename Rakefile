@@ -3,5 +3,8 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
+require 'ci/reporter/rake/test_unit' # use this if you're using Test::Unit
 
 Riddler::Application.load_tasks
+
+

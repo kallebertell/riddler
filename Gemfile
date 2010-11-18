@@ -15,4 +15,5 @@ gem 'foreigner'
 group :test do
   gem 'factory_girl_rails'
   gem 'mocha'
+  gem 'ci_reporter'
 end
