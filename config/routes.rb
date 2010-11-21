@@ -1,16 +1,15 @@
 Riddler::Application.routes.draw do
 
-  resources :answers
-
-  resources :choices
-
-  resources :questions
+  resources :games do
+    resources :questions do
+      resources :choices
+    end      
+  end
+  
+  match '/games/:game_id/questions/:question_id/choices/:id/select', 
+        :controller => :choices, :action => :select, :as => :select_choice
 
   resources :users
-
-  match 'questions/answer/:answer', :controller => :questions, :action => :answer
-
-  resources :games
 
   root :to => 'games#new'
 

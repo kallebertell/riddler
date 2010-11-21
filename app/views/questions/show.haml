@@ -1,0 +1,24 @@
+.notification
+  = "You are logged in as #{current_user.name}. "
+  = link_to "Log out", :logout
+
+.top
+  %h1
+    Round
+    = @game.round_count;
+
+.question
+  %h1
+    - if @question.question_type == Question::STATUS
+      = "Who said this?"
+    - else
+      = "What is his/her birthday?"
+
+.status
+  = @question.text
+
+%br
+
+%ul{:id => 'choices'}
+  - for choice in @question.choices
+    = render :partial => 'questions/choice', :locals => {:question => @question, :choice => choice}

@@ -15,7 +15,7 @@ class QuestionFactory
   end
 
   def create_status_question
-    question = Question.new
+    question = @game.questions.create
     question.game_id = @game.id
 
     question.question_type = Question::STATUS
@@ -51,7 +51,7 @@ class QuestionFactory
   end
 
   def create_birthday_question
-    question = Question.new
+    question = @game.questions.create
     question.game_id = @game.id
 
     question.question_type = Question::BIRTHDATE

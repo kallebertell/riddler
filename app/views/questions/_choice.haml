@@ -1,5 +1,4 @@
 %li
-  %a{:href => 'answer/'+choice.key.to_s}
-    %img{'src' => choice.pic_url}
-    %br
-    = choice.text
+  = link_to image_tag(choice.pic_url), question.id.to_s+'/choices/'+choice.id.to_s+'/select'
+  %br
+  = choice.text

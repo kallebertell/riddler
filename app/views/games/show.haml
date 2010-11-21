@@ -1,0 +1,4 @@
+.gameInfo
+  = "Game at round #{@game.round_count}"
+  %br
+  = link_to 'Gimme a question!', url_for(@game)+"/questions", :method => :post

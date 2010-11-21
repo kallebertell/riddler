@@ -1,10 +1,18 @@
 class GamesController < ApplicationController
 
   def new
-    game = session[:game] = Game.new
-    game.round_count = 0
-    game.save
-    redirect_to :new_question
+    @game = session[:game] = Game.new
   end
 
+  def create
+    @game = session[:game];
+    @game.round_count = 0
+    @game.save
+    redirect_to url_for(@game)
+  end
+  
+  def show
+    @game = Game.find(params[:id])
+  end
+  
 end
