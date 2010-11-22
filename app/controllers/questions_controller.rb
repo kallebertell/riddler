@@ -15,8 +15,6 @@ class QuestionsController < ApplicationController
     @question.save
     @game.save    
     
-    session[:correct_choice] = @question.correct_choice
-    
     redirect_to :action => 'show', :id => @question.id
   end
 

@@ -88,7 +88,6 @@ class QuestionFactory
   private 
   
   def parse_fb_date(fb_birthdate)
-    p fb_birthdate
     tokens = fb_birthdate.split("/")
     
     if (tokens.count == 2)

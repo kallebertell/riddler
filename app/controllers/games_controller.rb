@@ -8,7 +8,7 @@ class GamesController < ApplicationController
     @game = session[:game];
     @game.round_count = 0
     @game.save
-    redirect_to url_for(@game)
+    redirect_to @game
   end
   
   def show

@@ -2,10 +2,13 @@ class ChoicesController < ApplicationController
 
 
   def select
-    if (params[:id] == session[:correct_choice].id)
+    question = Question.find(params[:question_id])  
+    choice = Choice.find(params[:id])
+    
+    if (question.correct_choice.id == choice.id)
       flash[:correct] = "Correct!"
     else
-      flash[:incorrect] = "Incorrect. Should've been "+session[:correct_choice].text
+      flash[:incorrect] = "Incorrect. Should've been "+question.correct_choice.text
     end
 
     redirect_to url_for(Game.find(params[:game_id]))
