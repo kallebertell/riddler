@@ -1,4 +1,9 @@
 %li
-  = link_to image_tag(choice.pic_url), question.id.to_s+'/choices/'+choice.id.to_s+'/select'
-  %br
-  = choice.text
+  - if !choice.pic_url.nil? 
+    = link_to image_tag(choice.pic_url), question.id.to_s+'/choices/'+choice.id.to_s+'/select'
+    %br
+    = choice.text
+  - else
+    = link_to choice.text, question.id.to_s+'/choices/'+choice.id.to_s+'/select'
+
+
