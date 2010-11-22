@@ -14,7 +14,7 @@ gem 'foreigner'
 
 group :test do
   gem 'factory_girl_rails'
-  gem 'mocha'
+  gem 'mocha', :require => false 
   gem 'ci_reporter'
 end
 gem 'rails_code_qa'
