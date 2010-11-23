@@ -63,22 +63,19 @@ class QuestionFactory
     friend_to_guess = friends.pop()
     question.text = friend_to_guess['name']
     correct_date = parse_fb_date( friend_to_guess['birthday_date'] )
+    correct_month = correct_date.month()
     
-    choice_dates = [correct_date]
+    choice_months = [correct_month]
     
     2.times do 
-      if (rand(2)%2 == 0)
-        choice_dates << correct_date + 1 + rand(10)
-      else
-        choice_dates << correct_date - 1 - rand(10)
-      end
+      choice_months << get_random_month_other_than(correct_month)
     end
     
-    choice_dates.each do |date| 
+    choice_months.each do |month| 
       choice = Choice.new
-      choice.correct = correct_date == date
-      choice.text = date.month.to_s + "/" + date.mday.to_s
-      choice.key = date.month.to_s + "_" + date.mday.to_s
+      choice.correct = correct_month == month
+      choice.text = Date::MONTHNAMES[month]
+      choice.key = month.to_s
       question.choices << choice
     end
     
@@ -86,6 +83,16 @@ class QuestionFactory
   end
   
   private 
+  
+  def get_random_month_other_than(month)
+    rnd_month = 1 + rand(12)
+    
+    while (rnd_month == month) 
+      rnd_month = 1 + rand(12)
+    end
+    
+    return rnd_month
+  end
   
   def parse_fb_date(fb_birthdate)
     tokens = fb_birthdate.split("/")
