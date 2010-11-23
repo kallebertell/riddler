@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116223339) do
+ActiveRecord::Schema.define(:version => 20101123195458) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(:version => 20101116223339) do
     t.boolean  "correct"
     t.string   "key"
     t.boolean  "selected"
+  end
+
+  create_table "friends", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "name"
+    t.string   "fb_user_id"
+    t.string   "pic_square_url"
+    t.string   "birthday_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "games", :force => true do |t|
@@ -48,6 +58,15 @@ ActiveRecord::Schema.define(:version => 20101116223339) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "statuses", :force => true do |t|
+    t.integer  "game_id"
+    t.string   "message"
+    t.string   "fb_status_id"
+    t.string   "fb_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.integer  "facebook_id"

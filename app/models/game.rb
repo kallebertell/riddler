@@ -1,5 +1,7 @@
 class Game < ActiveRecord::Base
   has_many :questions
+  has_many :friends
+  has_many :statuses
   belongs_to :user
 
   def rounds_left?

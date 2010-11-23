@@ -38,7 +38,7 @@ class Session
   end
   
   def get_users_details(uids)
-    fql("SELECT uid, name, pic_square FROM user " +
+    fql("SELECT uid, name, pic_square, birthday_date FROM user " +
         "WHERE uid IN (#{uids.join(', ')})")
   end
 
@@ -48,6 +48,12 @@ class Session
         "(SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s})")
   end
 
+  def get_friends
+    fql("SELECT uid, name, pic_square, birthday_date FROM user " +
+        "WHERE uid IN "+
+        "(SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s})")
+  end
+  
   private 
     
   def fql(query)

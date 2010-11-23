@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
       redirect_to_target_or_default(root_url)
     end
 
-    question_factory = QuestionFactory.new(@fb_session, @game)
+    question_factory = QuestionFactory.new(@game)
 
     @game.round_count += 1
 
