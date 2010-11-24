@@ -26,9 +26,15 @@ class GamesController < ApplicationController
     status_datas = @fb_session.get_friends_statuses()
     
     for status_data in status_datas
+      msg = status_data['message']
+
+      if (msg.length > 255) 
+        msg = msg[0,253] + ".."
+      end
+    
       status = Status.new(:fb_user_id => status_data['uid'], 
                           :fb_status_id => status_data['status_id'],
-                          :message => status_data['message']);
+                          :message => msg);
       @game.statuses << status
       status.save           
     end

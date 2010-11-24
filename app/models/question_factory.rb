@@ -33,9 +33,10 @@ class QuestionFactory
     
     3.times { choice_uids << possible_uids.pop }
     
-    choice_uids = choice_uids << correct_answer
+    choice_uids << correct_answer
 
-    choices_details = Friend.where("fb_user_id in (:uids)", { :uids => choice_uids})
+    choices_details = Friend.where("game_id = :game_id AND fb_user_id in (:uids)",
+                                   {:game_id => @game.id, :uids => choice_uids})
  
 
     choices_details.each do |detail|
