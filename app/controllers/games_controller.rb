@@ -6,7 +6,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new
-    @game.round_count = 0
+    @game.round_count = 10
     @game.save
     
     cache_facebook_data_for_game

@@ -5,6 +5,9 @@ class ChoicesController < ApplicationController
     question = Question.find(params[:question_id])  
     choice = Choice.find(params[:id])
     
+    choice.selected = true
+    choice.save
+    
     if (question.correct_choice.id == choice.id)
       flash[:correct] = "Correct!"
     else

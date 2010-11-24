@@ -7,9 +7,11 @@ class QuestionsController < ApplicationController
       redirect_to_target_or_default(root_url)
     end
 
+    if (@game.questions.count >= @game.round_count)
+      redirect_to(@game)
+    end
+    
     question_factory = QuestionFactory.new(@game)
-
-    @game.round_count += 1
 
     @question = question_factory.create_random_question
     @question.save

@@ -9,12 +9,11 @@ class Game < ActiveRecord::Base
   end
 
   def points
-    counter = 0
-    questions.reduce(0) do |s,question|
+    questions.reduce(0) do |sum, question|
       if question.answered_correctly?
-        s+1
+        sum + 1
       else
-        s
+        sum
       end
     end
   end
