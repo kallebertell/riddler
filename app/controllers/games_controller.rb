@@ -23,8 +23,11 @@ class GamesController < ApplicationController
   # TODO: move this somewhere
   def cache_facebook_data_for_game
   
-    status_datas = @fb_session.get_friends_statuses()
+    data = @fb_session.get_friends_and_statuses()
     
+    status_datas = data['statuses']
+    friend_datas = data['friends']
+  
     for status_data in status_datas
       msg = status_data['message']
 
@@ -38,8 +41,6 @@ class GamesController < ApplicationController
       @game.statuses << status
       status.save           
     end
-    
-    friend_datas = @fb_session.get_friends()
     
     for friend_data in friend_datas
       friend = Friend.new(:fb_user_id => friend_data['uid'],
