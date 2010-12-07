@@ -21,3 +21,12 @@ Notice:
 
 If installing sqlite3-ruby gem fails, you need to install the development files for it. For example:
 http://accidentaltechnologist.com/ruby-on-rails/setting-up-sqlite3-for-ruby-on-rails-development/
+
+
+Features implemented
+====================
+
+Question types
+--------------
+* Birthdate question
+* Status questions
