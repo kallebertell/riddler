@@ -5,13 +5,9 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new
-    @game.round_count = 10
-    @game.save
-    
+    @game = Game.create(:round_count => 10)
     cache_facebook_data_for_game
-    
-    redirect_to @game
+    redirect_to [@game,@game.questions.create]
   end
   
   def show

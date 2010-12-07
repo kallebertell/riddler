@@ -1,28 +1,22 @@
+module QuestionFactory
 
-class QuestionFactory
+  private 
 
-  def initialize(game)
-    @game = game
-  end
-
-  def create_random_question
+  def set_random_question_attributes
     if (rand(2)%2 == 0)
-      return create_status_question
+      set_status_question_attributes
     else
-      return create_birthday_question
+      set_birthday_question_attributes
     end
   end
 
-  def create_status_question
-    question = @game.questions.create
-    question.game_id = @game.id
-
-    question.question_type = Question::STATUS
+  def set_status_question_attributes
+    self.question_type = Question::STATUS
     
-    friends_statuses = Status.where(:game_id => @game.id).sort_by { rand }
+    friends_statuses = Status.where(:game_id => game_id).sort_by { rand }
     
     status_to_guess = friends_statuses.pop()
-    question.text = status_to_guess.message
+    self.text = status_to_guess.message
     correct_answer = status_to_guess.fb_user_id
     
     possible_uids = friends_statuses.collect do |x| x.fb_user_id end
@@ -36,7 +30,7 @@ class QuestionFactory
     choice_uids << correct_answer
 
     choices_details = Friend.where("game_id = :game_id AND fb_user_id in (:uids)",
-                                   {:game_id => @game.id, :uids => choice_uids})
+                                   {:game_id => game_id, :uids => choice_uids})
  
 
     choices_details.each do |detail|
@@ -45,24 +39,19 @@ class QuestionFactory
       choice.text = detail.name
       choice.pic_url = detail.pic_square_url
       choice.key = detail.fb_user_id
-      question.choices << choice
+      self.choices << choice
     end
-    
-    return question
   end
 
-  def create_birthday_question
-    question = @game.questions.create
-    question.game_id = @game.id
+  def set_birthday_question_attributes
+    self.question_type = Question::BIRTHDATE
 
-    question.question_type = Question::BIRTHDATE
-
-    friends = Friend.where(:game_id => @game.id).sort_by {rand}
+    friends = Friend.where(:game_id => game_id).sort_by {rand}
     
-    friends.reject! do |x| x.birthday_date == nil end
+    friends.reject! do |x| x.birthday_date.nil? end
   
     friend_to_guess = friends.pop()
-    question.text = friend_to_guess.name
+    self.text = friend_to_guess.name
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
     correct_month = correct_date.month()
     
@@ -77,10 +66,8 @@ class QuestionFactory
       choice.correct = correct_month == month
       choice.text = Date::MONTHNAMES[month]
       choice.key = month.to_s
-      question.choices << choice
+      self.choices << choice
     end
-    
-    return question
   end
   
   private 

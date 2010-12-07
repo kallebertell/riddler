@@ -32,6 +32,7 @@ class Session
   end
   
   def get_friends_and_statuses
+  p 'raimo'
     status_query =
         "SELECT uid, status_id, message FROM status " +
         "WHERE uid IN " +
@@ -45,8 +46,7 @@ class Session
     data = @api.rest_call("fql.multiquery", {"queries" => {"statuses" => status_query, "friends" => friend_query}} )
     
     
-    return {"friends"  => data[0]['fql_result_set'],
-            "statuses" => data[1]['fql_result_set']}
+    return {"friends"  => data[0]['fql_result_set'], "statuses" => data[1]['fql_result_set']}
   end
   
   def get_friends_statuses

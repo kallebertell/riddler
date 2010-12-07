@@ -7,9 +7,9 @@ class GameTest < ActiveSupport::TestCase
     @user = Factory(:user)
   end
 
-  test "should read the number of choices correctly" do
+  test "should have at least twice the number of choices than questions" do
     assert_not_nil @game.id
-    assert_equal 5*3, @game.questions.map(&:choices).sum.size
+    assert @game.questions.size*2 <= @game.questions.map(&:choices).sum.size
   end
 
   test 'should not have rounds left when all question places are used' do
@@ -37,12 +37,25 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'should calculate points correctly when three correct choices are selected' do
-    @game_of_3_points = Factory(:game)
+    @game_of_3_points = Factory(:empty_game)
+
+    100.upto(200).each do |rand_id|
+      fb_id = rand_id.to_s
+      Factory(:friend, :fb_user_id => fb_id, :game_id => @game_of_3_points.id)
+      Factory(:status, :fb_user_id => fb_id, :game_id => @game_of_3_points.id)
+    end
+
+    5.times do
+      @game_of_3_points.questions.create
+    end
+
     @game_of_3_points.questions[0..2].each do |question|
-      correct_choice = question.choices.first
-      correct_choice.correct = true
-      correct_choice.selected = true
-      correct_choice.save
+      question.choices.detect do |choice|
+        if choice.correct?
+          choice.selected = true
+          choice.save
+        end
+      end
     end
     assert_equal 3, @game_of_3_points.points
   end
