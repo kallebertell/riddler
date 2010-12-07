@@ -9,9 +9,9 @@
 
 .question
   %h1
-    - if @question.question_type == Question::STATUS
+    - if @question.question_type_status?
       = "Who said this?"
-    - else
+    - elsif @question.question_type_birthdate?
       = "In which month is this person born?"
 
 .status

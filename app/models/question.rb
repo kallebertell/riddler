@@ -6,10 +6,7 @@ class Question < ActiveRecord::Base
 
   before_validation_on_create :set_random_question_attributes
 
-  # The types of possible questions
-  # NOTE: use inheritence instead?
-  STATUS = "status"
-  BIRTHDATE = "birthdate"
+  enum_attr :question_type, %w(status birthdate)
 
   def answered_correctly?
     return (1 == choices.where( :correct => true, :selected => true ).count) &&

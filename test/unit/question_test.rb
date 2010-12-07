@@ -7,7 +7,7 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:status, :game_id => @game.id)
     status = Factory(:friend, :game_id => @game.id)
     question = @game.questions.create
-    assert [Question::STATUS, Question::BIRTHDATE].include?(question.question_type)
+    assert question.enums(:question_type).include?(question.question_type)
   end
 
 end
