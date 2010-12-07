@@ -5,14 +5,10 @@ Riddler::Application.routes.draw do
       resources :answers
     end      
   end
-  
-  match '/games/:game_id/questions/:question_id/choices/:id/select', 
-        :controller => :choices, :action => :select, :as => :select_choice
 
   resources :users
 
   root :to => 'games#new'
-
 
   match 'sessions/create', :controller => :sessions, :action => :create, :as => :create_session
   match 'sessions/new', :controller => :sessions, :action => :new, :as => :login
