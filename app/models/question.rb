@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
   has_many :choices, :dependent => :destroy
   belongs_to :correct_choice, :class_name => 'Choice'
 
-  before_validation_on_create :set_random_question_attributes
+  before_validation :set_random_question_attributes, :on => :create
 
   enum_attr :question_type, %w(status birthdate)
 
