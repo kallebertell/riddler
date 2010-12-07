@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
+  before_filter :find_parent_resources
 
   def show
-    @game = Game.find(params[:game_id])
-    @question = Question.find(params[:id])        
+    @question = @game.questions.find(params[:id])        
   end
 
   private

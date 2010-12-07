@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
   private
 
   def find_parent_resources
-    @game = Game.where(:user_id => current_user.id).find(params[:game_id])
+    @game = current_user.games.find(params[:game_id])
     @question = @game.questions.find(params[:question_id])
   end
 end
