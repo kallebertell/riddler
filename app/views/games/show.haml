@@ -1,10 +1,6 @@
+%h1
+  = "Good game"
 .gameInfo
-  = "Game at round #{@game.questions.count} of #{@game.round_count}"
-  %br
-  = "You have #{@game.points} points"
-  %br
-  - if @game.questions.count < @game.round_count
-    = link_to 'Gimme a new question!', url_for(@game)+"/questions", :method => :post
-  - else
-    = "Good Game."
-    = link_to 'Try again', url_for(:action => :create), :method => :post
+  = "Game lasted #{@game.questions.count} rounds."
+  = "You got #{@game.points} points"
+= link_to 'Try again', games_path, :method => :post

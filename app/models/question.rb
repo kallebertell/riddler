@@ -18,6 +18,7 @@ class Question < ActiveRecord::Base
   end
 
   def answer!(choice_id)
+    throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)
   end
   
