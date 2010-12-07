@@ -7,8 +7,8 @@ module QuestionFactory
     return arr[rand(n)]
   end
 
-  def set_random_question_attributes(override_question_type = nil)
-    self.question_type = override_question_type || random_of(self.question_types)
+  def set_random_question_attributes
+    self.question_type ||= random_of(self.question_types)
     case self.question_type
     when :status
       set_status_question_attributes
