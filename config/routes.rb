@@ -2,7 +2,7 @@ Riddler::Application.routes.draw do
 
   resources :games do
     resources :questions do
-      resources :choices
+      resources :answers
     end      
   end
   

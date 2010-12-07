@@ -1,11 +1,10 @@
 class GamesController < ApplicationController
 
   def new
-    
   end
 
   def create
-    @game = Game.create(:round_count => 10)
+    @game = current_user.games.create(:round_count => 10)
     cache_facebook_data_for_game
     redirect_to [@game,@game.questions.create]
   end
@@ -15,8 +14,7 @@ class GamesController < ApplicationController
   end
   
   private 
-  
-  # TODO: move this somewhere
+
   def cache_facebook_data_for_game
   
     data = @fb_session.get_friends_and_statuses()
@@ -47,7 +45,6 @@ class GamesController < ApplicationController
       @game.friends << friend
       friend.save
     end
-    
     
   end
   

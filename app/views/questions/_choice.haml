@@ -1,9 +1,9 @@
 %li
   - if !choice.pic_url.nil? 
-    = link_to image_tag(choice.pic_url), question.id.to_s+'/choices/'+choice.id.to_s+'/select'
+    = link_to image_tag(choice.pic_url), game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post
     %br
     = choice.text
   - else
-    = link_to choice.text, question.id.to_s+'/choices/'+choice.id.to_s+'/select'
+    = link_to choice.text, game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post
 
 

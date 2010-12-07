@@ -16,6 +16,10 @@ class Question < ActiveRecord::Base
       (1 == choices.where( :correct => true).count) &&
       (1 == choices.where( :selected => true).count)
   end
+
+  def answer!(choice_id)
+    choices.find(choice_id).update_attribute(:selected, true)
+  end
   
   def correct_choice
     choices.each do |choice|
