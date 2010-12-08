@@ -34,6 +34,12 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
       get root_path
       assert_response :success
     end
+    
+    def should_answer_question
+
+    end 
+    
+    
   end
 
 end
