@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101208194158) do
+ActiveRecord::Schema.define(:version => 20101208210819) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20101208194158) do
     t.string   "birthday_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "used_in_birthday_question", :default => false
   end
 
   create_table "games", :force => true do |t|
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20101208194158) do
     t.string   "fb_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "used_in_status_question", :default => false
   end
 
   create_table "users", :force => true do |t|

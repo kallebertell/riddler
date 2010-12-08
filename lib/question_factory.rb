@@ -23,9 +23,14 @@ module QuestionFactory
   end
 
   def set_status_question_attributes
-    friends_statuses = Status.where(:game_id => game_id).sort_by { rand }
+    friends_statuses = Status.where("game_id = :game_id AND used_in_status_question = false",
+                                    {:game_id => game_id}).
+                                    sort_by { rand }
     
     status_to_guess = friends_statuses.pop()
+    status_to_guess.used_in_status_question = true
+    status_to_guess.save()
+    
     self.text = status_to_guess.message
     correct_answer = status_to_guess.fb_user_id
     
@@ -54,11 +59,16 @@ module QuestionFactory
   end
 
   def set_birthday_question_attributes
-    friends = Friend.where(:game_id => game_id).sort_by {rand}
+    friends = Friend.where("game_id = :game_id AND used_in_birthday_question = false",
+                           {:game_id => game_id}).
+                           sort_by {rand}
     
     friends.reject! do |x| x.birthday_date.nil? end
   
     friend_to_guess = friends.pop()
+    friend_to_guess.used_in_birthday_question = true
+    friend_to_guess.save()
+    
     self.text = friend_to_guess.name
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
     correct_month = correct_date.month()
