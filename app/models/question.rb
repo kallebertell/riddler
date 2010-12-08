@@ -2,16 +2,15 @@ class Question < ActiveRecord::Base
   include QuestionFactory
   belongs_to :game
   has_many :choices, :dependent => :destroy
-  belongs_to :correct_choice, :class_name => 'Choice'
 
   before_validation :set_random_question_attributes, :on => :create
 
   enum_attr :question_type, %w(status birthdate)
 
   def answered_correctly?
-    return (1 == choices.where( :correct => true, :selected => true ).count) &&
-      (1 == choices.where( :correct => true).count) &&
-      (1 == choices.where( :selected => true).count)
+    return (1 == self.choices.where( :correct => true, :selected => true ).count) &&
+      (1 == self.choices.where( :correct => true).count) &&
+      (1 == self.choices.where( :selected => true).count)
   end
 
   def answer!(choice_id)
