@@ -33,4 +33,19 @@ class QuestionTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test 'should determine correct choice' do
+    game = Factory(:game)
+    question = game.questions.first
+    assert_equal 1, question.choices.select { |c| c.correct }.size
+    assert_equal question.choices.detect { |c| c.correct }, question.correct_choice
+  end
+
+  test 'should answer correctly' do
+    game = Factory(:game)
+    question = game.questions.first
+    question.answer!(question.correct_choice.id)
+
+    assert question.answered_correctly?
+  end
 end
