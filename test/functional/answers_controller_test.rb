@@ -19,8 +19,7 @@ class AnswersControllerTest < ActionController::TestCase
     question = game.questions.first
     login_as(user) do 
       post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
-      assigns(:question).reload
-      assert assigns(:question).answered_correctly?
+      assert Question.find(question.id).answered_correctly?
       assert_redirected_to game_path(game)
     end
   end
@@ -31,9 +30,8 @@ class AnswersControllerTest < ActionController::TestCase
     question = game.questions.first
     login_as(user) do 
       post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
-      assigns(:question).reload
-      assert assigns(:question).answered_correctly?
       assert_redirected_to game_question_path(game, assigns(:game).questions.last)
+      assert Question.find(question.id).answered_correctly?
     end
   end
 
