@@ -13,7 +13,7 @@ class AnswersControllerTest < ActionController::TestCase
     end
   end
 
-  test "should be able to answer to own next question correctly" do
+  test "should be able to answer to own last question correctly" do
     user = Factory(:user)
     game = Factory(:game, :user_id => user.id)
     question = game.questions.first
@@ -21,7 +21,19 @@ class AnswersControllerTest < ActionController::TestCase
       post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
       assigns(:question).reload
       assert assigns(:question).answered_correctly?
-      assert_response :redirect
+      assert_redirected_to game_path(game)
+    end
+  end
+
+  test "should be able to answer to own next question correctly and move on to the next" do
+    user = Factory(:user)
+    game = Factory(:game, :round_count => 6, :user_id => user.id)
+    question = game.questions.first
+    login_as(user) do 
+      post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
+      assigns(:question).reload
+      assert assigns(:question).answered_correctly?
+      assert_redirected_to game_question_path(game, assigns(:game).questions.last)
     end
   end
 
