@@ -8,6 +8,7 @@ module QuestionFactory
   end
 
   def set_random_question_attributes
+    fail 'Add to game before creating' if game_id.nil?
     self.question_type ||= random_of(self.question_types)
     case self.question_type
     when :status

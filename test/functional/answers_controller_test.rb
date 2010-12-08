@@ -18,11 +18,11 @@ class AnswersControllerTest < ActionController::TestCase
     game = Factory(:game, :user_id => user.id)
     question = game.questions.first
     login_as(user) do 
-      post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
-      q = Question.find(question.id)
-      q.choices.each(&:reload)
-      assert q.answered_correctly?
-      assert_redirected_to game_path(game)
+      assert_difference 'game.points', 1 do
+        post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
+        assert_redirected_to game_path(game)
+        assert assigns(:question).answered_correctly?
+      end
     end
   end
 
@@ -31,11 +31,11 @@ class AnswersControllerTest < ActionController::TestCase
     game = Factory(:game, :round_count => 6, :user_id => user.id)
     question = game.questions.first
     login_as(user) do 
-      post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
-      assert_redirected_to game_question_path(game, assigns(:game).questions.last)
-      q = Question.find(question.id)
-      q.choices.each(&:reload)
-      assert q.answered_correctly?
+ #     assert_difference 'game.points', 1 do
+        post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.correct_choice.id
+        assert_redirected_to game_question_path(game, assigns(:game).questions.last)
+        assert assigns(:question).answered_correctly?
+  #    end
     end
   end
 

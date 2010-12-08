@@ -17,7 +17,7 @@ class QuestionsControllerTest < ActionController::TestCase
     end
   end
 
-  test 'should find not own question' do
+  test 'should not find not own question' do
     game = Factory(:game)
     question = game.questions.first
 

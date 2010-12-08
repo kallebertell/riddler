@@ -37,17 +37,7 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'should calculate points correctly when three correct choices are selected' do
-    @game_of_3_points = Factory(:empty_game)
-
-    100.upto(200).each do |rand_id|
-      fb_id = rand_id.to_s
-      Factory(:friend, :fb_user_id => fb_id, :game_id => @game_of_3_points.id)
-      Factory(:status, :fb_user_id => fb_id, :game_id => @game_of_3_points.id)
-    end
-
-    5.times do
-      @game_of_3_points.questions.create
-    end
+    @game_of_3_points = Factory(:game)
 
     @game_of_3_points.questions[0..2].each do |question|
       question.choices.detect do |choice|
