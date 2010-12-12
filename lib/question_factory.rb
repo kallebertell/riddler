@@ -10,6 +10,7 @@ module QuestionFactory
   def set_random_question_attributes
     fail 'Add to game before creating' if game_id.nil?
     self.question_type ||= random_of(self.question_types)
+    
     case self.question_type
     when :status
       set_status_question_attributes
@@ -57,6 +58,11 @@ module QuestionFactory
       choice.key = detail.fb_user_id
       self.choices << choice
     end
+    
+    if (choices.size < 4)
+      raise "Not enough choices to create status question. Only have " + choices.size.to_s + " choices" 
+    end
+
   end
 
   def set_birthday_question_attributes

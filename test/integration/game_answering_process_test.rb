@@ -44,7 +44,7 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     end
    
     def should_answer_question
-      choice_links = css_select("#choices a")
+      choice_links = css_select("#choices a")     
       post choice_links[0]['href']      
       assert_response :redirect
       follow_redirect!

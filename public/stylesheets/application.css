@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.status {
+.clue {
     font-size: 3em;
     width: 700px;
     border-radius: 15px;
@@ -18,7 +18,7 @@ body {
 
 #choices {
   padding:0;
-  margin:0;
+  margin:0;s
 }
 
 ul {
