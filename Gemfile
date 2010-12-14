@@ -1,6 +1,5 @@
 source :gemcutter
 
-gem 'nokogiri'
 gem 'rails', '3.0.0'
 gem 'haml'
 gem 'rake'

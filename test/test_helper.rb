@@ -17,7 +17,7 @@ class ActiveSupport::TestCase
   def login_as(user, &block)
     raise 'please give block' unless block_given?
     mocked_session = mock()
-    mocked_session.stubs(:get_friends_and_statuses).then.returns(FRIEND_MOCK_DATA)
+    mocked_session.stubs(:fetch_game_data).then.returns(FRIEND_MOCK_DATA)
     
     ApplicationController.send(:define_method, :session) do
       @session_cache ||= { :user_id => user.facebook_id, :fb_session => mocked_session }

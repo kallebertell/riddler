@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
 
   before_validation :set_random_question_attributes, :on => :create
 
-  enum_attr :question_type, %w(status birthdate)
+  enum_attr :question_type, %w(status birthdate like)
 
   def answered_correctly?
     return (1 == self.choices.where( :correct => true, :selected => true ).count) &&

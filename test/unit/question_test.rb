@@ -34,6 +34,13 @@ class QuestionTest < ActiveSupport::TestCase
     end
   end
 
+  test "should create like as question type" do
+    @game = Factory(:new_game)
+    status = Factory(:like, :game_id => @game.id)
+    question = @game.questions.create(:question_type => :like)
+    assert question.question_type_like?
+  end
+
   test 'should determine correct choice' do
     game = Factory(:game)
     question = game.questions.first

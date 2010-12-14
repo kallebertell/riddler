@@ -73,8 +73,6 @@ GEM
     mime-types (1.16)
     mocha (0.9.9)
       rake
-    nokogiri (1.4.4)
-    nokogiri (1.4.4-x86-mingw32)
     pg (0.9.0)
     pg (0.9.0-x86-mingw32)
     polyglot (0.3.1)
@@ -132,7 +130,6 @@ DEPENDENCIES
   json
   koala!
   mocha
-  nokogiri
   pg
   rails (= 3.0.0)
   rails_code_qa

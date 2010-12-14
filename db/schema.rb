@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101208210819) do
+ActiveRecord::Schema.define(:version => 20101212191830) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(:version => 20101208210819) do
   create_table "games", :force => true do |t|
     t.integer  "user_id"
     t.integer  "round_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "likes", :force => true do |t|
+    t.boolean  "used_in_like_question"
+    t.string   "name"
+    t.string   "like_type"
+    t.string   "fb_user_id"
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -87,6 +97,8 @@ ActiveRecord::Schema.define(:version => 20101208210819) do
   end
 
   add_foreign_key "choices", "questions", :name => "choices_question_id_fk"
+
+  add_foreign_key "likes", "games", :name => "likes_game_id_fk"
 
   add_foreign_key "questions", "games", :name => "questions_game_id_fk"
 
