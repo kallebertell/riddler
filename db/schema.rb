@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101214211246) do
+ActiveRecord::Schema.define(:version => 20101214232011) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20101214211246) do
   end
 
   create_table "likes", :force => true do |t|
-    t.boolean  "used_in_like_question"
+    t.boolean  "used_in_like_question", :default => false
     t.string   "name"
     t.string   "like_type"
     t.string   "fb_user_id"

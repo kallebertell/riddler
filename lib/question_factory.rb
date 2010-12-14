@@ -11,9 +11,8 @@ module QuestionFactory
 
   def set_random_question_attributes
     fail 'Add to game before creating' if game_id.nil?
-    self.question_type ||= random_of(self.question_types)
     
-    case self.question_type
+    case(self.question_type || random_of(self.question_types))
     when :status
       set_status_question_attributes
     when :birthdate
@@ -24,6 +23,7 @@ module QuestionFactory
   end
 
   def set_like_question_attributes
+    self.question_type = :like
     likes = Like.where(:game_id => game_id, :used_in_like_question => false).sort_by { rand }
 
     # Change to other question type if the user has too little likes
@@ -35,16 +35,15 @@ module QuestionFactory
     self.concept_of_matter = liking_to_guess.like_type
     
     correct_uids = [liking_to_guess.fb_user_id]
-    wrong_uids = likes.select { |fl|
-                         !correct_uids.include?(fl) and
-                         Like.where(:fb_user_id => fl.fb_user_id,
-                                    :name => self.matter).empty?
-                       }.map(&:fb_user_id).uniq[0..2]
+
+    not_wrong_uids = Like.where(:name => self.matter).project(:fb_user_id)
+    wrong_uids = (likes.map(&:fb_user_id) - not_wrong_uids.to_a).uniq[0..2]
 
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
 
   def set_status_question_attributes
+    self.question_type = :status
     statuses = Status.where(:game_id => game_id, :used_in_status_question => false).sort_by { rand }
 
     # Change to other question type if the user has too little statuses
@@ -61,6 +60,7 @@ module QuestionFactory
   end
 
   def set_birthday_question_attributes
+    self.question_type = :birthdate
     friends = Friend.where("game_id = :game_id AND used_in_birthday_question = false",
                            {:game_id => game_id}).
                            sort_by {rand}
@@ -71,7 +71,7 @@ module QuestionFactory
     friend_to_guess.used_in_birthday_question = true
     friend_to_guess.save()
     
-    self.text = friend_to_guess.name
+    self.matter = friend_to_guess.name
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
     correct_month = correct_date.month()
     
