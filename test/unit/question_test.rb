@@ -10,19 +10,33 @@ class QuestionTest < ActiveSupport::TestCase
     assert question.enums(:question_type).include?(question.question_type)
   end
 
-  test "should create status as question type" do
-    @game = Factory(:new_game)
+  test "should create a status question with several friends" do
+    @game = Factory(:game)
     status = Factory(:status, :game_id => @game.id)
     question = @game.questions.create(:question_type => :status)
     assert question.question_type_status?
+    assert_equal 4, question.choices.size
+    assert_not_nil Friend.find_by_name(question.choices.first.text)
+    assert_not_nil Status.find_by_message(question.matter)
   end
 
+  test "should create a valid like question with several friends" do
+    @game = Factory(:game)
+    question = @game.questions.create(:question_type => :like)
+    assert question.question_type_like?
+    assert_equal 4, question.choices.size
+    assert_not_equal question.choices.first, question.choices.last
+    assert_not_nil Friend.find_by_name(question.choices.first.text)
+    assert_not_nil Like.find_by_name(question.matter)
+  end
 
-  test "should create birthdate as question type" do
+  test "should create a valid birthdate question even with one friend" do
     @game = Factory(:new_game)
     status = Factory(:friend, :game_id => @game.id)
     question = @game.questions.create(:question_type => :birthdate)
     assert question.question_type_birthdate?
+    assert_equal 3, question.choices.size
+    assert_not_nil Friend.find_by_name(question.matter)
   end
 
   test "should fail creating bogus question type" do
@@ -32,13 +46,6 @@ class QuestionTest < ActiveSupport::TestCase
         question = @game.questions.create(:question_type => :bogus)
       end
     end
-  end
-
-  test "should create like as question type" do
-    @game = Factory(:new_game)
-    status = Factory(:like, :game_id => @game.id)
-    question = @game.questions.create(:question_type => :like)
-    assert question.question_type_like?
   end
 
   test 'should determine correct choice' do

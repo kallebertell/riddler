@@ -1,5 +1,7 @@
 module QuestionFactory
 
+
+
   private 
 
   def random_of(arr)
@@ -17,54 +19,45 @@ module QuestionFactory
     when :birthdate
       set_birthday_question_attributes
     when :like
-      set_status_question_attributes
-      #set_like_question_attributes
+      set_like_question_attributes
     end
   end
 
   def set_like_question_attributes
+    likes = Like.where(:game_id => game_id, :used_in_like_question => false).sort_by { rand }
+
+    # Change to other question type if the user has too little likes
+    return set_birthday_question_attributes unless likes.count > 3
+    
+    liking_to_guess = likes.pop()
+    liking_to_guess.update_attribute(:used_in_like_question, true)
+    self.matter = liking_to_guess.name
+    self.concept_of_matter = liking_to_guess.like_type
+    
+    correct_uids = [liking_to_guess.fb_user_id]
+    wrong_uids = likes.select { |fl|
+                         !correct_uids.include?(fl) and
+                         Like.where(:fb_user_id => fl.fb_user_id,
+                                    :name => self.matter).empty?
+                       }.map(&:fb_user_id).uniq[0..2]
+
+    self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
 
   def set_status_question_attributes
-    friends_statuses = Status.where("game_id = :game_id AND used_in_status_question = false",
-                                    {:game_id => game_id}).
-                                    sort_by { rand }
-    
-    status_to_guess = friends_statuses.pop()
-    status_to_guess.used_in_status_question = true
-    status_to_guess.save()
-    
-    self.text = status_to_guess.message
-    correct_answer = status_to_guess.fb_user_id
-    
-    possible_uids = friends_statuses.collect do |x| x.fb_user_id end
-    possible_uids.uniq!
-    possible_uids.reject! do |x| x == correct_answer end
-    
-    choice_uids = []
-    
-    3.times { choice_uids << possible_uids.pop }
-    
-    choice_uids << correct_answer
+    statuses = Status.where(:game_id => game_id, :used_in_status_question => false).sort_by { rand }
 
-    choices_details = Friend.where("game_id = :game_id AND fb_user_id in (:uids)",
-                                   {:game_id => game_id, :uids => choice_uids})
- 
-
-    choices_details.each do |detail|
-      choice = Choice.new
-      choice.correct = correct_answer == detail.fb_user_id
-      choice.text = detail.name
-      choice.pic_url = detail.pic_square_url
-      choice.key = detail.fb_user_id
-      self.choices << choice
-    end
+    # Change to other question type if the user has too little statuses
+    return set_birthday_question_attributes unless statuses.count > 3
     
-    if (choices.size < 4)
-      #TODO fix tests before uncommenting
-      #raise "Not enough choices to create status question. Only have " + choices.size.to_s + " choices" 
-    end
+    status_to_guess = statuses.pop()
+    status_to_guess.update_attribute(:used_in_status_question, true)
+    
+    correct_uids = [status_to_guess.fb_user_id]
+    wrong_uids = statuses.map(&:fb_user_id).uniq.reject { |fs| correct_uids.include?(fs) }[0..2]
 
+    self.matter = status_to_guess.message
+    self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
 
   def set_birthday_question_attributes
@@ -96,7 +89,6 @@ module QuestionFactory
       self.choices << choice
     end
   end
-  
   private 
   
   def get_random_month_other_than(month)
@@ -117,6 +109,27 @@ module QuestionFactory
     else
       return Date.civil(tokens[2].to_i, tokens[0].to_i, tokens[1].to_i)  
     end  
+  end
+
+  protected
+
+  def set_choices_from_correct_and_other_uids(correct_uids, other_uids)
+   Friend.where(:game_id => game_id, :fb_user_id => (correct_uids+other_uids)).sort { rand }.map do |friend|
+     self.choices.build( :question_id => self.id,
+                          :correct => correct_uids.include?(friend.fb_user_id),
+                          :text => friend.name,
+                          :pic_url => friend.pic_square_url,
+                          :key => friend.fb_user_id)
+   end
+   # choices_attributes = 
+   #   Friend.where(:game_id => game_id, :fb_user_id => (correct_uids+other_uids)).map do |friend|
+   #     [self.id,
+   #      correct_uids.include?(friend.fb_user_id),
+   #      friend.name,
+   #      friend.pic_square_url,
+   #      friend.fb_user_id]
+   #   end.sort { rand }
+   # Choice.mass_insert(%w(question_id correct text pic_url key), choices_attributes)
   end
 
 end
