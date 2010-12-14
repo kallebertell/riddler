@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101212191830) do
+ActiveRecord::Schema.define(:version => 20101214211246) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20101212191830) do
     t.datetime "updated_at"
     t.text     "text"
     t.string   "question_type"
+    t.text     "matter"
+    t.string   "concept_of_matter"
   end
 
   create_table "sessions", :force => true do |t|

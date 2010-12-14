@@ -9,13 +9,9 @@
 
 .question
   %h1
-    - if @question.question_type_status?
-      = "Who said this?"
-    - elsif @question.question_type_birthdate?
-      = "In which month is this person born?"
-
+    = @question.text
 .clue
-  = @question.text
+  = @question.matter
 
 %br
 

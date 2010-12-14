@@ -7,6 +7,17 @@ class Question < ActiveRecord::Base
 
   enum_attr :question_type, %w(status birthdate like)
 
+  def text
+    case question_type
+    when :status
+      "Who said this?"
+    when :birthdate
+      "In which month is this person born?"
+    when :like
+      "Who likes this #{concept_of_matter}?"
+    end
+  end
+
   def answered_correctly?
     return (1 == self.choices.where( :correct => true, :selected => true ).count) &&
       (1 == self.choices.where( :correct => true).count) &&

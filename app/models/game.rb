@@ -29,12 +29,10 @@ class Game < ActiveRecord::Base
     return unless @facebook_data
     @init = Time.now.to_f
     data = @facebook_data
-    p ['0CLOCK',(Time.now.to_f-@init)]
     
     status_datas = data['statuses']
     friend_datas = data['friends']
   
-    p ['1CLOCK',(Time.now.to_f-@init)]
     Friend.mass_insert(%w(game_id fb_user_id name pic_square_url birthday_date), 
                   friend_datas.map { |friend_data| 
                     [self.id,
@@ -43,14 +41,12 @@ class Game < ActiveRecord::Base
                      friend_data['pic_square'],
                      friend_data['birthday_date']] 
                   })
-    p ['2CLOCK',(Time.now.to_f-@init)]
     Status.mass_insert(%w(game_id fb_user_id fb_status_id message),
                   status_datas.map { |status_data|
                     [self.id,
                      status_data['uid'],
                      status_data['status_id'],
                      truncate(status_data['message'], :length => 255, :omission=> '...')] })
-    p ['3CLOCK',(Time.now.to_f-@init)]
     like_attributes = []
     friend_datas.each do |friend_data|
       { :interests => friend_data['interests'],
@@ -65,7 +61,6 @@ class Game < ActiveRecord::Base
         end unless values.blank?
       end
     end
-    p ['4CLOCK',(Time.now.to_f-@init)]
     Like.mass_insert(%w(game_id like_type name fb_user_id), like_attributes)
     p ['5LOCK',(Time.now.to_f-@init)]
     
