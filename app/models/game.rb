@@ -62,8 +62,6 @@ class Game < ActiveRecord::Base
       end
     end
     Like.mass_insert(%w(game_id like_type name fb_user_id), like_attributes)
-    p ['5LOCK',(Time.now.to_f-@init)]
-    
   end
 
 end
