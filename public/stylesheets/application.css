@@ -1,24 +1,35 @@
 body {
   font-family: Arial, sans-serif;
+  background-image: url('../images/riddler_bg.png');
 }
 
 .clue {
-    font-size: 3em;
-    width: 700px;
-    border-radius: 15px;
-    border: 1px solid #ffcccc;
-    background-color: #ffdddd;
-    padding: 15px;
+  font-size: 3em;
+  width: 700px;
+  background-color: #99cc99;
+  padding: 15px;
+  border: 1px solid #669966;        
+  border-radius: 15px;
+  -moz-border-radius: 15px;	
+  -webkit-border-radius: 15px;       
 }
 
 #container {
-    margin: 0 auto;
-    width: 900px;
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 900px;
+  background-color: #ffffff;
+  padding: 15px;    
+  border-radius: 15px;
+  -moz-border-radius: 15px;	
+  -webkit-border-radius: 15px;   
 }
 
 #choices {
   padding:0;
-  margin:0;s
+  margin:0;
+  background-color: #ffffff;
+  height: 100px;
 }
 
 ul {
@@ -29,9 +40,11 @@ ul {
   list-style-type: none;
   width: 10em;
   float: left;
-  text-align: center;
-  border-radius: 15px;
+  text-align: center;  
   padding: 10px;
+  border-radius: 15px;
+  -moz-border-radius: 15px;	
+  -webkit-border-radius: 15px;
 }
 
 li a {
@@ -40,16 +53,17 @@ li a {
 }
 
 #choices li:hover {
-    background-color: #dddddd;
-
+    background-color: #ccffcc;
 }
 
 #flash_correct {
-    font-size: 2em;
-    color: #66ff66;
+  font-weight: bold;
+  font-size: 2em;
+  color: #669966;
 }
 
 #flash_incorrect {
-    font-size: 2em;
-    color: #ff6666;
+  font-weight: bold;
+  font-size: 2em;
+  color: #996666;
 }
