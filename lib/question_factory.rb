@@ -73,32 +73,32 @@ module QuestionFactory
     
     self.matter = friend_to_guess.name
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
-    correct_month = correct_date.month()
-    
-    choice_months = [correct_month]
+
+    choice_dates = [correct_date]
     
     2.times do 
-      choice_months << get_random_month_other_than(correct_month)
+      choice_dates << get_random_date_in_month_other_than(correct_date.month())
     end
     
-    choice_months.each do |month| 
+    
+    choice_dates.each do |date| 
       choice = Choice.new
-      choice.correct = correct_month == month
-      choice.text = Date::MONTHNAMES[month]
-      choice.key = month.to_s
+      choice.correct = correct_date.month() == date.month()
+      choice.text = date.day().to_s + " " + Date::MONTHNAMES[date.month()]
+      choice.key = correct_date.month().to_s
       self.choices << choice
     end
   end
   private 
   
-  def get_random_month_other_than(month)
+  def get_random_date_in_month_other_than(month)
     rnd_month = 1 + rand(12)
     
     while (rnd_month == month) 
       rnd_month = 1 + rand(12)
     end
     
-    return rnd_month
+    return Date.civil(1, rnd_month, rand(30))
   end
   
   def parse_fb_date(fb_birthdate)
