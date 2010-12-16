@@ -98,7 +98,7 @@ module QuestionFactory
       rnd_month = 1 + rand(12)
     end
     
-    return Date.civil(1, rnd_month, rand(30))
+    return Date.civil(1, rnd_month, 1+rand(28))
   end
   
   def parse_fb_date(fb_birthdate)
