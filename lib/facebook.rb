@@ -28,21 +28,21 @@ module Facebook
     end
 
     def fetch_game_data
-      status_query =
-        "SELECT uid, status_id, message FROM status " +
-        "WHERE uid IN " +
-        "(SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s})"
+      friend_uid_query = "SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s}"#TODO consider LIMIT 0,50"
 
-      friend_query = 
-        "SELECT uid, name, pic_square, birthday_date, music, tv, movies, books, activities, interests FROM user " +
-        "WHERE uid IN "+
-        "(SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s})"
+      status_query = 'SELECT uid, status_id, message '+
+                     'FROM   status '+
+                     'WHERE  uid IN (SELECT uid2 from #friend_uids)'
 
-      data = @api.rest_call("fql.multiquery", { "queries" => {
-                                                  "statuses" => status_query,
-                                                  "friends" => friend_query }} )
+      friend_query = 'SELECT uid, name, pic_square, birthday_date, music, tv, movies, books, activities, interests '+
+                     'FROM   user '+
+                     'WHERE  uid IN (SELECT uid2 from #friend_uids)'
 
-      return {"friends"  => data[0]['fql_result_set'], "statuses" => data[1]['fql_result_set']}
+      data = @api.rest_call("fql.multiquery", "queries" => { "friend_uids" => friend_uid_query,
+                                                             "friends" => friend_query,
+                                                             "statuses" => status_query} )
+
+      return {"friends"  => data[1]['fql_result_set'], "statuses" => data[2]['fql_result_set']}
     end
 
     def get_friends_statuses
