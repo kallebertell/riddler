@@ -7,9 +7,7 @@ gem 'json'
 gem 'thin'
 gem 'jquery-rails'
 gem 'pg'
-git 'http://github.com/arsduo/koala.git' do 
-  gem 'koala'
-end
+gem 'koala'
 gem 'foreigner'
 gem 'enumerated_attribute'
 
