@@ -11,13 +11,13 @@ end
 Factory.define :game do |f|
   f.round_count 5
   f.after_create do |game|
-    interests = %w(Eating Sleeping Dancing)
+    interests = ['Eating', 'Sleeping', 'Dancing', 'Ice-Hockey', 'cycling']
 
     100.upto(105).each do |rand_id|
       fb_id = rand_id.to_s
       Factory(:friend, :fb_user_id => fb_id, :game_id => game.id)
       Factory(:status, :fb_user_id => fb_id, :game_id => game.id)
-      Factory(:like, :fb_user_id => fb_id, :game_id => game.id, :name => interests[rand_id % 3])
+      Factory(:like, :fb_user_id => fb_id, :game_id => game.id, :name => interests[rand_id % 5])
     end
 
     5.times do
