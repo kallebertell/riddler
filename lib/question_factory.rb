@@ -113,22 +113,13 @@ module QuestionFactory
   protected
 
   def set_choices_from_correct_and_other_uids(correct_uids, other_uids)
-   Friend.where(:game_id => game_id, :fb_user_id => (correct_uids+other_uids)).sort { rand }.map do |friend|
-     self.choices.build( :question_id => self.id,
-                          :correct => correct_uids.include?(friend.fb_user_id),
-                          :text => friend.name,
-                          :pic_url => friend.pic_square_url,
-                          :key => friend.fb_user_id)
-   end
-   # choices_attributes = 
-   #   Friend.where(:game_id => game_id, :fb_user_id => (correct_uids+other_uids)).map do |friend|
-   #     [self.id,
-   #      correct_uids.include?(friend.fb_user_id),
-   #      friend.name,
-   #      friend.pic_square_url,
-   #      friend.fb_user_id]
-   #   end.sort { rand }
-   # Choice.mass_insert(%w(question_id correct text pic_url key), choices_attributes)
+    Friend.where(:game_id => game_id, :fb_user_id => (correct_uids+other_uids)).order('random()').map do |friend|
+      self.choices.build(:question_id => self.id,
+                         :correct => correct_uids.include?(friend.fb_user_id),
+                         :text => friend.name,
+                         :pic_url => friend.pic_square_url,
+                         :key => friend.fb_user_id)
+    end
   end
 
 end
