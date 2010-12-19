@@ -36,8 +36,8 @@ module QuestionFactory
     
     correct_uids = [liking_to_guess.fb_user_id]
 
-    not_wrong_uids = Like.where(:name => self.matter).project(:fb_user_id)
-    wrong_uids = likes.where('fb_user_id NOT IN ?', not_wrong_uids).map(&:fb_user_id).uniq[0..2]
+    not_wrong_uids = Like.where(:name => self.matter).project(:fb_user_id).map(&:data)
+    wrong_uids = likes.where('fb_user_id NOT IN (?)', not_wrong_uids).map(&:fb_user_id).uniq[0..2]
 
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
@@ -53,7 +53,7 @@ module QuestionFactory
     status_to_guess.update_attribute(:used_in_status_question, true)
     
     correct_uids = [status_to_guess.fb_user_id]
-    wrong_uids = statuses.map(&:fb_user_id).uniq.reject { |fs| correct_uids.include?(fs) }[0..2]
+    wrong_uids = statuses.where('fb_user_id NOT IN (?)', correct_uids).map(&:fb_user_id).uniq[0..2]
 
     self.matter = status_to_guess.message
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
