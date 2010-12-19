@@ -12,7 +12,6 @@ class QuestionTest < ActiveSupport::TestCase
 
   test "should create a status question with several friends" do
     @game = Factory(:game)
-    status = Factory(:status, :game_id => @game.id)
     question = @game.questions.create(:question_type => :status)
     assert question.question_type_status?
     assert_equal 4, question.choices.size
