@@ -37,8 +37,7 @@ module QuestionFactory
     correct_uids = [liking_to_guess.fb_user_id]
 
     not_wrong_uids = Like.where(:name => self.matter).project(:fb_user_id)
-    wrong_uids = likes.where(Like.arel_table[:fb_user_id].not_in(not_wrong_uids)).
-                       map(&:fb_user_id).uniq[0..2]
+    wrong_uids = likes.where('fb_user_id NOT IN ?', not_wrong_uids).map(&:fb_user_id).uniq[0..2]
 
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
