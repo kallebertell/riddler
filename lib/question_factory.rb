@@ -24,7 +24,7 @@ module QuestionFactory
 
   def set_like_question_attributes
     self.question_type = :like
-    likes = Like.where(:game_id => game_id, :used_in_like_question => false).sort_by { rand }
+    likes = Like.where(:game_id => game_id, :used_in_like_question => false).order('random()')
 
     # Change to other question type if the user has too little likes
     return set_birthday_question_attributes unless likes.count > 3
