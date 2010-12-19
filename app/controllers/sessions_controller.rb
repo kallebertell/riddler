@@ -4,6 +4,10 @@ class SessionsController < ApplicationController
   def new
   end
 
+  def login
+    redirect_to @fb_session.url_for_oauth_code
+  end
+
   def create
     @fb_session.connect(params[:code])
 

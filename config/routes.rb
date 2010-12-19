@@ -13,6 +13,7 @@ Riddler::Application.routes.draw do
   match 'sessions/create', :controller => :sessions, :action => :create, :as => :create_session
   match 'sessions/new', :controller => :sessions, :action => :new, :as => :login
   match 'sessions/destroy', :controller => :sessions, :action => :destroy, :as => :logout
+  match 'canvas/', :controller => :sessions, :action => 'login'
 
 
   # The priority is based upon order of creation:
