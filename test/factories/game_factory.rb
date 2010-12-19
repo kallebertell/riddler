@@ -20,9 +20,7 @@ Factory.define :game do |f|
       Factory(:like, :fb_user_id => fb_id, :game_id => game.id, :name => interests[rand_id % 5])
     end
 
-    5.times do
-      game.questions.create
-    end
+    game.questions.create
   end
 end
 

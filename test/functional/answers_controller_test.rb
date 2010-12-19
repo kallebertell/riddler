@@ -16,6 +16,9 @@ class AnswersControllerTest < ActionController::TestCase
   test "should be able to answer to own last question correctly" do
     user = Factory(:user)
     game = Factory(:game, :user_id => user.id)
+    4.times do
+      game.questions.create
+    end
     question = game.questions.first
     login_as(user) do 
       assert_difference 'game.points', 1 do

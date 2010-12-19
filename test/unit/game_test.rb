@@ -13,11 +13,16 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'should not have rounds left when all question places are used' do
+    (@game.round_count - @game.questions.count).times do
+      @game.questions.create
+    end
     assert !@game.rounds_left?
   end
 
   test 'should have next question coming when not all places are used' do
-    @game.questions.last.destroy
+    (@game.round_count - @game.questions.count - 1).times do
+      @game.questions.create
+    end
     assert @game.rounds_left?
   end
 
@@ -38,6 +43,9 @@ class GameTest < ActiveSupport::TestCase
 
   test 'should calculate points correctly when three correct choices are selected' do
     @game_of_3_points = Factory(:game)
+    3.times do
+      @game_of_3_points.questions.create
+    end
 
     @game_of_3_points.questions[0..2].each do |question|
       question.choices.detect do |choice|
