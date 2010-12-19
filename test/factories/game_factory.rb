@@ -13,7 +13,7 @@ Factory.define :game do |f|
   f.after_create do |game|
     interests = %w(Eating Sleeping Dancing)
 
-    100.upto(200).each do |rand_id|
+    100.upto(105).each do |rand_id|
       fb_id = rand_id.to_s
       Factory(:friend, :fb_user_id => fb_id, :game_id => game.id)
       Factory(:status, :fb_user_id => fb_id, :game_id => game.id)
