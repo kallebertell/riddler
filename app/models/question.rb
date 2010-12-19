@@ -23,7 +23,7 @@ class Question < ActiveRecord::Base
     when :tv
       'likes to watch this on tv'
     when :interest
-      "is interested in #{concept_of_matter}"
+      "is interested in..."
     else
       "likes this #{concept_of_matter}"
     end
