@@ -1,6 +1,5 @@
 %h1
   = "Good game"
 .gameInfo
-  = "Game lasted #{@game.questions.count} rounds."
-  = "You got #{@game.points} points"
+  = "Out of #{@game.questions.count} rounds you got #{@game.points} points"
 = link_to 'Try again', games_path, :method => :post
