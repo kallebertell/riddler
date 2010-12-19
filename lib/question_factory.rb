@@ -44,7 +44,7 @@ module QuestionFactory
 
   def set_status_question_attributes
     self.question_type = :status
-    statuses = Status.where(:game_id => game_id, :used_in_status_question => false).sort_by { rand }
+    statuses = Status.where(:game_id => game_id, :used_in_status_question => false).order('random()')
 
     # Change to other question type if the user has too little statuses
     return set_birthday_question_attributes unless statuses.count > 3
@@ -62,8 +62,7 @@ module QuestionFactory
   def set_birthday_question_attributes
     self.question_type = :birthdate
     friends = Friend.where("game_id = :game_id AND used_in_birthday_question = false",
-                           {:game_id => game_id}).
-                           sort_by {rand}
+                           {:game_id => game_id}).order('random()')
     
     friends.reject! do |x| x.birthday_date.nil? end
   
