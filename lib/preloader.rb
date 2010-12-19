@@ -1,0 +1,2 @@
+module Preloader
+end

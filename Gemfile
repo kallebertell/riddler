@@ -10,6 +10,7 @@ gem 'pg'
 gem 'koala'
 gem 'foreigner'
 gem 'enumerated_attribute'
+gem 'delayed_job'
 
 group :test do
   gem 'factory_girl_rails'
