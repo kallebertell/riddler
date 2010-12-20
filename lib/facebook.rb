@@ -15,12 +15,19 @@ module Facebook
       @oauth.url_for_oauth_code(:permissions => ["offline_access","friends_status","friends_birthday","friends_likes"])
     end
 
-    def connect(code)    
-      @graph = Koala::Facebook::GraphAPI.new(@oauth.get_access_token(code))
-      @api = Koala::Facebook::RestAPI.new(@oauth.get_access_token(code))
+    def parse_signed_request(signed_request)
+      @oauth.parse_signed_request(signed_request)
+    end
 
-    rescue Koala::Facebook::APIError
+    def connect_with_code(code)
+      connect_with_oauth_token(@oauth.get_access_token(code))
+    rescue Koala::Facebook::APIError => e
       raise Error
+    end
+
+    def connect_with_oauth_token(oauth_token)
+      @graph = Koala::Facebook::GraphAPI.new(oauth_token)
+      @api = Koala::Facebook::RestAPI.new(oauth_token)
     end
 
     def get_current_user

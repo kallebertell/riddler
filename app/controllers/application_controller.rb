@@ -8,11 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_session_variables
-    @fb_session = session[:fb_session];
-
-    if (!@fb_session)
-    	@fb_session = session[:fb_session] = Facebook::Session.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url))
-    end
+    @fb_session = (session[:fb_session] ||= Facebook::Session.new(FB_APP_ID, FB_SECRET, URI.escape(create_session_url)))
   end
 
 end
