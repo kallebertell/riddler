@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def login
     oauth_params = @fb_session.parse_signed_request(params[:signed_request])
-
+    logger.info(oauth_params)
     if oauth_params && oauth_params['oauth_token']
       @fb_session.connect_with_oauth_token(oauth_params['oauth_token'])
       set_user_session(@fb_session.get_current_user)
