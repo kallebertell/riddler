@@ -14,6 +14,12 @@ class SessionsControllerTest < ActionController::TestCase
     assert_nil session[:user_id]
   end
 
+  test "should not break if canvas page is sent old style fb_sig authentication request" do
+    assert_no_difference('User.count') do
+      post :login, :fb_sig_foo => 'signedreq'
+    end
+  end
+
   test "should log existing user in through canvas page" do
     session[:fb_session] = fb_session = mock()
     fb_session.stubs(:parse_signed_request).with('signedreq').then.returns({'oauth_token'=>'testtoken'})
