@@ -74,11 +74,8 @@ module QuestionFactory
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
 
     choice_dates = [correct_date]
-    
-    2.times do 
-      choice_dates << get_random_date_in_month_other_than(correct_date.month())
-    end
-    
+   
+    choice_dates << get_random_date_in_month_other_than(correct_date.month()) 
     
     choice_dates.each do |date| 
       choice = Choice.new

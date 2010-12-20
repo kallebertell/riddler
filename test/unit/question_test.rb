@@ -34,7 +34,7 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:friend, :game_id => @game.id)
     question = @game.questions.create(:question_type => :birthdate)
     assert question.question_type_birthdate?
-    assert_equal 3, question.choices.size
+    assert_equal 2, question.choices.size
     assert_not_nil Friend.find_by_name(question.matter)
   end
 

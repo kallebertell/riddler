@@ -12,7 +12,7 @@ class Question < ActiveRecord::Base
     when :status
       "Who said this?"
     when :birthdate
-      "In which month is this person born?"
+      "When is this person's birthday?"
     when :like
       "Who #{concept_of_matter_in_question_form}?"
     end
