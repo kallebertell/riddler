@@ -57,7 +57,7 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     end 
    
    def should_see_result
-      assert_select "h1", "Good game"
+      assert_select "a", "Try again"
    end 
     
   end
