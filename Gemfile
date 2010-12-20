@@ -16,5 +16,5 @@ group :test do
   gem 'factory_girl_rails'
   gem 'mocha', :require => false 
   gem 'ci_reporter'
+  gem 'rcov'
 end
-gem 'rails_code_qa'

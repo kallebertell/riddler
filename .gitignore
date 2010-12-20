@@ -4,3 +4,4 @@ log/*.log
 tmp/**/*
 .DS\_Store
 *.sw?
+coverage
