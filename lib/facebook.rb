@@ -16,7 +16,9 @@ module Facebook
     end
 
     def parse_signed_request(signed_request)
-      @oauth.parse_signed_request(signed_request)
+      unless signed_request.nil?
+        @oauth.parse_signed_request(signed_request)
+      end
     end
 
     def connect_with_code(code)
