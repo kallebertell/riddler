@@ -5,7 +5,7 @@ body {
 
 .clue {
   font-size: 3em;
-  width: 700px;
+  width: 600px;
   background-color: #99cc99;
   padding: 15px;
   border: 1px solid #669966;        
@@ -17,7 +17,7 @@ body {
 #container {
   margin: 0 auto;
   margin-top: 50px;
-  width: 900px;
+  width: 700px;
   background-color: #ffffff;
   padding: 15px;    
   border-radius: 15px;
@@ -38,7 +38,7 @@ ul {
 
 #choices li {
   list-style-type: none;
-  width: 10em;
+  width: 120px;
   float: left;
   text-align: center;  
   padding: 10px;

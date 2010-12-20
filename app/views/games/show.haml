@@ -1,5 +1,20 @@
 %h1
-  = "Good game"
+  - if @game.points >= 10
+    = "Perfect game!"
+  - elsif @game.points >= 8
+    = "Excellent game!"
+  - elsif @game.points >= 6
+    = "Good game!"
+  - elsif @game.points >= 4
+    = "Nice game."
+  - elsif @game.points >= 2
+    = "Nice try, but you don't know your friends all that well do you?"
+  - else 
+    = "Are you sure these people are your friends?"
+
 .gameInfo
-  = "Out of #{@game.questions.count} rounds you got #{@game.points} points"
+  = "You scored #{@game.points} points of #{@game.questions.count}"
+  %br
+  = "Your all-time total score is #{@current_user.alltime_score}"
+%br
 = link_to 'Try again', games_path, :method => :post
