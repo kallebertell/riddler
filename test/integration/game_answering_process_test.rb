@@ -3,12 +3,6 @@ require 'test_helper'
 class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
   fixtures :all
 
-  test "game answering and getting results" do
-    log_in do |user|
-      play_a_game_as(user)
-    end
-  end
-
   test "play a game two times" do
     log_in do |user|
       play_a_game_as(user)
