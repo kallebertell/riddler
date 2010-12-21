@@ -4,7 +4,7 @@ class GameTest < ActiveSupport::TestCase
   
   def setup
     @game = Factory(:game)
-    @user = Factory(:user)
+    @user = @game.user
   end
 
   test "should have at least twice the number of choices than questions" do
@@ -44,9 +44,9 @@ class GameTest < ActiveSupport::TestCase
   test 'should calculate points correctly when three correct choices are selected' do
     @game_of_3_points = Factory(:game)
     3.times do
-      @game_of_3_points.questions.create
+      @game_of_3_points.questions.create()
     end
-
+ 
     @game_of_3_points.questions[0..2].each do |question|
       question.choices.detect do |choice|
         if choice.correct?

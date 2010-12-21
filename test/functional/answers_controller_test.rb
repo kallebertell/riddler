@@ -3,10 +3,16 @@ require 'test_helper'
 class AnswersControllerTest < ActionController::TestCase
 
   test "should not be able to answer to someone elses question" do
-    user = Factory(:user)
     game = Factory(:game)
+    game_user = Factory(:user)
+    other_user = Factory(:user)
+    
+    game.user = game_user
+    game.save
+    
+    game.questions.create()
     question = game.questions.first
-    login_as(user) do 
+    login_as(other_user) do 
       assert_raise ActiveRecord::RecordNotFound do
         post :create, :game_id => game.id, :question_id => question.id, :choice_id => question.choices.first.id
       end
@@ -14,9 +20,9 @@ class AnswersControllerTest < ActionController::TestCase
   end
 
   test "should be able to answer to own last question correctly" do
-    user = Factory(:user)
-    game = Factory(:game, :user_id => user.id)
-    4.times do
+    game = Factory(:game)
+    user = game.user
+    5.times do
       game.questions.create
     end
     question = game.questions.first
@@ -30,8 +36,9 @@ class AnswersControllerTest < ActionController::TestCase
   end
 
   test "should be able to answer to own next question correctly and move on to the next" do
-    user = Factory(:user)
-    game = Factory(:game, :round_count => 6, :user_id => user.id)
+    game = Factory(:game, :round_count => 6)
+    user = game.user
+    game.questions.create()
     question = game.questions.first
     login_as(user) do 
  #     assert_difference 'game.points', 1 do
@@ -43,8 +50,9 @@ class AnswersControllerTest < ActionController::TestCase
   end
 
   test "should be able to answer wrong to a question" do
-    user = Factory(:user)
-    game = Factory(:game, :user_id => user.id)
+    game = Factory(:game)
+    user = game.user
+    game.questions.create()
     question = game.questions.first
     login_as(user) do 
       correct_id = question.correct_choice.id

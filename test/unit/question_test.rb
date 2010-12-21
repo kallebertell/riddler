@@ -31,7 +31,7 @@ class QuestionTest < ActiveSupport::TestCase
 
   test "should create a valid birthdate question even with one friend" do
     @game = Factory(:new_game)
-    status = Factory(:friend, :game_id => @game.id)
+    status = Factory(:friend, :user_id => @game.user.id)
     question = @game.questions.create(:question_type => :birthdate)
     assert question.question_type_birthdate?
     assert_equal 2, question.choices.size
@@ -49,6 +49,7 @@ class QuestionTest < ActiveSupport::TestCase
 
   test 'should determine correct choice' do
     game = Factory(:game)
+    game.questions.create()
     question = game.questions.first
     assert_equal 1, question.choices.select { |c| c.correct }.size
     assert_equal question.choices.detect { |c| c.correct }, question.correct_choice
@@ -56,6 +57,7 @@ class QuestionTest < ActiveSupport::TestCase
 
   test 'should answer correctly' do
     game = Factory(:game)
+    game.questions.create()
     question = game.questions.first
     question.answer!(question.correct_choice.id)
 

@@ -1,9 +1,6 @@
 class Game < ActiveRecord::Base
   include ActionView::Helpers::TextHelper
   has_many :questions
-  has_many :friends
-  has_many :statuses
-  has_many :likes
   belongs_to :user
 
   after_create :set_cached_facebook_data_for_game
@@ -33,17 +30,17 @@ class Game < ActiveRecord::Base
     status_datas = data['statuses']
     friend_datas = data['friends']
   
-    Friend.mass_insert(%w(game_id fb_user_id name pic_square_url birthday_date), 
+    Friend.mass_insert(%w(user_id fb_user_id name pic_square_url birthday_date), 
                   friend_datas.map { |friend_data| 
-                    [self.id,
+                    [self.user.id,
                      friend_data['uid'],
                      friend_data['name'],
                      friend_data['pic_square'],
                      friend_data['birthday_date']] 
                   })
-    Status.mass_insert(%w(game_id fb_user_id fb_status_id message),
+    Status.mass_insert(%w(user_id fb_user_id fb_status_id message),
                   status_datas.map { |status_data|
-                    [self.id,
+                    [self.user.id,
                      status_data['uid'],
                      status_data['status_id'],
                      truncate(status_data['message'], :length => 255, :omission=> '...')] })
@@ -57,11 +54,11 @@ class Game < ActiveRecord::Base
         :music => friend_data['music']
       }.map do |key, values|
         values.split(',').map(&:strip).reject(&:blank?).each do |name|
-          like_attributes << [self.id, key.to_s.singularize, name, friend_data['uid']]
+          like_attributes << [self.user.id, key.to_s.singularize, name, friend_data['uid']]
         end unless values.blank?
       end
     end
-    Like.mass_insert(%w(game_id like_type name fb_user_id), like_attributes)
+    Like.mass_insert(%w(user_id like_type name fb_user_id), like_attributes)
   end
 
 end

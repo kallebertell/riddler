@@ -25,8 +25,9 @@ class GamesControllerTest < ActionController::TestCase
   end
 
   test 'should show the results of own game' do
-    user = Factory(:user)
-    others_game = Factory(:game, :user_id => user.id)
+    others_game = Factory(:game)
+    user = others_game.user
+    
     login_as(user) do 
       get :show, :id => others_game.id
       assert_response :success
