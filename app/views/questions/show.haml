@@ -17,4 +17,4 @@
 
 %ul{:id => 'choices'}
   - for choice in @question.choices
-    = render :partial => 'questions/choice', :locals => {:question => @question, :choice => choice}
+    = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
