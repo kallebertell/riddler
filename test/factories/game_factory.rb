@@ -10,7 +10,10 @@ end
 
 Factory.define :game do |f|
   f.round_count 5
+  
   f.after_create do |game|
+    game.user = Factory(:user)
+    
     interests = ['Eating', 'Sleeping', 'Dancing', 'Ice-Hockey', 'cycling']
 
     100.upto(105).each do |rand_id|

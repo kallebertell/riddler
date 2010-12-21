@@ -38,6 +38,17 @@ class Question < ActiveRecord::Base
   def answer!(choice_id)
     throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)
+    
+    if !game.rounds_left?
+      user = game.user
+    
+      if user.alltime_score.nil? 
+        user.alltime_score = 0
+      end
+
+      user.alltime_score += @game.points;
+      user.save
+    end
   end
   
   def correct_choice

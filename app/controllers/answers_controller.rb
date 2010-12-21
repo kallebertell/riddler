@@ -13,12 +13,6 @@ class AnswersController < ApplicationController
     if @game.rounds_left?
       redirect_to [@game,@game.questions.create]
     else
-      if @current_user.alltime_score.nil? 
-        @current_user.alltime_score = 0
-      end
-      
-      @current_user.alltime_score += @game.points;
-      @current_user.save
       redirect_to(@game)
     end
   end

@@ -61,4 +61,21 @@ class QuestionTest < ActiveSupport::TestCase
 
     assert question.answered_correctly?
   end
+  
+  test 'should increment total score' do
+    game = Factory(:game)
+    game.user.alltime_score = 0
+    
+    while game.rounds_left? do
+      question = game.questions.create
+      # Why isn't this set automatically?
+      question.game = game
+      question.answer!(question.correct_choice.id)
+    end
+    
+    assert game.points > 0
+    
+    assert game.user.alltime_score > 0
+  end
+  
 end
