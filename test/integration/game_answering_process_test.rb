@@ -48,10 +48,14 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
    
-    def should_answer_question
+    def should_have_from_one_to_four_choices_to_choose_from
       choice_links = css_select("#choices a.text")     
       assert_operator 1, :<, choice_links.size
 #FIXME assert_operator choice_links.size, :<, 5
+    end
+
+    def should_answer_question
+      should_have_from_one_to_four_choices_to_choose_from
       post choice_links[0]['href']      
       assert_response :redirect
       follow_redirect!
