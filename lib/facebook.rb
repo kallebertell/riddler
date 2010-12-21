@@ -7,12 +7,26 @@ module Facebook
 
   class Session
 
-    def initialize(fb_id, fb_secret, callback_url)
-      @oauth = Koala::Facebook::OAuth.new(fb_id, fb_secret, callback_url)
+    def initialize(callback_url)
+      @callback_url = callback_url
+      @oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, callback_url)
+      @permissions = ["friends_status","friends_birthday"]
+    end
+
+    def url_for_canvas_login
+      url_for_oauth(true)
     end
 
     def url_for_oauth_code
-      @oauth.url_for_oauth_code(:permissions => ["offline_access","friends_status","friends_birthday","friends_likes"])
+      url_for_oauth(false)
+    end
+
+    def url_for_oauth(is_canvas)
+      redirect_uri = is_canvas ? FB_APP_ROOT : @callback_url
+      canvas = is_canvas ? '1' : '0'
+      fbconnect = is_canvas ? '0' : '1'
+
+      return "https://graph.facebook.com/oauth/authorize?client_id=#{FB_APP_ID}&redirect_uri=#{redirect_uri}&scope=#{@permissions.join(',')}&canvas=#{canvas}&fbconnect=#{fbconnect}"
     end
 
     def parse_signed_request(signed_request)

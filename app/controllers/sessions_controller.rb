@@ -7,13 +7,13 @@ class SessionsController < ApplicationController
 
   def login
     oauth_params = @fb_session.parse_signed_request(params[:signed_request])
-    logger.info(oauth_params)
+    logger.info(oauth_params.inspect)
     if oauth_params && oauth_params['oauth_token']
       @fb_session.connect_with_oauth_token(oauth_params['oauth_token'])
       set_user_session(@fb_session.get_current_user)
       redirect_to root_url
     else
-      redirect_to @fb_session.url_for_oauth_code
+      render :text => "<script>top.location='#{@fb_session.url_for_canvas_login}'</script>"
     end
   end
 
