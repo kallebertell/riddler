@@ -10,7 +10,7 @@
 .question
   %h1
     = @question.text
-.clue
+.clue{:style => "font-size: #{26 - (@question.matter.length/20)}pt"}
   = @question.matter
 
 %br
