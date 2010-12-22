@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101221135247) do
+ActiveRecord::Schema.define(:version => 20101222194259) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -24,14 +24,12 @@ ActiveRecord::Schema.define(:version => 20101221135247) do
   end
 
   create_table "friends", :force => true do |t|
-    t.integer  "game_id"
     t.string   "name"
     t.string   "fb_user_id"
     t.string   "pic_square_url"
     t.string   "birthday_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "used_in_birthday_question", :default => false
     t.integer  "user_id"
   end
 
@@ -43,11 +41,9 @@ ActiveRecord::Schema.define(:version => 20101221135247) do
   end
 
   create_table "likes", :force => true do |t|
-    t.boolean  "used_in_like_question", :default => false
     t.string   "name"
     t.string   "like_type"
     t.string   "fb_user_id"
-    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -74,13 +70,11 @@ ActiveRecord::Schema.define(:version => 20101221135247) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "statuses", :force => true do |t|
-    t.integer  "game_id"
     t.string   "message"
     t.string   "fb_status_id"
     t.string   "fb_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "used_in_status_question", :default => false
     t.integer  "user_id"
   end
 
@@ -103,8 +97,6 @@ ActiveRecord::Schema.define(:version => 20101221135247) do
   end
 
   add_foreign_key "choices", "questions", :name => "choices_question_id_fk"
-
-  add_foreign_key "likes", "games", :name => "likes_game_id_fk"
 
   add_foreign_key "questions", "games", :name => "questions_game_id_fk"
 

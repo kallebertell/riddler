@@ -30,6 +30,7 @@ class Game < ActiveRecord::Base
     status_datas = data['statuses']
     friend_datas = data['friends']
   
+    Friend.delete_all(:user_id => user.id)
     Friend.mass_insert(%w(user_id fb_user_id name pic_square_url birthday_date), 
                   friend_datas.map { |friend_data| 
                     [self.user.id,
@@ -38,6 +39,7 @@ class Game < ActiveRecord::Base
                      friend_data['pic_square'],
                      friend_data['birthday_date']] 
                   })
+    Status.delete_all(:user_id => user.id)
     Status.mass_insert(%w(user_id fb_user_id fb_status_id message),
                   status_datas.map { |status_data|
                     [self.user.id,
@@ -58,6 +60,7 @@ class Game < ActiveRecord::Base
         end unless values.blank?
       end
     end
+    Like.delete_all(:user_id => user.id)
     Like.mass_insert(%w(user_id like_type name fb_user_id), like_attributes)
   end
 
