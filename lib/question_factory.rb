@@ -24,12 +24,14 @@ module QuestionFactory
 
   def set_like_question_attributes
     self.question_type = :like
-    likes = Like.where(:user_id => game.user.id).order('random()')
+    likes = Like.where(:user_id => game.user.id).order('used_at DESC NULLS LAST, random()')
     
     # Change to other question type if the user has too little likes
     return set_birthday_question_attributes unless likes.count > 3
     
     liking_to_guess = likes.pop()
+    liking_to_guess.update_attribute(:used_at, Time.now)
+
     self.matter = liking_to_guess.name
     self.concept_of_matter = liking_to_guess.like_type
     
@@ -43,12 +45,13 @@ module QuestionFactory
 
   def set_status_question_attributes
     self.question_type = :status
-    statuses = Status.where(:user_id => game.user.id).order('random()')
+    statuses = Status.where(:user_id => game.user.id).order('used_at DESC NULLS LAST, random()')
 
     # Change to other question type if the user has too little statuses
     return set_birthday_question_attributes unless statuses.count > 3
     
     status_to_guess = statuses.pop()
+    status_to_guess.update_attribute(:used_at, Time.now)
     
     correct_uids = [status_to_guess.fb_user_id]
     wrong_uids = statuses.where('fb_user_id NOT IN (?)', correct_uids).map(&:fb_user_id).uniq[0..2]
@@ -60,12 +63,13 @@ module QuestionFactory
   def set_birthday_question_attributes
     self.question_type = :birthdate
     friends = Friend.where("user_id = :user_id",
-                           {:user_id => game.user.id}).order('random()')
+                           {:user_id => game.user.id}).order('used_at DESC NULLS LAST, random()')
     
     friends.reject! do |x| x.birthday_date.nil? end
   
     friend_to_guess = friends.pop()
-    
+    friend_to_guess.update_attribute(:used_at, Time.now)
+
     self.matter = friend_to_guess.name
     correct_date = parse_fb_date( friend_to_guess.birthday_date )
 
