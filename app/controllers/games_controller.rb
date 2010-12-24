@@ -5,7 +5,10 @@ class GamesController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      @game = current_user.games.create(:round_count => 10, :facebook_data => @fb_session.fetch_game_data)
+      @current_user.update_facebook_data(@fb_session)
+    end    
+    ActiveRecord::Base.transaction do
+      @game = current_user.games.create(:round_count => 10)
       redirect_to [@game,@game.questions.create]
     end
   end
