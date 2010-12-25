@@ -12,8 +12,8 @@ class RemoveUnusedColsFromFbDataTables < ActiveRecord::Migration
     add_column :likes, :game_id, :integer
     add_column :statuses, :game_id, :integer
     add_column :friends, :game_id, :integer
-    add_column :friends, :used_in_birthday_question, :default => false
-    add_column :likes, :used_in_like_question, :default => false
-    add_column :statuses, :used_in_status_question, :default => false
+    add_column :friends, :used_in_birthday_question, :boolean, :default => false
+    add_column :likes, :used_in_like_question, :boolean, :default => false
+    add_column :statuses, :used_in_status_question, :boolean, :default => false
   end
 end

@@ -9,11 +9,9 @@ class CreateLikes < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_foreign_key :likes, :games
   end
 
   def self.down
-    remove_foreign_key :likes, :games
     drop_table :likes
   end
 end

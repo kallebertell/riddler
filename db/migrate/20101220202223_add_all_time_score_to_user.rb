@@ -4,6 +4,6 @@ class AddAllTimeScoreToUser < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :users, :alltime_scores 
+    remove_column :users, :alltime_score
   end
 end
