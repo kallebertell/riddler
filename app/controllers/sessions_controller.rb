@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
     session[:user_id] = fb_user_attributes['id']
     user = User.find_by_facebook_id(fb_user_attributes['id'])
     user ||= User.create(:facebook_id => fb_user_attributes['id'])
-    user.update_attributes(user)
+    user.update_profile_attributes(fb_user_attributes)
   end
 
 end

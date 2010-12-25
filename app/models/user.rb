@@ -67,5 +67,21 @@ class User < ActiveRecord::Base
     Like.delete_all(:user_id => id, :fb_user_id => expired_friend_fb_uids)
     Like.mass_insert(%w(user_id like_type name fb_user_id), like_attributes)
   end
+
+  def update_profile_attributes(attrs)
+    self.update_attributes({
+      :name => attrs['name'],
+      :email => attrs['email'],
+      :location => attrs['location'],
+      :timezone => attrs['timezone'],
+      :first_name => attrs['first_name'],
+      :last_name => attrs['last_name'],
+      :birthday => attrs['birthday'],
+      :link => attrs['link'],
+      :locale => attrs['locale'],
+      :verified => attrs['verified'],
+      :updated_time => attrs['updated_time']
+    })
+  end
   
 end
