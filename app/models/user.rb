@@ -5,6 +5,13 @@ class User < ActiveRecord::Base
   has_many :statuses
   has_many :likes
   
+  def self.find_user_friends(user_id)
+     self.find_by_sql("SELECT u.id, u.name, u.alltime_score " + 
+                              "FROM users u , friends f " + 
+                              "WHERE u.facebook_id = f.fb_user_id AND f.user_id = #{user_id}" + 
+                              "ORDER BY u.alltime_score DESC")
+  end
+  
   def update_facebook_data(fb_session)
     
     @init = Time.now.to_f

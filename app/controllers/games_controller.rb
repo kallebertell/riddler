@@ -15,7 +15,11 @@ class GamesController < ApplicationController
   
   def show
     @game = current_user.games.find(params[:id])
+    
+    @users = User.find_user_friends(current_user.id)
+    @users << current_user
+    
+    @users.sort! { |a,b| b.alltime_score <=> a.alltime_score } 
   end
-  
   
 end
