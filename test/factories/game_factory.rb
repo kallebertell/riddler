@@ -23,4 +23,3 @@ Factory.define :game do |f|
     game.save
   end
 end
-
