@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   
   def self.find_user_friends(user_id)
      self.find_by_sql("SELECT u.id, u.name, u.alltime_score " + 
-                      "FROM \"users\" u , \"friends\" f " + 
+                      "FROM #{User.table_name} u , #{Friend.table_name} f " + 
                       "WHERE u.facebook_id = f.fb_user_id AND f.user_id = #{user_id} " + 
                       "ORDER BY u.alltime_score DESC")
   end
