@@ -4,6 +4,7 @@ class ChangeFacebookIdTypeInUser < ActiveRecord::Migration
   end
 
   def self.down
-    change_column(:users, :facebook_id, :integer)
+    remove_column(:users, :facebook_id)
+    add_column(:users, :facebook_id, :integer)
   end
 end
