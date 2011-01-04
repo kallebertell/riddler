@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101230204410) do
+ActiveRecord::Schema.define(:version => 20110104211854) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20101230204410) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "alltime_score"
+    t.integer  "best_score"
   end
 
   add_foreign_key "choices", "questions", :name => "choices_question_id_fk"

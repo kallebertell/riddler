@@ -14,8 +14,6 @@
 
 .gameInfo
   = "You scored #{@game.points} points of #{@game.questions.count}"
-  %br
-  = "Your all-time total score is #{@current_user.alltime_score}"
 
 .highscore
   %table.score_table
@@ -23,6 +21,8 @@
       = "#"
     %th 
       = "Name"
+    %th 
+      = "Best Score"
     %th 
       = "All-time Score"
     - cnt = 0

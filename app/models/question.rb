@@ -47,6 +47,15 @@ class Question < ActiveRecord::Base
       end
 
       user.alltime_score += @game.points;
+    
+      if user.best_score.nil? 
+        user.best_score = 0
+      end
+      
+      if user.best_score < @game.points
+        user.best_score = @game.points
+      end
+      
       user.save
     end
   end
