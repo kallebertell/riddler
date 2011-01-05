@@ -50,11 +50,10 @@ module Facebook
       return @user ||= @graph.get_object('me')
     end
 
-    def fetch_game_data(old_friend_fb_uids, expired_friend_fb_uids, statuses_since)
-      friend_uid_query = "SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s}"
+    def fetch_game_data(opts = {})
+      statuses_since = opts[:statuses_since] || nil
       
-      new_friend_uid_query = "SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s}" + 
-                             (old_friend_fb_uids.empty? ? "" : " AND NOT (uid2 IN (#{old_friend_fb_uids.join(',')}))")
+      friend_uid_query = "SELECT uid2 FROM friend WHERE uid1 = #{@user['id'].to_s}"
       
       status_query = "SELECT uid, status_id, message, time "+
                      "FROM   status "+
@@ -62,15 +61,13 @@ module Facebook
 
       friend_query = "SELECT uid, name, pic_square, birthday_date, music, tv, movies, books, activities, interests "+
                      "FROM   user "+
-                     "WHERE  uid IN (SELECT uid2 from #new_friend_uids) "+
-                     (expired_friend_fb_uids.empty? ? "" : " OR uid IN (#{expired_friend_fb_uids.join(',')})")
-
-      data = @api.rest_call("fql.multiquery", "queries" => { "new_friend_uids" => new_friend_uid_query,
-                                                             "friend_uids" => friend_uid_query,
+                     "WHERE  uid IN (SELECT uid2 from #friend_uids) "
+                     
+      data = @api.rest_call("fql.multiquery", "queries" => { "friend_uids" => friend_uid_query,
                                                              "friends" => friend_query,
                                                              "statuses" => status_query} )
 
-      return {"friends"  => data[2]['fql_result_set'], "statuses" => data[3]['fql_result_set']}
+      return {"friends"  => data[1]['fql_result_set'], "statuses" => data[2]['fql_result_set']}
     end
 
   end
