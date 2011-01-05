@@ -80,7 +80,7 @@ li a {
 }
 
 .score_table td, .score_table th {
-  background: url(../images/table_body.gif) no-repeat 50% 100%;
+  background: url(../images/hiscore_table.gif) repeat 50% 100%;
   text-shadow: #6DA918 1px 1px 1px;  
   padding: 5px;
   padding-right: 40px;
