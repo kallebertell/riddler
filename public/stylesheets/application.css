@@ -74,10 +74,16 @@ li a {
 
 .score_table {
   border-collapse: collapse;
+  -moz-box-shadow: 3px 3px 4px #ccc;
+  -webkit-box-shadow: 3px 3px 4px #ccc;
+  box-shadow: 3px 3px 4px #ccc;
 }
 
 .score_table td, .score_table th {
-  border: 2px solid #336633;
+  background: url(../images/table_body.gif) no-repeat 50% 100%;
+  text-shadow: #6DA918 1px 1px 1px;  
   padding: 5px;
+  padding-right: 40px;
   background-color: #ccffcc;
+  color: white;
 }
