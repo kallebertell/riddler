@@ -12,10 +12,12 @@ class GameTest < ActiveSupport::TestCase
     assert @game.questions.size*2 <= @game.questions.map(&:choices).sum.size
   end
 
-  test 'should not have rounds left when all question places are used' do
-    (@game.round_count - @game.questions.count).times do
-      @game.questions.create
+  test 'should not have rounds left when all wrong_answers are used' do
+    @game.max_wrong_answers.times do
+      @game.wrong_answers += 1
+      assert @game.rounds_left?
     end
+    @game.wrong_answers += 1
     assert !@game.rounds_left?
   end
 

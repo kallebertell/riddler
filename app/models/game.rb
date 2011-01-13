@@ -1,9 +1,9 @@
 class Game < ActiveRecord::Base
   has_many :questions
   belongs_to :user
-
+  
   def rounds_left?
-    round_count > questions.count
+    wrong_answers <= max_wrong_answers
   end
 
   def points

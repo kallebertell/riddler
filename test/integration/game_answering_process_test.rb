@@ -16,11 +16,12 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     user.should_get_index
     user.should_get_redirected_to_first_question_when_game_is_created
     
-    9.times do 
-      user.should_answer_question_and_get_redirected_to_next_question
-    end
+    gameResult = user.css_select(".gameInfo")
     
-    user.should_answer_question
+    while (gameResult.empty?)
+      user.should_answer_question
+      gameResult = user.css_select(".gameInfo")
+    end
     
     user.should_see_result
   end

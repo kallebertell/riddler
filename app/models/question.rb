@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
   before_validation :set_random_question_attributes, :on => :create
 
   enum_attr :question_type, %w(status birthdate like)
-
+  
   def text
     case question_type
     when :status
@@ -39,23 +39,18 @@ class Question < ActiveRecord::Base
     throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)
     
+    game.wrong_answers += 1 unless answered_correctly?
+    game.save
+    
     if !game.rounds_left?
       user = game.user
     
-      if user.alltime_score.nil? 
-        user.alltime_score = 0
-      end
+      user.alltime_score = 0 if user.alltime_score.nil? 
+      user.best_score = 0 if user.best_score.nil? 
 
-      user.alltime_score += @game.points;
-    
-      if user.best_score.nil? 
-        user.best_score = 0
-      end
-      
-      if user.best_score < @game.points
-        user.best_score = @game.points
-      end
-      
+      user.alltime_score += @game.points
+      user.best_score = @game.points if user.best_score < @game.points
+
       user.save
     end
   end

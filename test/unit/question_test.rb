@@ -64,20 +64,30 @@ class QuestionTest < ActiveSupport::TestCase
     assert question.answered_correctly?
   end
   
-  test 'should increment total score' do
+  test 'should set scores when game ends' do
     game = Factory(:game)
     game.user.alltime_score = 0
     
-    while game.rounds_left? do
+    3.times do
       question = game.questions.create
       # Why isn't this set automatically?
       question.game = game
       question.answer!(question.correct_choice.id)
     end
     
-    assert game.points > 0
+    3.times do
+      question = game.questions.create
+      question.game = game
     
-    assert game.user.alltime_score > 0
+      incorrect_choice_id = 0
+      question.choices.each { |choice| incorrect_choice_id = choice.id unless choice == question.correct_choice }
+    
+      question.answer!(incorrect_choice_id)
+    end
+    
+    assert_equal 3, game.points
+    assert_equal 3, game.user.best_score
+    assert_equal 3, game.user.alltime_score
   end
   
 end

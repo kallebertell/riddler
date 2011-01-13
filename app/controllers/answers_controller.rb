@@ -10,6 +10,9 @@ class AnswersController < ApplicationController
       flash[:incorrect] = "Incorrect!"
     end
 
+    # reload game since answering it may change its state
+    @game.reload()
+   
     if @game.rounds_left?
       redirect_to [@game,@game.questions.create]
     else
