@@ -17,18 +17,21 @@
 
 .highscore
   %table.score_table
-    %th 
-      = "#"
-    %th 
-      = "Name"
-    %th 
-      = "Best Score"
-    %th 
-      = "All-time Score"
-    - cnt = 0
-    - for user in @users
-      - cnt = cnt + 1 
-      = render :partial => 'users/show_score', :locals => {:cnt => cnt, :user => user}
+    %thead
+      %tr
+        %th 
+          = "#"
+        %th 
+          = "Name"
+        %th 
+          = "Best Score"
+        %th 
+          = "All-time Score"
+    %tbody
+      - cnt = 0
+      - for user in @users
+        - cnt = cnt + 1 
+        = render :partial => 'users/show_score', :locals => {:cnt => cnt, :user => user}
 
 %br
 = link_to 'Try again', games_path, :class => 'create_game', :method => :post
