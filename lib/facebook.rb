@@ -10,7 +10,7 @@ module Facebook
     def initialize(callback_url)
       @callback_url = callback_url
       @oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, callback_url)
-      @permissions = ["friends_status","friends_birthday"]
+      @permissions = ["friends_status","friends_birthday", "friends_likes"]
     end
 
     def url_for_canvas_login

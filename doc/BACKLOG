@@ -1,21 +1,26 @@
 Next up
 
-* Request reorganizing
-* Question type: Like question (ie. Who liked "foobar")
+* Question time limit - Raimo
+* "Loading" spinner UI - Kalle
+* Life counter - Kalle
+* Post your score - Kalle
+
 
 Backlog
 
-* Facebook information caching in db
-* Question Type Specific haml templates
-* Basic javascript driven question-asking-loop ui
-** Json interfaces for creating/fetching new question
-** "Loading" spinner
-** update round count
-* Rankings
-* Sharing rankings
+* New question types
+** About me
+** Activities
+** Events
+** Interests
+** Religion+Politics
+** Work History
+* Proxy people pics
+* Data fetch optimization
+** Long-term optimization by fetching the data only sometimes
+** Fetch only some of the data at once
 
 * Android wrapper app
 * iPhone wrapper app
 * ...
-
 
