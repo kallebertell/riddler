@@ -31,4 +31,4 @@
       = render :partial => 'users/show_score', :locals => {:cnt => cnt, :user => user}
 
 %br
-= link_to 'Try again', games_path, :method => :post
+= link_to 'Try again', games_path, :class => 'create_game', :method => :post
