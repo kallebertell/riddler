@@ -4,7 +4,13 @@
 
 .top
   %h1
-    = "Round #{@game.questions.count}";
+    = "Round #{@game.questions.count}"
+  .life_count
+    - @game.wrong_answers.times do 
+      %img{:src=>'/images/empty_heart.png'}
+    - (@game.max_wrong_answers - @game.wrong_answers).times do 
+      %img{:src=>'/images/heart.png'}
+
 
 .question
   %h1

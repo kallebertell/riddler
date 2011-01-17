@@ -14,6 +14,19 @@ body {
   -webkit-border-radius: 15px;       
 }
 
+.top h1 {
+  float: left;
+  width: 50%;
+  margin: 0px;
+  margin-top: 20px;	
+}
+
+.life_count {
+	display: inline-block;
+	text-align: right;
+	width: 49%;
+}
+
 #container {
   margin: 0 auto;
   margin-top: 50px;
