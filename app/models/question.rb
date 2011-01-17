@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
   before_validation :set_random_question_attributes, :on => :create
 
   enum_attr :question_type, %w(status birthdate like)
-  
+
   def text
     case question_type
     when :status
@@ -38,10 +38,10 @@ class Question < ActiveRecord::Base
   def answer!(choice_id)
     throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)
-    
+
     game.wrong_answers += 1 unless answered_correctly?
     game.save
-    
+
     if !game.rounds_left?
       user = game.user
       user.alltime_score += @game.points
@@ -50,11 +50,11 @@ class Question < ActiveRecord::Base
       user.save
     end
   end
-  
+
   def correct_choice
     choices.each do |choice|
-      return choice if choice.correct?    
+      return choice if choice.correct?
     end
   end
-  
+
 end
