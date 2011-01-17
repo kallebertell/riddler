@@ -13,10 +13,11 @@ class GameTest < ActiveSupport::TestCase
   end
 
   test 'should not have rounds left when all wrong_answers are used' do
-    @game.max_wrong_answers.times do
+    (@game.max_wrong_answers - 1).times do
       @game.wrong_answers += 1
       assert @game.rounds_left?
     end
+    
     @game.wrong_answers += 1
     assert !@game.rounds_left?
   end

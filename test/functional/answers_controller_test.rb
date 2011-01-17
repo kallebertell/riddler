@@ -41,8 +41,8 @@ class AnswersControllerTest < ActionController::TestCase
 
 
 
-  test "should be able to answer to own next question correctly and move on to the next" do
-    game = Factory(:game, :wrong_answers => 2)
+  test "should be able to answer to own question correctly and move on to the next" do
+    game = Factory(:game, :wrong_answers => 1)
     user = game.user
     game.questions.create()
     question = game.questions.first

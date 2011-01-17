@@ -75,7 +75,7 @@ class QuestionTest < ActiveSupport::TestCase
       question.answer!(question.correct_choice.id)
     end
     
-    3.times do
+    2.times do
       question = game.questions.create
       question.game = game
     
