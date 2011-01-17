@@ -17,5 +17,37 @@ $(document).ready(function() {
       });
     });
   };
+
+  $.fn.countDown = function(options) {
+    var options = jQuery.extend({
+      text: 'You have %d seconds remaining.',
+      limit: 10,
+      url: '',
+      target: 'body'
+    }, options);
+
+    return this.each(function() {
+      var that = this;
+      var remaining = options.limit;
+      var prefix = options.text.split('%d')[0];
+      var suffix = options.text.split('%d')[1];
+      var jobId = window.setInterval(function() {
+        if (remaining > 0) {
+          $(that).html(prefix + (--remaining) + suffix);
+          if (remaining <= 3) {
+            $(that).css('color', 'red');
+          } else if (remaining <= 5) {
+            $(that).css('color', 'yellow');
+          }
+        } else {
+          $.post(options.url, function(data) {
+            $(target).html(data);
+          });
+          window.clearInterval(jobId);
+        }
+      }, 1000);
+    });
+  };
+
 })(jQuery);
 
