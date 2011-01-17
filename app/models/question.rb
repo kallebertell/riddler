@@ -44,10 +44,6 @@ class Question < ActiveRecord::Base
     
     if !game.rounds_left?
       user = game.user
-    
-      user.alltime_score = 0 if user.alltime_score.nil? 
-      user.best_score = 0 if user.best_score.nil? 
-
       user.alltime_score += @game.points
       user.best_score = @game.points if user.best_score < @game.points
 
