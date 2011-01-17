@@ -6,6 +6,8 @@ class AnswersController < ApplicationController
     
     if @question.answered_correctly?
       flash[:correct] = "Correct!"
+    elsif @question.answered_late?
+      flash[:incorrect] = "You were late!"
     else
       flash[:incorrect] = "Incorrect!"
     end

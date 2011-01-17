@@ -35,6 +35,10 @@ class Question < ActiveRecord::Base
       (1 == self.choices.where( :selected => true).count)
   end
 
+  def answered_late?
+
+  end
+
   def answer!(choice_id)
     throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)

@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   belongs_to :user
   
   def rounds_left?
-    wrong_answers < max_wrong_answers
+    wrong_answers < max_wrong_answers && (questions.empty? or !questions.last.answered_late?)
   end
 
   def points
