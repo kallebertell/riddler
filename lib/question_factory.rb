@@ -12,11 +12,13 @@ module QuestionFactory
   def set_random_question_attributes
     fail 'Add to game before creating' if game.nil?
     
-    case(self.question_type || random_of([:status, :like]))
+    case(self.question_type || random_of([:status, :like, :about]))
     when :status
       set_status_question_attributes
     when :like
       set_like_question_attributes
+    when :about
+      set_about_question_attributes
     when :birthdate
       set_birthday_question_attributes
     end
@@ -61,12 +63,33 @@ module QuestionFactory
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
 
+  def set_about_question_attributes
+    self.question_type = :about
+    
+    friends = Friend.where(:user_id => game.user.id).order('about_used_at DESC NULLS LAST, random()')
+
+    friends.reject! { |friend| friend.about.blank? }
+        
+    return set_like_question_attributes unless friends.length > 3
+
+    friend_to_guess = friends.pop()
+
+    friend_to_guess.update_attribute(:about_used_at, Time.now)
+    
+    correct_uids = [friend_to_guess.fb_user_id]
+    wrong_uids = Friend.where('fb_user_id NOT IN (?)', correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
+    
+    self.matter = friend_to_guess.about
+    self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
+    
+  end
+
   def set_birthday_question_attributes
     self.question_type = :birthdate
     
     friends = Friend.where(:user_id => game.user.id).order('used_at DESC NULLS LAST, random()')
     
-    friends.reject! do |x| x.birthday_date.nil? end
+    friends.reject! do |friend| friend.birthday_date.nil? end
   
     friend_to_guess = friends.pop()
     friend_to_guess.update_attribute(:used_at, Time.now)

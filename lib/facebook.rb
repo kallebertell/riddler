@@ -10,7 +10,7 @@ module Facebook
     def initialize(callback_url)
       @callback_url = callback_url
       @oauth = Koala::Facebook::OAuth.new(FB_APP_ID, FB_SECRET, callback_url)
-      @permissions = ["friends_status","friends_birthday", "friends_likes"]
+      @permissions = ["friends_status","friends_birthday", "friends_likes", "friends_about_me"]
     end
 
     def url_for_canvas_login
@@ -59,7 +59,7 @@ module Facebook
                      "FROM   status "+
                      "WHERE  uid IN (SELECT uid2 from #friend_uids) AND time > #{statuses_since.to_i}"
 
-      friend_query = "SELECT uid, name, pic_square, birthday_date, music, tv, movies, books, activities, interests "+
+      friend_query = "SELECT uid, name, pic_square, birthday_date, music, tv, movies, books, activities, interests, about_me "+
                      "FROM   user "+
                      "WHERE  uid IN (SELECT uid2 from #friend_uids) "
                      

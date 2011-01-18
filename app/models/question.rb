@@ -4,9 +4,8 @@ class Question < ActiveRecord::Base
   has_many :choices, :dependent => :destroy
 
   before_validation :set_random_question_attributes, :on => :create
-
-  enum_attr :question_type, %w(status birthdate like)
-
+  enum_attr :question_type, %w(status birthdate like about)
+  
   def text
     case question_type
     when :status
@@ -15,6 +14,8 @@ class Question < ActiveRecord::Base
       "When is this person's birthday?"
     when :like
       "Who #{concept_of_matter_in_question_form}?"
+    when :about
+      "Whose 'About Me' is this?"
     end
   end
 

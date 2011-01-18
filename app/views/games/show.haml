@@ -1,6 +1,15 @@
 %h1
-  - if @game.points >= 10
-    = "Perfect game!"
+  
+  - if @game.points >= 18
+    = "You must share a collective brain with your friends!"
+  - elsif @game.points >= 16
+    = "Do you spy on your friends regularly?"
+  - elsif @game.points >= 14
+    = "You know it's a bit creepy how much you know about your friends."
+  - elsif @game.points >= 12
+    = "Wow. You're like a fact book on your friends!"
+  - elsif @game.points >= 10
+    = "You really know your friends!"
   - elsif @game.points >= 8
     = "Excellent game!"
   - elsif @game.points >= 6

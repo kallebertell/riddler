@@ -31,14 +31,14 @@ class User < ActiveRecord::Base
     
     Friend.delete_all({:user_id => id})
 
-    Friend.mass_insert(%w(user_id fb_user_id name pic_square_url birthday_date expire_at), 
+    Friend.mass_insert(%w(user_id fb_user_id name pic_square_url birthday_date about), 
              friend_datas.map { |friend_data|
                [self.id,
                 friend_data['uid'],
                 friend_data['name'],
                 friend_data['pic_square'],
                 friend_data['birthday_date'],
-                Time.now + (7 + rand(8)).days]
+                  truncate(friend_data['about_me'], :length => 255, :imission => '...')]
              })
 
     Status.mass_insert(%w(user_id fb_user_id fb_status_id created_at message),
