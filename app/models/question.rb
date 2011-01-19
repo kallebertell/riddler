@@ -42,7 +42,7 @@ class Question < ActiveRecord::Base
 
   def answer!(choice_id)
     throw :already_answered unless choices.where(:selected => true).empty?
-    choices.find(choice_id).update_attribute(:selected, true)
+    choices.find(choice_id).update_attribute(:selected, true) unless choice_id.nil?
     self.update_attribute(:answered_at, Time.now)
 
     game.wrong_answers += 1 unless answered_correctly?
