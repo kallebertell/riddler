@@ -22,4 +22,4 @@
     = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
 
 %script{ :language => 'javascript' }
-  -#"$('.timeLimit').countDown({ limit: 10, url: '#{game_question_answers_path(@game, @question)}' });"
+  ="$('.timeLimit').countDown({ limit: #{@game.seconds_to_answer}, url: '#{game_question_answers_path(@game, @question)}' });"
