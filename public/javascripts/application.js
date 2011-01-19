@@ -41,7 +41,7 @@ $(document).ready(function() {
           }
         } else {
           $.post(options.url, function(data) {
-            $(target).html(data);
+            $(options.target).html(data);
           });
           window.clearInterval(jobId);
         }
