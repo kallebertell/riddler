@@ -34,10 +34,10 @@ $(document).ready(function() {
       var jobId = window.setInterval(function() {
         if (remaining > 0) {
           $(that).html(prefix + (--remaining) + suffix);
-          if (remaining <= 3) {
+          if (remaining <= 4) {
             $(that).css('color', 'red');
           } else if (remaining <= 5) {
-            $(that).css('color', 'yellow');
+            $(that).css('color', 'orange');
           }
         } else {
           $.post(options.url, function(data) {
