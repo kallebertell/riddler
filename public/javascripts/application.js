@@ -31,7 +31,7 @@ $(document).ready(function() {
       var remaining = options.limit;
       var prefix = options.text.split('%d')[0];
       var suffix = options.text.split('%d')[1];
-      var setRemainingTime = function(remaining) {
+      var displayRemainingTime = function(remaining) {
         $(that).html(prefix + remaining + suffix);
         if (remaining <= 4) {
           $(that).css('color', 'red');
@@ -39,10 +39,10 @@ $(document).ready(function() {
           $(that).css('color', 'orange');
         }
       };
-      setRemainingTime(remaining);
+      displayRemainingTime(remaining);
       var jobId = window.setInterval(function() {
         if (remaining > 0) {
-          setRemainingTime(--remaining);
+          displayRemainingTime(--remaining);
         } else {
           $.post(options.url, function(data) {
             $(options.target).html(data);
