@@ -2,6 +2,25 @@ require 'test_helper'
 
 class QuestionTest < ActiveSupport::TestCase
 
+  test "should answer on time if answered immediately" do
+    @game = Factory(:new_game)
+    status = Factory(:status, :user_id => @game.user.id)
+    status = Factory(:friend, :user_id => @game.user.id)
+    question = @game.questions.create
+    question.answer!(question.choices.first.id)
+    assert !question.answered_late?
+  end
+
+  test "should be answered late if answered after 10 seconds" do
+    @game = Factory(:new_game)
+    status = Factory(:status, :user_id => @game.user.id)
+    status = Factory(:friend, :user_id => @game.user.id)
+    question = @game.questions.create
+    question.update_attribute(:created_at, 11.seconds.ago)
+    question.answer!(question.choices.first.id)
+    assert question.answered_late?
+  end
+
   test "should create one of the enum types as question type" do
     @game = Factory(:new_game)
     status = Factory(:status, :user_id => @game.user.id)

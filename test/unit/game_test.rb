@@ -24,7 +24,8 @@ class GameTest < ActiveSupport::TestCase
 
   test 'should have next question coming when not all places are used' do
     (@game.round_count - @game.questions.count - 1).times do
-      @game.questions.create
+      q = @game.questions.create
+      q.answer!(q.choices.first.id)
     end
     assert @game.rounds_left?
   end
