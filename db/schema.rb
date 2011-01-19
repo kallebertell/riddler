@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110119194633) do
+ActiveRecord::Schema.define(:version => 20110119211430) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20110119194633) do
     t.datetime "updated_at"
     t.integer  "max_wrong_answers", :default => 2
     t.integer  "wrong_answers",     :default => 0
+    t.integer  "seconds_to_answer", :default => 10, :null => false
   end
 
   create_table "likes", :force => true do |t|

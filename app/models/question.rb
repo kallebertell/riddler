@@ -37,7 +37,7 @@ class Question < ActiveRecord::Base
   end
 
   def answered_late?
-    self.created_at + 10.seconds < self.answered_at
+    self.created_at + self.game.seconds_to_answer.seconds < self.answered_at
   end
 
   def answer!(choice_id)
