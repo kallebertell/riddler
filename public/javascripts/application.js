@@ -41,8 +41,8 @@ $(document).ready(function() {
       };
       displayRemainingTime(remaining);
       var jobId = window.setInterval(function() {
-        if (remaining > 0) {
-          displayRemainingTime(--remaining);
+        if (--remaining > 0) {
+          displayRemainingTime(remaining);
         } else {
           $.post(options.url, function(data) {
             $(options.target).html(data);
