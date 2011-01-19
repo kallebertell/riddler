@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110118173855) do
+ActiveRecord::Schema.define(:version => 20110119194633) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20110118173855) do
     t.string   "question_type"
     t.text     "matter"
     t.string   "concept_of_matter"
+    t.datetime "answered_at"
   end
 
   create_table "sessions", :force => true do |t|
