@@ -37,12 +37,13 @@ class Question < ActiveRecord::Base
   end
 
   def answered_late?
-
+    self.created_at + 10.seconds < self.answered_at
   end
 
   def answer!(choice_id)
     throw :already_answered unless choices.where(:selected => true).empty?
     choices.find(choice_id).update_attribute(:selected, true)
+    self.update_attribute(:answered_at, Time.now)
 
     game.wrong_answers += 1 unless answered_correctly?
     game.save
