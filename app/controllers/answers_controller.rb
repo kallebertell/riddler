@@ -1,13 +1,15 @@
 class AnswersController < ApplicationController
   before_filter :find_parent_resources
 
+
+
   def create
     @question.answer!(params[:choice_id])
     
     if @question.answered_correctly?
       flash[:correct] = "Correct!"
     elsif @question.answered_late?
-      flash[:incorrect] = "You were late!"
+      flash[:incorrect] = "You were too late!"
     else
       flash[:incorrect] = "Incorrect!"
     end
