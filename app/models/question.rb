@@ -41,7 +41,7 @@ class Question < ActiveRecord::Base
   end
 
   def answer!(choice_id)
-    throw :already_answered unless choices.where(:selected => true).empty?
+    raise QuestionAlreadyAnswered unless answered_at.nil?
     choices.find(choice_id).update_attribute(:selected, true) unless choice_id.nil?
     self.update_attribute(:answered_at, Time.now)
 

@@ -25,7 +25,7 @@ class AnswersControllerTest < ActionController::TestCase
     5.times do
       game.questions.create
     end
-    question = game.questions.first
+    question = game.questions.last
 
     incorrect_choice_id = 0
     question.choices.each { |choice| incorrect_choice_id = choice.id unless choice.id == question.correct_choice.id }
