@@ -18,6 +18,8 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     
     gameResult = user.css_select(".gameInfo")
     
+    user.should_answer_question_twice_with_same_redirect
+
     while (gameResult.empty?)
       user.should_answer_question
       gameResult = user.css_select(".gameInfo")
@@ -67,6 +69,16 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     def should_answer_question_and_get_redirected_to_next_question
       should_answer_question
       assert_not_nil assigns(:question)
+    end 
+
+    def should_answer_question_twice_with_same_redirect
+      selected_link = should_select_one_and_have_from_two_to_four_choices
+      post selected_link['href']      
+      assert_response :redirect
+      post selected_link['href']      
+      assert_response :redirect
+      follow_redirect!
+      assert_response :success
     end 
    
    def should_see_result
