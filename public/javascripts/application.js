@@ -25,19 +25,20 @@ $(document).ready(function() {
 
     return this.each(function() {
       var selected = this;
+      var link = $(selected).find('a:first');
+      var selectionHandler = function () {
+        $(selected).unbind('click');
+        $(selected).click(function(){return false;});
+        $(selected).addClass('selected');
 
-      $(selected).click(function () {
         for (var i=0; i < selections.length; i++) {
-          if (selected === selections[i]) {
-            $(selections[i]).addClass('selected');
-            $(selections[i]).click(function() {
-              return false;
-            });
-          } else {
+          if (selected !== selections[i]) {
             $(selections[i]).hide();
           }
         }
-      });
+      };
+
+      $(selected).click(selectionHandler);
     });
   };
 
