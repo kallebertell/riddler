@@ -69,6 +69,11 @@ li a {
     background-color: #ccffcc;
 }
 
+#choices li.selected {
+  background-color: inherit !important;
+  border: 3px solid black;        
+}
+
 #flash_correct {
   font-weight: bold;
   font-size: 2em;
@@ -99,4 +104,18 @@ li a {
   padding-right: 40px;
   background-color: #ccffcc;
   color: white;
+}
+
+.answer_table {
+  display: table;
+  margin: 0 auto;
+}
+.clue {
+  margin-left: auto;
+  margin-right: auto;
+}
+.answer_option {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

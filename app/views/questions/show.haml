@@ -17,9 +17,10 @@
 
 %br
 
-%ul{:id => 'choices'}
-  - for choice in @question.choices
-    = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
+.answer_table
+  %ul{:id => 'choices'}
+    - for choice in @question.choices
+      = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
 
 %script{ :language => 'javascript' }
   ="$('.timeLimit').countDown({ limit: #{@game.seconds_to_answer}, url: '#{game_question_answers_path(@game, @question)}' });"

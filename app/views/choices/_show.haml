@@ -1,7 +1,7 @@
-%li
+%li.answer_option
   - unless choice.pic_url.nil? 
-    = link_to image_tag(choice.pic_url, :width => 50, :height => 50), game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post
+    = link_to(image_tag(choice.pic_url, :width => 50, :height => 50), game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post)
     %br
-  = link_to choice.text, game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post, :class => 'text'
+  = link_to(choice.text, game_question_answers_path(@game, @question, :choice_id => choice.id), :method => :post, :class => 'text')
 
 
