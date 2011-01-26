@@ -16,7 +16,7 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:status, :user_id => @game.user.id)
     status = Factory(:friend, :user_id => @game.user.id)
     question = @game.questions.create
-    question.update_attribute(:created_at, 11.seconds.ago)
+    question.update_attribute(:created_at, 31.seconds.ago)
     question.answer!(question.choices.first.id)
     assert question.answered_late?
   end

@@ -8,7 +8,11 @@ class GamesController < ApplicationController
       @current_user.update_facebook_data(@fb_session)
     end    
     ActiveRecord::Base.transaction do
-      @game = current_user.games.create(:round_count => 10, :wrong_answers => 0, :max_wrong_answers => 2)
+      @game = current_user.games.create(
+        :round_count => 10,
+        :wrong_answers => 0,
+        :max_wrong_answers => 2,
+        :seconds_to_answer => 30)
       redirect_to [@game,@game.questions.create]
     end
   end
