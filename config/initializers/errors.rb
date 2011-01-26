@@ -1,0 +1,3 @@
+class QuestionAlreadyAnswered < RuntimeError
+end
+
