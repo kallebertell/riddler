@@ -3,6 +3,7 @@
 
 $(document).ready(function() {
   $('.create_game').loadingWindow();
+  $('.answer_option').freezeSelection();
 });
 
 
@@ -14,6 +15,28 @@ $(document).ready(function() {
       var link = this;
       $(link).click(function () {
         $('#container').html('Prepare for the game to begin!');
+      });
+    });
+  };
+
+  $.fn.freezeSelection = function(options) {
+    var options = jQuery.extend({}, options);
+    var selections = this;
+
+    return this.each(function() {
+      var selected = this;
+
+      $(selected).click(function () {
+        for (var i=0; i < selections.length; i++) {
+          if (selected === selections[i]) {
+            $(selections[i]).addClass('selected');
+            $(selections[i]).click(function() {
+              return false;
+            });
+          } else {
+            $(selections[i]).hide();
+          }
+        }
       });
     });
   };
