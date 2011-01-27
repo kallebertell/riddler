@@ -16,13 +16,13 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     user.should_get_index
     user.should_get_redirected_to_first_question_when_game_is_created
     
-    gameResult = user.css_select(".gameInfo")
+    gameResult = user.css_select(".game_info")
     
     user.should_answer_question_twice_with_same_redirect
 
     while (gameResult.empty?)
       user.should_answer_question
-      gameResult = user.css_select(".gameInfo")
+      gameResult = user.css_select(".game_info")
     end
     
     user.should_see_result
@@ -82,7 +82,7 @@ class GameAnsweringProcessTest < ActionDispatch::IntegrationTest
     end 
    
    def should_see_result
-      assert_select "a", "Try again"
+      assert_select ".create_game", "Try again"
    end 
     
   end

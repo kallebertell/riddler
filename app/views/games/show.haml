@@ -21,8 +21,11 @@
   - else 
     = "Are you sure these people are your friends?"
 
-.gameInfo
-  = "You scored #{@game.points} points"
+.game_info
+  = "You scored "
+  %span{:id=>"score"}
+    = @game.points
+  = " points"
 
 .highscore
   %table.score_table
@@ -44,3 +47,4 @@
 
 %br
 = link_to 'Try again', games_path, :class => 'create_game', :method => :post
+= link_to 'Share score', '#share', :class => 'share_score'

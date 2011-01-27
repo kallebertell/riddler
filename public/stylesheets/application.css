@@ -5,7 +5,6 @@ body {
 
 .clue {
   font-size: 3em;
-  width: 600px;
   background-color: #99cc99;
   padding: 15px;
   border: 1px solid #669966;        
@@ -20,11 +19,23 @@ body {
   margin: 0px;
   margin-top: 20px;	
 }
+.time_limit {
+  text-align: right;	
+}
 
 .life_count {
-	display: inline-block;
-	text-align: right;
-	width: 49%;
+  display: inline-block;
+  text-align: right;
+  width: 49%;
+}
+
+.waiting_message {
+  text-align: center;
+  font-size: 2em;	
+}
+
+#counter {
+  font-size: 2em;
 }
 
 #container {

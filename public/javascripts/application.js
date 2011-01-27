@@ -3,7 +3,21 @@
 
 $(document).ready(function() {
   $('.create_game').loadingWindow();
+  $('.share_score').shareScore();
   $('.answer_option').freezeSelection();
+
+  /* Loads the Facebook Connect Javascript API */
+  window.fbAsyncInit = function() { 
+    FB.init({appId: "166590666700460", status: true, cookie: true, xfbml: true}); 
+  }; 
+
+  (function() {   
+    var e = document.createElement("script"); 
+    e.async = true; 
+    e.src = document.location.protocol + "//connect.facebook.net/en_US/all.js"; 
+    document.getElementById("fb-root").appendChild(e); 
+  }());
+
 });
 
 
@@ -14,7 +28,7 @@ $(document).ready(function() {
     return this.each(function() {
       var link = this;
       $(link).click(function () {
-        $('#container').html('Prepare for the game to begin!');
+        $('#container').html('<div class="waiting_message"> Creating your personalized questions! <br/> <img src="/images/loader.gif" />');
       });
     });
   };
@@ -44,7 +58,7 @@ $(document).ready(function() {
 
   $.fn.countDown = function(options) {
     var options = jQuery.extend({
-      text: 'You have %d seconds remaining.',
+      text: '<span id=\'counter\'>%d</span> seconds remaining.',
       limit: 10,
       url: '',
       target: 'body'
@@ -74,6 +88,43 @@ $(document).ready(function() {
           window.clearInterval(jobId);
         }
       }, 1000);
+    });
+  };
+
+  $.fn.shareScore = function(options) {
+    var options = jQuery.extend({}, options)
+
+    var score = jQuery.trim( $('#score').html() );
+    var msg = 'scored ' + score + ' points in Riddler';
+
+    return this.each(function() {
+        var link = this;
+
+        var streamPublish = function() {
+           FB.ui({
+              method:  'stream.publish',
+              display: 'dialog',
+              message: msg,
+              attachment: {
+                name: 'Riddler Game',
+                caption: 'The game which makes you know your friends eerily well!',
+                media: [{ 'type': 'image', 'src': 'http://riddle.herko.com/images/riddler_ico.png', 'href': 'http://google.com' }],
+                href: 'http://riddle.heroku.com'
+              },
+              action_links: [{ text: 'Code', href: 'http://github.com/facebook/connect-js' }],
+              user_message_prompt: 'Poof moo?'
+             },
+
+             function(response) {
+             }
+           );
+
+        };
+
+        $(link).click(function () {
+          streamPublish();
+          return false;
+        });
     });
   };
 

@@ -9,6 +9,8 @@
     = yield(:head)
     %script
   %body
+    %img{:src=>"/images/loader.gif", :style=>"visibility:hidden; width:0px; height:0px;"}
+    #fb-root
     #container
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}"
