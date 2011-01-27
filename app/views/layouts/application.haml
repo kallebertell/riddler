@@ -7,10 +7,12 @@
     = javascript_include_tag 'jquery', 'rails', 'application'
     = csrf_meta_tag
     = yield(:head)
-    %script
+    
   %body
     %img{:src=>"/images/loader.gif", :style=>"visibility:hidden; width:0px; height:0px;"}
     #fb-root
+    %script{ :language => 'javascript' }
+      = "$.loadFacebookConnect({fbAppId: #{FB_APP_ID} });"
     #container
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}"

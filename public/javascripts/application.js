@@ -5,24 +5,25 @@ $(document).ready(function() {
   $('.create_game').loadingWindow();
   $('.share_score').shareScore();
   $('.answer_option').freezeSelection();
-
-  /* Loads the Facebook Connect Javascript API */
-  window.fbAsyncInit = function() { 
-    FB.init({appId: "166590666700460", status: true, cookie: true, xfbml: true}); 
-  }; 
-
-  (function() {   
-    var e = document.createElement("script"); 
-    e.async = true; 
-    e.src = document.location.protocol + "//connect.facebook.net/en_US/all.js"; 
-    document.getElementById("fb-root").appendChild(e); 
-  }());
-
 });
 
 
 
 (function($) {
+	
+  $.loadFacebookConnect = function(options) {
+    var options = jQuery.extend({fbAppId : ""}, options);
+
+    window.fbAsyncInit = function() { 
+      FB.init({appId: options.fbAppId, status: true, cookie: true, xfbml: true}); 
+    }; 
+
+    var e = document.createElement("script"); 
+    e.async = true; 
+    e.src = document.location.protocol + "//connect.facebook.net/en_US/all.js"; 
+    document.getElementById("fb-root").appendChild(e);  
+  }
+
   $.fn.loadingWindow = function(options) {
     var options = jQuery.extend({}, options);
     return this.each(function() {
