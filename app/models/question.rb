@@ -6,6 +6,14 @@ class Question < ActiveRecord::Base
   before_validation :set_random_question_attributes, :on => :create
   enum_attr :question_type, %w(status birthdate like about)
   
+  def seconds_to_answer
+    return (game.seconds_to_answer-6*Math.log([1,self.ordinal].max).round)
+  end
+
+  def ordinal
+    game.questions.where('id <= ?',id).count
+  end
+  
   def text
     case question_type
     when :status
@@ -37,7 +45,7 @@ class Question < ActiveRecord::Base
   end
 
   def answered_late?
-    self.created_at + self.game.seconds_to_answer.seconds < self.answered_at
+    self.created_at + self.seconds_to_answer.seconds < self.answered_at
   end
 
   def answer!(choice_id)

@@ -8,6 +8,7 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:friend, :user_id => @game.user.id)
     question = @game.questions.create
     question.answer!(question.choices.first.id)
+    assert_equal 1, question.ordinal
     assert !question.answered_late?
   end
 
@@ -107,6 +108,17 @@ class QuestionTest < ActiveSupport::TestCase
     assert_equal 3, game.points
     assert_equal 3, game.user.best_score
     assert_equal 3, game.user.alltime_score
+  end
+
+  test 'should have increasing ordinals in questions which do not change' do
+    game = Factory(:game)
+    5.times do |index|
+      question = game.questions.create
+      assert_equal index+1, question.ordinal
+    end
+    game.questions.each_with_index do |question, index|
+      assert_equal index+1, question.ordinal
+    end
   end
   
 end

@@ -1,6 +1,6 @@
 .top
   %h1
-    = "Round #{@game.questions.count}"
+    = "Round #{@question.ordinal}"
   .life_count
     - @game.wrong_answers.times do 
       %img{:src=>'/images/empty_heart.png'}
@@ -23,4 +23,4 @@
       = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
 
 %script{ :language => 'javascript' }
-  ="$('.time_limit').countDown({ limit: #{@game.seconds_to_answer}, url: '#{game_question_answers_path(@game, @question)}' });"
+  ="$('.time_limit').countDown({ limit: #{@question.seconds_to_answer}, url: '#{game_question_answers_path(@game, @question)}' });"
