@@ -12,7 +12,7 @@ $(document).ready(function() {
 (function($) {
 	
   $.loadFacebookConnect = function(options) {
-    var options = jQuery.extend({fbAppId : ""}, options);
+    var options = $.extend({fbAppId : ""}, options);
 
     window.fbAsyncInit = function() { 
       FB.init({appId: options.fbAppId, status: true, cookie: true, xfbml: true}); 
@@ -25,7 +25,7 @@ $(document).ready(function() {
   }
 
   $.fn.loadingWindow = function(options) {
-    var options = jQuery.extend({}, options);
+    var options = $.extend({}, options);
     return this.each(function() {
       var link = this;
       $(link).click(function () {
@@ -35,7 +35,7 @@ $(document).ready(function() {
   };
 
   $.fn.freezeSelection = function(options) {
-    var options = jQuery.extend({}, options);
+    var options = $.extend({}, options);
     var selections = this;
 
     return this.each(function() {
@@ -58,7 +58,7 @@ $(document).ready(function() {
   };
 
   $.fn.countDown = function(options) {
-    var options = jQuery.extend({
+    var options = $.extend({
       text: '<span id=\'counter\'>%d</span> seconds remaining.',
       limit: 10,
       url: '',
@@ -93,9 +93,9 @@ $(document).ready(function() {
   };
 
   $.fn.shareScore = function(options) {
-    var options = jQuery.extend({}, options)
+    var options = $.extend({}, options)
 
-    var score = jQuery.trim( $('#score').html() );
+    var score = $.trim( $('#score').html() );
     var msg = 'scored ' + score + ' points in Riddler';
 
     return this.each(function() {
