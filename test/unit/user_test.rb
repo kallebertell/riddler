@@ -8,8 +8,8 @@ class UserTest < ActiveSupport::TestCase
 
   test "should find user friends" do
     assert_not_nil @user.id
-    user_friends = User.find_user_friends(@user.id)
-    assert_equal 4, user_friends.size
+    user_friends = User.find_user_and_friends(@user.id)
+    assert_equal 5, user_friends.size
   
   end
   

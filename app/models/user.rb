@@ -4,13 +4,12 @@ class User < ActiveRecord::Base
   has_many :friends
   has_many :statuses
   has_many :likes
-  
-  def self.find_user_friends(user_id)
-     self.find_by_sql("SELECT u.id, u.name, u.alltime_score " + 
-                      "FROM #{User.table_name} u , #{Friend.table_name} f " + 
-                      "WHERE u.facebook_id = f.fb_user_id AND f.user_id = #{user_id} " + 
-                      "ORDER BY u.alltime_score DESC")
+
+  def self.find_user_and_friends(user_id)
+    friend_ids = Friend.select('fb_user_id').where('user_id = ?', user_id).map(&:fb_user_id)+[User.find(user_id).facebook_id]
+    self.select('row_number() OVER () as rank, users.*').where('facebook_id IN (?)', friend_ids).order("best_score DESC")
   end
+
   
   def update_facebook_data(fb_session)
     
