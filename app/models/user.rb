@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   def self.find_user_and_friends(user_id)
     friend_ids = Friend.select('fb_user_id').where('user_id = ?', user_id).map(&:fb_user_id)+[User.find(user_id).facebook_id]
     #Only in PostgreSQL 8.4+
-    #self.select('row_number() OVER () as rank, users.*').where('facebook_id IN (?)', friend_ids).order("best_score DESC")
+    #self.select("row_number() OVER () as rank, #{User.table_name}.*").where('facebook_id IN (?)', friend_ids).order("best_score DESC")
     #PostgreSQL 8.3-: http://explainextended.com/2009/05/05/postgresql-row-numbers/
-    self.find_by_sql("SELECT rank, (a[rank]).* FROM    ( SELECT  a, generate_series(1, array_upper(a, 1)) AS rank FROM    ( SELECT  ARRAY ( SELECT users FROM   users ORDER BY best_score DESC) AS a) q2) q3 WHERE (a[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
+    self.find_by_sql("SELECT rank, (a[rank]).* FROM    ( SELECT  a, generate_series(1, array_upper(a, 1)) AS rank FROM    ( SELECT  ARRAY ( SELECT #{User.table_name} FROM  #{User.table_name} ORDER BY best_score DESC) AS a) q2) q3 WHERE (a[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
   end
 
   
