@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   def self.find_user_and_friends(user_id)
     friend_ids = Friend.select('fb_user_id').where('user_id = ?', user_id).map(&:fb_user_id)+[User.find(user_id).facebook_id]
-    self.select('row_number() OVER () as rank, users.*').where('facebook_id IN (?)', friend_ids).order("best_score DESC")
+    #self.select('row_number() OVER () as rank, users.*').where('facebook_id IN (?)', friend_ids).order("best_score DESC")
+    self.find_by_sql("SELECT rank, (a[rank]).* FROM    ( SELECT  a, generate_series(1, array_upper(a, 1)) AS rank FROM    ( SELECT  ARRAY ( SELECT users FROM   users ORDER BY best_score DESC) AS a) q2) q3 WHERE (a[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
   end
 
   
