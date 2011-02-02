@@ -4,7 +4,6 @@
 $(document).ready(function() {
   $('.create_game').loadingWindow();
   $('.share_score').shareScore();
-  $('.answer_option').freezeSelection();
 });
 
 
@@ -31,29 +30,6 @@ $(document).ready(function() {
       $(link).click(function () {
         $('#container').html('<div class="waiting_message"> Creating your personalized questions! <br/> <img src="/images/loader.gif" />');
       });
-    });
-  };
-
-  $.fn.freezeSelection = function(options) {
-    var options = $.extend({}, options);
-    var selections = this;
-
-    return this.each(function() {
-      var selected = this;
-      var link = $(selected).find('a:first');
-      var selectionHandler = function () {
-        $(selected).unbind('click');
-        $(selected).click(function(){return false;});
-        $(selected).addClass('selected');
-
-        for (var i=0; i < selections.length; i++) {
-          if (selected !== selections[i]) {
-            $(selections[i]).hide();
-          }
-        }
-      };
-
-      $(selected).click(selectionHandler);
     });
   };
 
