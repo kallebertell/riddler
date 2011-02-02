@@ -39,8 +39,8 @@ module QuestionFactory
     
     correct_uids = [liking_to_guess.fb_user_id]
 
-    not_wrong_uids = Like.where(:name => self.matter).map(&:fb_user_id)
-    wrong_uids = Friend.where('fb_user_id NOT IN (?)', not_wrong_uids).order('random()').map(&:fb_user_id).uniq[0..2]
+    not_wrong_uids = Like.where(:user_id => game.user.id, :name => self.matter).map(&:fb_user_id)
+    wrong_uids = Friend.where('user_id = ? AND fb_user_id NOT IN (?)', game.user.id, not_wrong_uids).order('random()').map(&:fb_user_id).uniq[0..2]
 
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
   end
@@ -57,7 +57,7 @@ module QuestionFactory
     status_to_guess.update_attribute(:used_at, Time.now)
     
     correct_uids = [status_to_guess.fb_user_id]
-    wrong_uids = Friend.where('fb_user_id NOT IN (?)', correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
+    wrong_uids = Friend.where('user_id = ? AND fb_user_id NOT IN (?)', game.user.id, correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
 
     self.matter = status_to_guess.message
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
@@ -77,7 +77,7 @@ module QuestionFactory
     friend_to_guess.update_attribute(:about_used_at, Time.now)
     
     correct_uids = [friend_to_guess.fb_user_id]
-    wrong_uids = Friend.where('fb_user_id NOT IN (?)', correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
+    wrong_uids = Friend.where('user_id = ? AND fb_user_id NOT IN (?)', game.user.id, correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
     
     self.matter = friend_to_guess.about
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
@@ -135,7 +135,7 @@ module QuestionFactory
   protected
 
   def set_choices_from_correct_and_other_uids(correct_uids, other_uids)
-    Friend.where(:user_id => game.user.id, :fb_user_id => (correct_uids+other_uids)).order('random()').map do |friend|
+    Friend.where(:user_id => game.user.id, :fb_user_id => (correct_uids+other_uids)).order('random()').each do |friend|
       self.choices.build(:question_id => self.id,
                          :correct => correct_uids.include?(friend.fb_user_id),
                          :text => friend.name,

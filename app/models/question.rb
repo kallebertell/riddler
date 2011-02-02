@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
   enum_attr :question_type, %w(status birthdate like about)
   
   def seconds_to_answer
-    return (game.seconds_to_answer-4.5*Math.log([1,self.ordinal].max).round)
+    return (game.seconds_to_answer-(4.5*Math.log([1,self.ordinal].max)).round)
   end
 
   def ordinal
