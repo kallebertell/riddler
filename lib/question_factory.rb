@@ -12,7 +12,7 @@ module QuestionFactory
   def set_random_question_attributes
     fail 'Add to game before creating' if game.nil?
     
-    case(self.question_type || random_of([:status, :like, :about]))
+    case(self.question_type || get_random_question_type)
     when :status
       set_status_question_attributes
     when :like
@@ -21,6 +21,14 @@ module QuestionFactory
       set_about_question_attributes
     when :birthdate
       set_birthday_question_attributes
+    end
+  end
+
+  def get_random_question_type
+    case (rand(100))
+    when 0..45: :status
+    when 46..89: :like
+    when 90..99: :about
     end
   end
 
