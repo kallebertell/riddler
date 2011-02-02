@@ -15,5 +15,11 @@ class Game < ActiveRecord::Base
       end
     end
   end
+  
+  def end
+    user.alltime_score += points
+    user.best_score = points if user.best_score < points
+    user.save
+  end
 
 end

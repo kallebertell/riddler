@@ -83,7 +83,7 @@ module QuestionFactory
     friend_to_guess = friends.pop()
 
     friend_to_guess.update_attribute(:about_used_at, Time.now)
-    
+
     correct_uids = [friend_to_guess.fb_user_id]
     wrong_uids = Friend.where('user_id = ? AND fb_user_id NOT IN (?)', game.user.id, correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
     

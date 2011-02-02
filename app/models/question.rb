@@ -55,14 +55,7 @@ class Question < ActiveRecord::Base
 
     game.wrong_answers += 1 unless answered_correctly?
     game.save
-
-    if !game.rounds_left?
-      user = game.user
-      user.alltime_score += @game.points
-      user.best_score = @game.points if user.best_score < @game.points
-
-      user.save
-    end
+    game.end unless game.rounds_left?
   end
 
   def correct_choice
