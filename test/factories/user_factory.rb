@@ -20,10 +20,13 @@ Factory.define :user_with_user_friends, :class => 'User' do |f|
   f_id = (100000 + rand(100000)).to_s
   f.facebook_id f_id
   f.name 'user with friends'
-
+  f.score_recorded_at 7.days.ago
+  f.week_best_score 99999
+  
   f.after_create do |user|
     200.upto(203).each do |fb_id|
-      user_friend = Factory(:user, :facebook_id => fb_id)
+      
+      user_friend = Factory(:user, :facebook_id => fb_id, :week_best_score => fb_id*10, :score_recorded_at => Time.now)
       friend = Factory(:friend, :user_id => user.id, :fb_user_id => fb_id)
     end
   end

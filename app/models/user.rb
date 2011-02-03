@@ -6,13 +6,44 @@ class User < ActiveRecord::Base
   has_many :likes
 
   def self.find_user_and_friends(user_id)
-    friend_ids = Friend.select('fb_user_id').where('user_id = ?', user_id).map(&:fb_user_id)+[User.find(user_id).facebook_id]
+    friend_ids = find_friend_ids(user_id)
     #Only in PostgreSQL 8.4+
     #self.select("row_number() OVER () as rank, #{User.table_name}.*").where('facebook_id IN (?)', friend_ids).order("best_score DESC")
     #PostgreSQL 8.3-: http://explainextended.com/2009/05/05/postgresql-row-numbers/
-    self.find_by_sql("SELECT rank, (a[rank]).* FROM    ( SELECT  a, generate_series(1, array_upper(a, 1)) AS rank FROM    ( SELECT  ARRAY ( SELECT #{User.table_name} FROM  #{User.table_name} ORDER BY best_score DESC) AS a) q2) q3 WHERE (a[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
+    self.find_by_sql(
+      "SELECT rank, (arr[rank]).* 
+       FROM  ( SELECT  arr, generate_series(1, array_upper(arr, 1)) AS rank 
+               FROM    ( SELECT  ARRAY ( SELECT #{User.table_name} 
+                                         FROM  #{User.table_name} 
+                                         ORDER BY best_score DESC
+                                       ) AS arr
+                       ) q2
+             ) q3 
+       WHERE (arr[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
   end
 
+  def self.find_user_and_friends_ordered_by_week_score(user_id)
+    friend_ids = find_friend_ids(user_id)
+    friend_users =
+      self.find_by_sql(
+        "SELECT u.*, 0 as rank, #{this_weeks_best_score}, #{this_weeks_total_score}
+         FROM #{User.table_name} u
+         WHERE u.facebook_id IN ('#{friend_ids.join("','")}')
+         ORDER BY this_weeks_best_score DESC")
+       
+    rank_cnt = 1
+    friend_users.each do |u| 
+      u.rank = rank_cnt
+      rank_cnt += 1
+    end
+    
+    return friend_users
+  end
+  
+  def self.find_friend_ids(user_id)
+    Friend.select('fb_user_id').where('user_id = ?', user_id).map(&:fb_user_id) + [User.find(user_id).facebook_id]
+  end
+  
   
   def update_facebook_data(fb_session)
     
@@ -86,4 +117,17 @@ class User < ActiveRecord::Base
     })
   end
   
+  private
+  
+  def self.this_weeks_best_score
+    "CASE WHEN EXTRACT(WEEK FROM score_recorded_at) = #{current_week} THEN week_best_score ELSE 0 END AS this_weeks_best_score"
+  end
+  
+  def self.this_weeks_total_score
+    "CASE WHEN EXTRACT(WEEK FROM score_recorded_at) = #{current_week} THEN week_total_score ELSE 0 END AS this_weeks_total_score"
+  end  
+  
+  def self.current_week
+    Date.today.cweek
+  end
 end
