@@ -17,9 +17,27 @@ class Game < ActiveRecord::Base
   end
   
   def end
-    user.alltime_score += points
+    user.week_total_score = 0 unless time_matches_this_week?(user.score_recorded_at)
+    
+    user.week_total_score += points;
+    user.total_score += points
+
+    user.week_best_score = points if user.week_best_score < points;
     user.best_score = points if user.best_score < points
+
+    user.score_recorded_at = Date.today
+
     user.save
   end
 
+  private
+  
+  def current_week
+    Date.today.cweek
+  end
+  
+  def time_matches_this_week?(time)
+    !time.nil? && time.to_date.cweek == current_week
+  end
+  
 end

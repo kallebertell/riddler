@@ -86,7 +86,7 @@ class QuestionTest < ActiveSupport::TestCase
   
   test 'should set scores when game ends' do
     game = Factory(:game)
-    game.user.alltime_score = 0
+    game.user.total_score = 0
     
     3.times do
       question = game.questions.create
@@ -107,7 +107,7 @@ class QuestionTest < ActiveSupport::TestCase
     
     assert_equal 3, game.points
     assert_equal 3, game.user.best_score
-    assert_equal 3, game.user.alltime_score
+    assert_equal 3, game.user.total_score
   end
 
   test 'should have increasing ordinals in questions which do not change' do
