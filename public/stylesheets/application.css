@@ -105,8 +105,11 @@ li a {
   border-collapse: collapse;
 }
 
-.score_table td, .score_table th {
-  text-shadow: #6DA918 1px 1px 1px;  
+.score_table th {
+  text-shadow: #6DA918 1px 1px 1px;
+}
+
+.score_table td, .score_table th {  
   padding: 5px;
   padding-right: 40px;
   color: white;
