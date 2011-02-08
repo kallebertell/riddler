@@ -17,8 +17,12 @@ class Game < ActiveRecord::Base
   end
   
   def end
-    user.week_total_score = 0 unless time_matches_this_week?(user.score_recorded_at)
     
+    unless (time_matches_this_week?(user.score_recorded_at))
+      user.week_total_score = 0
+      user.week_best_score = 0
+    end
+     
     user.week_total_score += points;
     user.total_score += points
 
