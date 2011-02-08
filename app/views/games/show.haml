@@ -27,6 +27,12 @@
     = @game.points
   = " points"
 
+%br
+= link_to 'Try again', games_path, :class => 'create_game', :method => :post
+= link_to 'Share score', '#share', :class => 'share_score'
+%br
+%br
+
 .highscore
   %ul
     %li 
@@ -63,10 +69,6 @@
           = "Total"
     %tbody
       = render :partial => 'users/user_alltime_score', :collection => @users
-
-%br
-= link_to 'Try again', games_path, :class => 'create_game', :method => :post
-= link_to 'Share score', '#share', :class => 'share_score'
 
 %script
   = "$(function() { $('.highscore').tabs(); });"

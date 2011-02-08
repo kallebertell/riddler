@@ -97,6 +97,11 @@ li a {
   color: #996666;
 }
 
+#score {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
 .highscore {
   padding-top: 20px;	
 }
