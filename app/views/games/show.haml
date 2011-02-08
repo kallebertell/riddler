@@ -28,7 +28,15 @@
   = " points"
 
 .highscore
-  %table.score_table
+  %ul
+    %li 
+      %a{:href => '#week_tab'} 
+        = "This week's high scores"
+    %li
+      %a{:href => '#alltime_tab'}
+        = "All-time high scores"
+
+  %table.score_table{:id => 'week_tab'}
     %thead
       %tr
         %th 
@@ -36,12 +44,29 @@
         %th 
           = "Name"
         %th 
-          = "Best Score"
+          = "Best"
         %th 
-          = "All-time Score"
+          = "Total"
     %tbody
-      = render :partial => 'users/user', :collection => @users
+      = render :partial => 'users/user_week_score', :collection => @week_best_users
+
+  %table.score_table{:id => 'alltime_tab'}
+    %thead
+      %tr
+        %th 
+          = "#"
+        %th 
+          = "Name"
+        %th 
+          = "Best"
+        %th 
+          = "Total"
+    %tbody
+      = render :partial => 'users/user_alltime_score', :collection => @users
 
 %br
 = link_to 'Try again', games_path, :class => 'create_game', :method => :post
 = link_to 'Share score', '#share', :class => 'share_score'
+
+%script
+  = "$(function() { $('.highscore').tabs(); });"

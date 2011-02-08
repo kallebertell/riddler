@@ -21,6 +21,8 @@ class GamesController < ApplicationController
     @game = current_user.games.find(params[:id])
     
     @users = User.find_user_and_friends(current_user.id)
+    
+    @week_best_users = User.find_user_and_friends_ordered_by_week_score(current_user.id)
   end
   
 end

@@ -103,18 +103,15 @@ li a {
 
 .score_table {
   border-collapse: collapse;
-  -moz-box-shadow: 3px 3px 4px #ccc;
-  -webkit-box-shadow: 3px 3px 4px #ccc;
-  box-shadow: 3px 3px 4px #ccc;
 }
 
 .score_table td, .score_table th {
-  background: url(../images/hiscore_table.gif) repeat 50% 100%;
   text-shadow: #6DA918 1px 1px 1px;  
   padding: 5px;
   padding-right: 40px;
-  background-color: #ccffcc;
   color: white;
+  text-align: left;
+  border-bottom: 1px solid #66cc66;
 }
 
 .answer_table {
