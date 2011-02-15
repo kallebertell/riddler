@@ -56,10 +56,6 @@ body {
   height: 100px;
 }
 
-ul {
-
-}
-
 #choices li {
   list-style-type: none;
   width: 120px;
@@ -102,26 +98,6 @@ li a {
   font-weight: bold;
 }
 
-.highscore {
-  padding-top: 20px;	
-}
-
-.score_table {
-  border-collapse: collapse;
-}
-
-.score_table th {
-  text-shadow: #6DA918 1px 1px 1px;
-}
-
-.score_table td, .score_table th {  
-  padding: 5px;
-  padding-right: 40px;
-  color: white;
-  text-align: left;
-  border-bottom: 1px solid #66cc66;
-}
-
 .answer_table {
   display: table;
   margin: 0 auto;
@@ -135,3 +111,73 @@ li a {
   margin-right: auto;
   display: block;
 }
+
+/* Style for highscore tabs */
+.highscore {
+  width: 500px;
+  text-align: left;
+}
+
+.highscore li { 
+  list-style:none;
+  float:left;
+}
+
+.highscore ul a {
+  display:block;
+  padding:6px 10px;
+  text-decoration:none!important;
+  margin:1px;
+  margin-left:0;
+  font:10px Verdana;
+  color:#FFF;
+  background:#494;
+
+  border-top-right-radius: 5px;
+  -moz-border-top-right-radius: 5px;	
+  -webkit-border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  -moz-border-top-left-radius: 5px;	
+  -webkit-border-top-left-radius: 5px;
+}
+
+.highscore ul a:hover {
+  color:#FFF;
+  background:#131;
+}
+
+.highscore ul a.selected {
+  margin-bottom:0;
+  color:#000;
+  background:#9c9;
+  border-bottom:1px solid #9c9;
+  cursor:default;
+}
+
+.highscore table {
+  padding:10px 10px 8px 10px;
+  *padding-top:3px;
+  *margin-top:-15px;
+  clear:left;
+  background:#9c9;
+}
+
+.score_table {
+  background-color: #cccccc;
+  border-collapse: collapse;
+}
+
+.score_table th {
+  text-shadow: #333333 2px 2px 2px;
+  color: white;
+}
+
+.score_table td, .score_table th {  
+  font:0.8em Verdana;
+  padding: 5px;
+  padding-right: 40px;
+  
+  text-align: left;
+  border-bottom: 1px solid #696;
+}
+

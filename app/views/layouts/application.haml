@@ -4,7 +4,7 @@
     %title
       = h(yield(:title) || "Riddler")
     = stylesheet_link_tag 'application', 'jquery-ui'
-    = javascript_include_tag 'jquery', 'ui/jquery.ui.core', 'ui/jquery.ui.widget', 'ui/jquery.ui.tabs', 'rails', 'application'
+    = javascript_include_tag 'jquery', 'jquery.idTabs.min.js', 'rails', 'application'
     = csrf_meta_tag
     = yield(:head)
     
