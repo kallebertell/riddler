@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   def login
     oauth_params = @fb_session.parse_signed_request(params[:signed_request])
     logger.info(oauth_params.inspect)
+    
     if oauth_params && oauth_params['oauth_token']
       @fb_session.connect_with_oauth_token(oauth_params['oauth_token'])
       set_user_session(@fb_session.get_current_user)
@@ -15,17 +16,20 @@ class SessionsController < ApplicationController
     else
       render :text => "<script>top.location='#{@fb_session.url_for_canvas_login}'</script>"
     end
+    
   end
 
   def create
     @fb_session.connect_with_code(params[:code])
     set_user_session(@fb_session.get_current_user)
 
+    @current_user.update_games_left
+
     flash[:notice] = "Logged in as #{current_user.name} successfully."
     redirect_to_target_or_default(root_url)
     
   rescue Facebook::Error
-  	flash[:error] = "Invalid login or password"	
+    flash[:error] = "Invalid login or password"	
     redirect_to_target_or_default(root_url)
   end
 
@@ -34,6 +38,7 @@ class SessionsController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_to root_url
   end
+  
   private
 
   def set_user_session(fb_user_attributes)
@@ -41,6 +46,7 @@ class SessionsController < ApplicationController
     user = User.find_by_facebook_id(fb_user_attributes['id'])
     user ||= User.create(:facebook_id => fb_user_attributes['id'])
     user.update_profile_attributes(fb_user_attributes)
+    @current_user = user
   end
 
 end

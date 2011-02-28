@@ -2,6 +2,7 @@ Factory.define :user do |f|
   f_id = (100000 + rand(100000)).to_s
   f.facebook_id f_id
   f.name 'example user'
+  f.games_left 3
   
   interests = ['Eating', 'Sleeping', 'Dancing', 'Ice-Hockey', 'cycling']
   

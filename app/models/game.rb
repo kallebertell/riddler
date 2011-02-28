@@ -25,6 +25,8 @@ class Game < ActiveRecord::Base
 
     user.score_recorded_at = DateTime.now
 
+    user.games_left = user.games_left - 1
+    
     user.save
   end
 
