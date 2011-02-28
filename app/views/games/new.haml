@@ -1,1 +1,3 @@
-= link_to 'Start Game', url_for(:action => :create), :class => 'create_game', :method => :post
+.controls
+  = link_to 'Start Game', url_for(:action => :create), :class => 'create_game', :method => :post
+= render :partial => 'highscore'

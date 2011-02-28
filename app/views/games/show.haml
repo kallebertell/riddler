@@ -28,52 +28,8 @@
     = points
   = " points"
 
-%br
-= link_to 'Try again', games_path, :class => 'create_game', :method => :post
-= link_to 'Share score', '#share', :class => 'share_score'
-%br
-%br
+.controls
+  = link_to 'Try again', games_path, :class => 'create_game', :method => :post
+  = link_to 'Share score', '#share', :class => 'share_score'
 
-.highscore
-  %ul
-    %li 
-      %a{:href => '#week_tab'} 
-        = "This week's high scores"
-    %li
-      %a{:href => '#alltime_tab'}
-        = "All-time high scores"
-
-  %table.score_table{:id => 'week_tab'}
-    %thead
-      %tr
-        %th 
-          = "Rank"
-        %th 
-          = "Picture"
-        %th 
-          = "Name"
-        %th 
-          = "Best"
-        %th 
-          = "Total"
-    %tbody
-      = render :partial => 'users/user_week_score', :collection => @week_best_users
-
-  %table.score_table{:id => 'alltime_tab'}
-    %thead
-      %tr
-        %th 
-          = "Rank"
-        %th 
-          = "Picture"
-        %th 
-          = "Name"
-        %th 
-          = "Best"
-        %th 
-          = "Total"
-    %tbody
-      = render :partial => 'users/user_alltime_score', :collection => @users
-
-%script
-  = "$(function() { $('.highscore ul').idTabs(); });"
+= render :partial => 'highscore'
