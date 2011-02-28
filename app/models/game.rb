@@ -7,13 +7,7 @@ class Game < ActiveRecord::Base
   end
 
   def points
-    questions.reduce(0) do |sum, question|
-      if question.answered_correctly?
-        sum + 1
-      else
-        sum
-      end
-    end
+    Choice.where(:correct => true, :selected => true, :question_id => self.question_ids).count
   end
   
   def end
