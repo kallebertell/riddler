@@ -72,19 +72,19 @@ module QuestionFactory
   def set_about_question_attributes
     self.question_type = :about
     
-    friends = Friend.where(:user_id => game.user.id).order('about_used_at DESC NULLS LAST, random()')
-
-    friends.reject! { |friend| friend.about.blank? }
-        
-    return set_like_question_attributes unless friends.length > 3
+    friends = Friend.where('user_id = ? AND length(about) > 0', game.user.id).order('about_used_at DESC NULLS LAST, random()')
 
     friend_to_guess = friends.pop()
+
+    return set_like_question_attributes if friend_to_guess.nil? #fallback
 
     friend_to_guess.update_attribute(:about_used_at, Time.now)
 
     correct_uids = [friend_to_guess.fb_user_id]
     wrong_uids = Friend.where('user_id = ? AND fb_user_id NOT IN (?)', game.user.id, correct_uids).order('random()').map(&:fb_user_id).uniq[0..2]
     
+    return set_like_question_attributes if wrong_uids.length < 3 #fallback
+
     self.matter = friend_to_guess.about
     self.set_choices_from_correct_and_other_uids(correct_uids, wrong_uids)
     
