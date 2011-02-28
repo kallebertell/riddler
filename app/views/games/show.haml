@@ -1,22 +1,23 @@
 %h1
   
-  - if @game.points >= 18
+  - points = @game.points
+  - if points >= 18
     = "You must share a collective brain with your friends!"
-  - elsif @game.points >= 16
+  - elsif points >= 16
     = "Do you spy on your friends regularly?"
-  - elsif @game.points >= 14
+  - elsif points >= 14
     = "You know it's a bit creepy how much you know about your friends."
-  - elsif @game.points >= 12
+  - elsif points >= 12
     = "Wow. You're like a fact book on your friends!"
-  - elsif @game.points >= 10
+  - elsif points >= 10
     = "You really know your friends!"
-  - elsif @game.points >= 8
+  - elsif points >= 8
     = "Excellent game!"
-  - elsif @game.points >= 6
+  - elsif points >= 6
     = "Good game!"
-  - elsif @game.points >= 4
+  - elsif points >= 4
     = "Nice game."
-  - elsif @game.points >= 2
+  - elsif points >= 2
     = "Nice try, but you don't know your friends all that well do you?"
   - else 
     = "Are you sure these people are your friends?"
@@ -24,7 +25,7 @@
 .game_info
   = "You scored "
   %span{:id=>"score"}
-    = @game.points
+    = points
   = " points"
 
 %br
