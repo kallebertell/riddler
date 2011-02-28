@@ -128,6 +128,6 @@ class User < ActiveRecord::Base
   end  
   
   def self.current_week
-    Date.today.cweek
+    DateTime.now.cweek
   end
 end

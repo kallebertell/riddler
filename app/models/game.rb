@@ -23,7 +23,7 @@ class Game < ActiveRecord::Base
     user.week_best_score = points if user.week_best_score < points;
     user.best_score = points if user.best_score < points
 
-    user.score_recorded_at = Date.today
+    user.score_recorded_at = DateTime.now
 
     user.save
   end
@@ -31,7 +31,7 @@ class Game < ActiveRecord::Base
   private
   
   def current_week
-    Date.today.cweek
+    DateTime.now.cweek
   end
   
   def time_matches_this_week?(time)

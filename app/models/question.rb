@@ -39,9 +39,8 @@ class Question < ActiveRecord::Base
   end
 
   def answered_correctly?
-    return (1 == self.choices.where( :correct => true, :selected => true ).count) &&
-      (1 == self.choices.where( :correct => true).count) &&
-      (1 == self.choices.where( :selected => true).count)
+    # (1 == self.choices.where( :correct => true).count) && (1 == self.choices.where( :selected => true).count)
+    return (1 == self.choices.where( :correct => true, :selected => true ).count)
   end
 
   def answered_late?
