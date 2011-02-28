@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203184839) do
+ActiveRecord::Schema.define(:version => 20110221172333) do
 
   create_table "choices", :force => true do |t|
     t.integer  "question_id"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20110203184839) do
     t.integer  "week_best_score",   :default => 0
     t.integer  "week_total_score",  :default => 0
     t.datetime "score_recorded_at"
+    t.integer  "games_left",        :default => 3
   end
 
   add_foreign_key "choices", "questions", :name => "choices_question_id_fk"

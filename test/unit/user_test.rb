@@ -4,6 +4,7 @@ class UserTest < ActiveSupport::TestCase
 
   def setup
     @user = Factory(:user_with_user_friends)
+    @another_user = Factory(:user)
   end
 
   test "should find user friends" do
@@ -19,4 +20,8 @@ class UserTest < ActiveSupport::TestCase
     1.upto(5).each { |x| assert_equal x, user_friends[x-1].rank}
   end
   
+  test "should have 3 as default games_left" do
+    assert_equal 3, @user.games_left
+    assert_equal 3, @another_user.games_left
+  end
 end

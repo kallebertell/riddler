@@ -121,6 +121,38 @@ class User < ActiveRecord::Base
     "https://graph.facebook.com/#{self.facebook_id}/picture"
   end
   
+  def create_game
+    raise NoGamesLeft unless games_left > 0
+    
+    game = games.create(
+       :round_count => 10,
+       :wrong_answers => 0,
+       :max_wrong_answers => 2,
+       :seconds_to_answer => 30)
+  
+    games_left = games_left - 1
+  
+    return game
+  end
+  
+  def update_games_left
+    return if games_left >= 3
+
+    seconds_since_last_game = Time.now - last_game_started_at.to_i
+    new_games = seconds_since_last_game/60/60
+    games_left += new_games
+
+    games_left = 3 if games_left > 3
+  end
+  
+  def last_game_started_at
+    last_game  = @games.order("created_at").first
+  
+    return nil if last_game.nil?
+  
+    last_game.created_at
+  end
+  
   private
   
   def self.this_weeks_best_score
