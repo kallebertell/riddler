@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
          ORDER BY this_weeks_best_score DESC")
        
     rank_cnt = 1
-    friend_users.each do |u| 
+    friend_users.each do |u|
       u.rank = rank_cnt
       rank_cnt += 1
     end
@@ -122,7 +122,7 @@ class User < ActiveRecord::Base
   end
   
   def create_game
-    raise NoGamesLeft unless games_left > 0
+    raise NoGamesLeft unless self.games_left > 0
     
     game = games.create(
        :round_count => 10,
@@ -130,19 +130,19 @@ class User < ActiveRecord::Base
        :max_wrong_answers => 2,
        :seconds_to_answer => 30)
   
-    games_left = games_left - 1
+    self.games_left = self.games_left - 1
   
     return game
   end
   
   def update_games_left
-    return if games_left >= 3
+    return if self.games_left >= 3
 
     seconds_since_last_game = Time.now - last_game_started_at.to_i
     new_games = seconds_since_last_game/60/60
-    games_left += new_games
+    self.games_left += new_games
 
-    games_left = 3 if games_left > 3
+    self.games_left = 3 if self.games_left > 3
   end
   
   def last_game_started_at
