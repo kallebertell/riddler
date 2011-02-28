@@ -36,8 +36,7 @@ module QuestionFactory
     self.question_type = :like
     likes = Like.where(:user_id => game.user.id).order('used_at DESC NULLS LAST, random()')
     
-    # Change to other question type if the user has too little likes
-    return set_birthday_question_attributes unless likes.count > 3
+    return set_birthday_question_attributes unless likes.count > 3 #fallback
     
     liking_to_guess = likes.pop()
     liking_to_guess.update_attribute(:used_at, Time.now)
@@ -58,8 +57,7 @@ module QuestionFactory
     
     statuses = Status.where(:user_id => game.user.id).order('used_at DESC NULLS LAST, random()')
 
-    # Change to other question type if the user has too little statuses
-    return set_birthday_question_attributes unless statuses.count > 3
+    return set_birthday_question_attributes unless statuses.count > 3 #fallback
     
     status_to_guess = statuses.pop()
     status_to_guess.update_attribute(:used_at, Time.now)
