@@ -28,6 +28,16 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:friend, :user_id => @game.user.id)
     question = @game.questions.create
     question.update_attribute(:created_at, 31.seconds.ago)
+    if question.choices.empty?
+      p 'THE FOLLOWING QUESTION IS EMPTY:'
+      p question.inspect
+      p 'THE STATUSES'
+      p @game.user.statuses
+      p 'THE FRIENDS'
+      p @game.user.friends
+      p 'THE LIKES'
+      p @game.user.likes
+    end
     question.answer!(question.choices.first.id)
     assert question.answered_late?
   end
