@@ -7,6 +7,16 @@ class QuestionTest < ActiveSupport::TestCase
     status = Factory(:status, :user_id => @game.user.id)
     status = Factory(:friend, :user_id => @game.user.id)
     question = @game.questions.create
+    if question.choices.empty?
+      p 'THE FOLLOWING QUESTION IS EMPTY:'
+      p question.inspect
+      p 'THE STATUSES'
+      p @game.user.statuses
+      p 'THE FRIENDS'
+      p @game.user.friends
+      p 'THE LIKES'
+      p @game.user.likes
+    end
     question.answer!(question.choices.first.id)
     assert_equal 1, question.ordinal
     assert !question.answered_late?
