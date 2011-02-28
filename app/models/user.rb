@@ -116,6 +116,10 @@ class User < ActiveRecord::Base
       :updated_time => attrs['updated_time']
     })
   end
+
+  def profile_picture
+    "https://graph.facebook.com/#{self.facebook_id}/picture"
+  end
   
   private
   
