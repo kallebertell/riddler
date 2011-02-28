@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '3.0.0'
+gem 'rails', '3.0.4'
 gem 'haml'
 gem 'rake'
 gem 'json'
