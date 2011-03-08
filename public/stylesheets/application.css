@@ -19,6 +19,36 @@ body {
   margin: 0px;
   margin-top: 20px;	
 }
+
+h1.msg {
+  font-size: 1.5em;
+  padding: 0px;
+  margin: 0px;
+  padding-bottom: 5px;
+}
+
+.link_button {
+  background-color: #white;
+  color: #cc3333;
+
+  text-decoration: none;
+  border: 1px inset #ff9999;
+  padding: 4px;
+  display: inline-block;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.link_button:hover {
+  background-color: #fff0f0;
+  color: black;
+}
+
+.game_result {
+  margin-bottom: 15px;
+}
+
 .time_limit {
   text-align: right;	
 }

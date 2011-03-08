@@ -1,3 +1,9 @@
-.controls
-  = link_to 'Start Game', url_for(:action => :create), :class => 'create_game', :method => :post
+.games_left
+  - if @current_user.games_left < 1
+    = "Login again later for more games!"
+  - else 
+    = "You have #{pluralize(@current_user.games_left, 'game')} left. "
+    %br
+    = link_to 'Start Game', games_path, :class => 'create_game link_button', :method => :post
+  
 = render :partial => 'highscore'

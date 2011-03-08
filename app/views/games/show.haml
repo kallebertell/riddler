@@ -1,35 +1,39 @@
-%h1
-  
-  - points = @game.points
-  - if points >= 18
-    = "You must share a collective brain with your friends!"
-  - elsif points >= 16
-    = "Do you spy on your friends regularly?"
-  - elsif points >= 14
-    = "You know it's a bit creepy how much you know about your friends."
-  - elsif points >= 12
-    = "Wow. You're like a fact book on your friends!"
-  - elsif points >= 10
-    = "You really know your friends!"
-  - elsif points >= 8
-    = "Excellent game!"
-  - elsif points >= 6
-    = "Good game!"
-  - elsif points >= 4
-    = "Nice game."
-  - elsif points >= 2
-    = "Nice try, but you don't know your friends all that well do you?"
+.game_result
+  %h1.msg
+    - points = @game.points
+    - name = @current_user.first_name
+    = "#{points} points."
+    %br
+    - if points >= 18
+      = "#{name} must share a collective brain with his friends!"
+    - elsif points >= 16
+      = "#{name} must spy on his friends regularly?"
+    - elsif points >= 14
+      = "It's a bit creepy how much #{name} knows about his friends."
+    - elsif points >= 12
+      = "#{name} is like a fact book on his friends!"
+    - elsif points >= 10
+      = "#{name} really know his friends!"
+    - elsif points >= 8
+      = "#{name} is in tune with his people."
+    - elsif points >= 6
+      = "#{name} seems to know his friends superficially at least."
+    - elsif points >= 4
+      = "#{name} barely knows who his facebook friends are."
+    - elsif points >= 2
+      = "#{name} doesn't really know his friends at all."
+    - else 
+      = "#{name} probably shouldn't be friends with most of these people?"
+
+  = link_to 'Share score', '#share', :class => 'share_score link_button'
+
+.games_left
+  - if @current_user.games_left < 1
+    = "Login again later for more games!"
   - else 
-    = "Are you sure these people are your friends?"
-
-.game_info
-  = "You scored "
-  %span{:id=>"score"}
-    = points
-  = " points"
-
-.controls
-  = link_to 'Try again', games_path, :class => 'create_game', :method => :post
-  = link_to 'Share score', '#share', :class => 'share_score'
+    = "You have #{pluralize(@current_user.games_left, 'game')} left. "
+    %br
+    = link_to 'Play again', games_path, :class => 'create_game link_button', :method => :post
+  
 
 = render :partial => 'highscore'

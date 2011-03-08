@@ -28,7 +28,7 @@ $(document).ready(function() {
     return this.each(function() {
       var link = this;
       $(link).click(function () {
-        $('#container').html('<div class="waiting_message"> Creating your personalized questions! <br/> <img src="/images/loader.gif" />');
+        $('#container').html('<div class="waiting_message"> Creating your questions! <br/> <img src="/images/loader.gif" />');
       });
     });
   };
@@ -71,8 +71,7 @@ $(document).ready(function() {
   $.fn.shareScore = function(options) {
     var options = $.extend({}, options)
 
-    var score = $.trim( $('#score').html() );
-    var msg = 'scored ' + score + ' points in Riddler';
+    var caption = $.trim( $('h1.msg').html() );
 
     return this.each(function() {
         var link = this;
@@ -81,18 +80,21 @@ $(document).ready(function() {
            FB.ui({
               method:  'stream.publish',
               display: 'dialog',
-              message: msg,
+              message: '',
               attachment: {
-                name: 'Riddler Game',
-                caption: 'The game which makes you know your friends eerily well!',
-                media: [{ 'type': 'image', 'src': 'http://riddle.herko.com/images/riddler_ico.png', 'href': 'http://google.com' }],
-                href: 'http://riddle.heroku.com'
+                name: 'Friddler',
+                caption: caption,
+                media: [{ 'type': 'image', 'src': 'http://friddler.herko.com/images/friddler_ico.png', 'href': 'http://friddler.herko.com' }],
+                href: 'http://friddler.heroku.com'
               },
-              action_links: [{ text: 'Code', href: 'http://github.com/facebook/connect-js' }],
-              user_message_prompt: 'Poof moo?'
+             /*
+              action_links: [{ text: 'Kalle on Friddler', href: 'http://friddler.heroku.com/user/foobar' }],
+             */
+              user_message_prompt: 'Share the love'
              },
 
              function(response) {
+                alert('Response: '+response);
              }
            );
 

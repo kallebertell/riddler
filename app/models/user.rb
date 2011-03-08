@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
   def create_game
     raise NoGamesLeft unless self.games_left > 0
     
-    game = games.create(
+    game = self.games.create(
        :round_count => 10,
        :wrong_answers => 0,
        :max_wrong_answers => 2,
@@ -138,19 +138,29 @@ class User < ActiveRecord::Base
   def update_games_left
     return if self.games_left >= 3
 
-    seconds_since_last_game = Time.now - last_game_started_at.to_i
+    seconds_since_last_game = Time.now.to_i - last_game_started_at.to_i
+        
     new_games = seconds_since_last_game/60/60
+    
+    
     self.games_left += new_games
 
     self.games_left = 3 if self.games_left > 3
+    
+    save()
   end
   
   def last_game_started_at
-    last_game  = @games.order("created_at").first
+    last_game  = self.games.order("created_at").last
   
     return nil if last_game.nil?
   
+    p "last game started at #{last_game.created_at}"
     last_game.created_at
+  end
+  
+  def first_name
+    self.name.split()[0]
   end
   
   private
@@ -166,4 +176,6 @@ class User < ActiveRecord::Base
   def self.current_week
     DateTime.now.cweek
   end
+  
+  
 end
