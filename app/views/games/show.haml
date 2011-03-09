@@ -1,39 +1,39 @@
-.game_result
-  %h1.msg
-    - points = @game.points
-    - name = @current_user.first_name
-    = "#{points} points."
-    %br
-    - if points >= 18
-      = "#{name} must share a collective brain with his friends!"
-    - elsif points >= 16
-      = "#{name} must spy on his friends regularly?"
-    - elsif points >= 14
-      = "It's a bit creepy how much #{name} knows about his friends."
-    - elsif points >= 12
-      = "#{name} is like a fact book on his friends!"
-    - elsif points >= 10
-      = "#{name} really know his friends!"
-    - elsif points >= 8
-      = "#{name} is in tune with his people."
-    - elsif points >= 6
-      = "#{name} seems to know his friends superficially at least."
-    - elsif points >= 4
-      = "#{name} barely knows who his facebook friends are."
-    - elsif points >= 2
-      = "#{name} doesn't really know his friends at all."
+.boxed_view
+  .game_result
+    %h1.msg
+      - points = @game.points
+      - name = @current_user.first_name
+      = "#{pluralize(points, 'point')}. "
+      %br
+      - if points >= 18
+        = "#{name} must share a collective brain with his friends!"
+      - elsif points >= 16
+        = "#{name} must spy on his friends regularly!"
+      - elsif points >= 14
+        = "It's a bit creepy how much #{name} knows about his friends."
+      - elsif points >= 12
+        = "#{name} is like a fact book on his friends!"
+      - elsif points >= 10
+        = "#{name} really know his friends!"
+      - elsif points >= 8
+        = "#{name} is in tune with his people."
+      - elsif points >= 6
+        = "#{name} seems to know his friends superficially."
+      - elsif points >= 4
+        = "#{name} barely knows who his facebook friends are."
+      - elsif points >= 2
+        = "#{name} doesn't really know his friends at all."
+      - else 
+        = "#{name} probably shouldn't be friends with most of these people?"
+      
+    = link_to 'Share score', '#share', :class => 'share_score link_button'
+
+  .games_left
+    - if @current_user.games_left < 1
+      = "Login again later for more games!"
     - else 
-      = "#{name} probably shouldn't be friends with most of these people?"
+      = "You have #{pluralize(@current_user.games_left, 'game')} left."
+      %br
+      = link_to 'Play again', games_path, :class => 'create_game link_button', :method => :post
 
-  = link_to 'Share score', '#share', :class => 'share_score link_button'
-
-.games_left
-  - if @current_user.games_left < 1
-    = "Login again later for more games!"
-  - else 
-    = "You have #{pluralize(@current_user.games_left, 'game')} left. "
-    %br
-    = link_to 'Play again', games_path, :class => 'create_game link_button', :method => :post
-  
-
-= render :partial => 'highscore'
+  = render :partial => 'highscore'

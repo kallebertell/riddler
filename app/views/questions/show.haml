@@ -1,26 +1,33 @@
-.top
-  %h1
-    = "Round #{@question.ordinal}"
-  .life_count
-    - @game.wrong_answers.times do 
-      %img{:src=>'/images/empty_heart.png'}
-    - (@game.max_wrong_answers - @game.wrong_answers).times do 
-      %img{:src=>'/images/heart.png'}
-  .time_limit
+
+.boxed_view
+  .top
+    %h1
+      = "Round #{@question.ordinal}"
+ 
+
+  .question
+    %h1
+      = @question.text
+  .clue{:style => "font-size: #{26 - (@question.matter.length/20)}pt"}
+    = @question.matter
+
+  %br
+
+  .answer_table
+    %ul{:id => 'choices'}
+      - for choice in @question.choices
+        = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
+
+.time_limit
+
+.life_count
+  - @game.wrong_answers.times do 
+    %img{:src=>'/images/empty_heart.png'}
+  - (@game.max_wrong_answers - @game.wrong_answers).times do 
+    %img{:src=>'/images/heart.png'}
 
 
-.question
-  %h1
-    = @question.text
-.clue{:style => "font-size: #{26 - (@question.matter.length/20)}pt"}
-  = @question.matter
 
-%br
-
-.answer_table
-  %ul{:id => 'choices'}
-    - for choice in @question.choices
-      = render :partial => 'choices/show', :locals => {:question => @question, :choice => choice}
 
 %script{ :language => 'javascript' }
   ="$('.time_limit').countDown({ limit: #{@question.seconds_to_answer}, url: '#{game_question_answers_path(@game, @question)}' });"

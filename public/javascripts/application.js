@@ -28,7 +28,7 @@ $(document).ready(function() {
     return this.each(function() {
       var link = this;
       $(link).click(function () {
-        $('#container').html('<div class="waiting_message"> Creating your questions! <br/> <img src="/images/loader.gif" />');
+        $('.boxed_view').html('<div class="waiting_message"> Creating your questions! <br/> <img src="/images/loader.gif" />');
       });
     });
   };
@@ -94,7 +94,7 @@ $(document).ready(function() {
              },
 
              function(response) {
-                alert('Response: '+response);
+               
              }
            );
 
