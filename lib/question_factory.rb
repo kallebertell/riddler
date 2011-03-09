@@ -144,7 +144,7 @@ module QuestionFactory
     Friend.where(:user_id => game.user.id, :fb_user_id => (correct_uids+other_uids)).order('random()').each do |friend|
       self.choices.build(:question_id => self.id,
                          :correct => correct_uids.include?(friend.fb_user_id),
-                         :text => friend.name,
+                         :text => friend.shortened_name,
                          :pic_url => friend.pic_square_url,
                          :key => friend.fb_user_id)
     end

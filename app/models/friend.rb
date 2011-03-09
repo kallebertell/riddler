@@ -4,4 +4,11 @@ class Friend < ActiveRecord::Base
   has_many :statuses
   
   scope :expired_since, lambda {|time| where("expire_at < ?", time) }
+  
+  def shortened_name
+    split_name = self.name.split(' ')
+    
+    split_name[0] + " " + split_name[split_name.length-1][0,1]
+  end
+
 end
