@@ -124,7 +124,11 @@ class User < ActiveRecord::Base
   def create_game
     raise NoGamesLeft unless self.games_left > 0
     
+<<<<<<< HEAD
     game = self.games.create(
+=======
+    game = games.create(
+>>>>>>> 253e5dcac940186816e30aee14b21d29ff27546a
        :round_count => 10,
        :wrong_answers => 0,
        :max_wrong_answers => 2,
@@ -163,6 +167,7 @@ class User < ActiveRecord::Base
     self.name.split()[0]
   end
   
+
   private
   
   def self.this_weeks_best_score
