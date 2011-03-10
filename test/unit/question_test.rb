@@ -55,7 +55,7 @@ class QuestionTest < ActiveSupport::TestCase
     question = @game.questions.create(:question_type => :status)
     assert question.question_type_status?
     assert_equal 4, question.choices.size
-    assert_not_nil Friend.find_by_name(question.choices.first.text)
+    assert_not_nil Friend.where(:name => question.choices.first.text + '%')
     assert_not_nil Status.find_by_message(question.matter)
   end
 
@@ -65,7 +65,7 @@ class QuestionTest < ActiveSupport::TestCase
     assert question.question_type_like?
     assert_equal 4, question.choices.size
     assert_not_equal question.choices.first, question.choices.last
-    assert_not_nil Friend.find_by_name(question.choices.first.text)
+    assert_not_nil Friend.where(:name => question.choices.first.text + '%')
     assert_not_nil Like.find_by_name(question.matter)
   end
 

@@ -8,6 +8,8 @@ class Friend < ActiveRecord::Base
   def shortened_name
     split_name = self.name.split(' ')
     
+    return split_name[0] if split_name.length < 2
+    
     split_name[0] + " " + split_name[split_name.length-1][0,1]
   end
 
