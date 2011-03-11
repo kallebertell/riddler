@@ -1,4 +1,6 @@
 class Friend < ActiveRecord::Base
+  include ActionView::Helpers::TextHelper
+  
   belongs_to :user
   has_many :likes
   has_many :statuses
@@ -10,7 +12,7 @@ class Friend < ActiveRecord::Base
     
     return split_name[0] if split_name.length < 2
     
-    split_name[0] + " " + split_name[split_name.length-1][0,1]
+    split_name[0] + " " + truncate(split_name[split_name.length-1], :length=>1, :omission=>'')
   end
 
 end
