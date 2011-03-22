@@ -16,7 +16,6 @@ class SessionsController < ApplicationController
     else
       render :partial => 'javascript_redirection', :object => @fb_session.url_for_canvas_login
     end
-    
   end
 
   def create
