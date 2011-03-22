@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       set_user_session(@fb_session.get_current_user)
       redirect_to root_url
     else
-      render :text => "<script>top.location='#{@fb_session.url_for_canvas_login}'</script>"
+      render :partial => 'javascript_redirection', :object => @fb_session.url_for_canvas_login
     end
     
   end
