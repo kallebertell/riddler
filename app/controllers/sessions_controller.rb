@@ -1,4 +1,3 @@
-
 class SessionsController < ApplicationController
   skip_before_filter :login_required
   skip_before_filter :verify_authenticity_token, :only => 'login'
@@ -16,15 +15,13 @@ class SessionsController < ApplicationController
       @current_user.update_games_left
       redirect_to root_url
     else
-      render :text => "<script>top.location='#{@fb_session.url_for_canvas_login}'</script>"
+      render :text => '<script>window.location="'+@fb_session.url_for_canvas_login+'";</script>'
     end
-    
   end
 
   def create
     @fb_session.connect_with_code(params[:code])
     set_user_session(@fb_session.get_current_user)
-
     @current_user.update_games_left
 
     flash[:notice] = "Logged in as #{current_user.name} successfully."

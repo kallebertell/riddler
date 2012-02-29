@@ -11,6 +11,7 @@ gem 'koala'
 gem 'foreigner'
 gem 'enumerated_attribute'
 gem 'exception_notification_rails3', :require => 'exception_notifier'
+gem 'newrelic_rpm'
 
 group :test do
   gem 'factory_girl_rails'

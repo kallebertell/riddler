@@ -84,12 +84,9 @@ $(document).ready(function() {
               attachment: {
                 name: 'Friddler',
                 caption: caption,
-                media: [{ 'type': 'image', 'src': 'http://friddler.herko.com/images/friddler_ico.png', 'href': 'http://friddler.herko.com' }],
-                href: 'http://friddler.heroku.com'
+                media: [{ 'type': 'image', 'src': 'http://friddler.heroku.com/images/friddler_ico.png', 'href': 'http://friddler.herko.com' }],
+                href: 'https://apps.facebook.com/friddler/'
               },
-             /*
-              action_links: [{ text: 'Kalle on Friddler', href: 'http://friddler.heroku.com/user/foobar' }],
-             */
               user_message_prompt: 'Share the love'
              },
 

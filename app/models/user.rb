@@ -22,14 +22,14 @@ class User < ActiveRecord::Base
        WHERE (arr[rank]).facebook_id IN ('#{friend_ids.join("','")}')")
   end
 
+  # In perferct world, everyone is your friend
   def self.find_user_and_friends_ordered_by_week_score(user_id)
     friend_ids = find_friend_ids(user_id)
     friend_users =
       self.find_by_sql(
         "SELECT u.*, 0 as rank, #{this_weeks_best_score}, #{this_weeks_total_score}
          FROM #{User.table_name} u
-         WHERE u.facebook_id IN ('#{friend_ids.join("','")}')
-         ORDER BY this_weeks_best_score DESC")
+         ORDER BY this_weeks_best_score DESC") #WHERE u.facebook_id IN ('#{friend_ids.join("','")}')
        
     rank_cnt = 1
     friend_users.each do |u|
