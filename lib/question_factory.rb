@@ -107,7 +107,7 @@ module QuestionFactory
    
     choice_dates << get_random_date_in_month_other_than(correct_date.month()) 
     
-    choice_dates.each do |date| 
+    choice_dates.sort.each do |date| 
       choice = Choice.new
       choice.correct = correct_date.month() == date.month()
       choice.text = date.day().to_s + " " + Date::MONTHNAMES[date.month()]
