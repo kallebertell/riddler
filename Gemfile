@@ -19,3 +19,6 @@ group :test do
   gem 'ci_reporter'
   gem 'rcov'
 end
+group :test do
+  gem 'heroku'
+end
