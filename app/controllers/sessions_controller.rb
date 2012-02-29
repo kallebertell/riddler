@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       @current_user.update_games_left
       redirect_to root_url
     else
-      render :partial => 'javascript_redirection', :object => @fb_session.url_for_canvas_login
+      render :text => '<script>window.location="'+@fb_session.url_for_canvas_login+'";</script>'
     end
   end
 
