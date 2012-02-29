@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     if oauth_params && oauth_params['oauth_token']
       @fb_session.connect_with_oauth_token(oauth_params['oauth_token'])
       set_user_session(@fb_session.get_current_user)
+      @current_user.update_games_left
       redirect_to root_url
     else
       render :text => "<script>top.location='#{@fb_session.url_for_canvas_login}'</script>"
